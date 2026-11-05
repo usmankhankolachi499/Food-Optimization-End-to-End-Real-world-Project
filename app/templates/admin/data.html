@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block title %}Data pipeline{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-database-gear"></i> Data engineering</div>
+    <h1>Data pipeline &amp; quality</h1>
+    <p>Raw CSV / JSONL sources from the <code>data/</code> folder are ingested into <strong>SQL Server (T-SQL)</strong> through the application models, high-volume tracking mirrors to <strong>MongoDB</strong>, and this report validates the stored rows (SRS 3.10 / 3.11).</p>
+  </div>
+  <form method="post" action="{{ url_for('admin.data_run') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button class="btn btn-brand" type="submit"><i class="bi bi-check2-square me-1"></i> Run validation</button>
+  </form>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-lg-4">
+    <div class="panel h-100">
+      <div class="panel-body">
+        <h2 class="h6 fw-bold"><i class="bi bi-1-circle me-2 text-brand"></i>Ingested store — {{ sql.engine }}</h2>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle mb-0">
+            <thead><tr><th>Table</th><th class="text-end">Rows</th></tr></thead>
+            <tbody>
+              {% for name, count in sql.tables.items() %}
+                <tr><td><code>{{ name }}</code></td><td class="text-end">{{ count }}</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="panel h-100">
+      <div class="panel-body">
+        <h2 class="h6 fw-bold"><i class="bi bi-2-circle me-2 text-brand"></i>MongoDB tracking {{ '✅' if mongo.enabled else '— not configured' }}</h2>
+        {% if mongo.enabled %}
+          {% if mongo.collections %}
+            <ul class="list-check mb-0">
+              {% for name, count in mongo.collections.items() %}
+                <li><i class="bi bi-check-circle-fill"></i><span><code>{{ name }}</code> — {{ count }} docs</span></li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="muted mb-0">Collections will appear when the first GPS ping is recorded.</p>
+          {% endif %}
+        {% else %}
+          <p class="muted mb-0">Set <code>MONGO_URI</code> in <code>.env</code> to mirror location logs to MongoDB.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="panel h-100">
+      <div class="panel-body">
+        <h2 class="h6 fw-bold"><i class="bi bi-3-circle me-2 text-brand"></i>ML artifacts</h2>
+        <ul class="list-check mb-0">
+          <li><i class="bi bi-check-circle-fill"></i><span><code>delivery_time_model.pkl</code> + <code>model_features.pkl</code></span></li>
+          <li><i class="bi bi-check-circle-fill"></i><span>Loaded by <code>ml.predictor</code> and used for every ETA</span></li>
+          <li><i class="bi bi-check-circle-fill"></i><span>Trained from <code>data/ml/delivery_time_dataset.csv</code></span></li>
+          <li><i class="bi bi-check-circle-fill"></i><span>Never modified by the web app</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel mb-4">
+  <div class="panel-head"><h2><i class="bi bi-folder2-open me-2 text-brand"></i>Source data folder — data/</h2></div>
+  <div class="panel-body">
+    <div class="row g-3">
+      {% for folder in sources %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm border-0"><div class="card-body">
+            <span class="badge badge-soft mb-2">{{ folder.folder }}</span>
+            {% if folder.files %}
+              <ul class="list-check mb-0">
+                {% for f in folder.files %}
+                  <li><i class="bi bi-file-earmark-text"></i><span>{{ f.name }} <span class="muted">({{ f.kb }} KB)</span></span></li>
+                {% endfor %}
+              </ul>
+            {% else %}<p class="muted mb-0">Empty.</p>{% endif %}
+          </div></div>
+        </div>
+      {% else %}
+        <p class="muted mb-0">No data folders found.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-head"><h2><i class="bi bi-clipboard-check me-2 text-brand"></i>Validation report <span class="muted small">(generated {{ report.generated_at|dt('%d %b %Y, %I:%M %p') }})</span></h2></div>
+  <div class="panel-body">
+    <div class="row g-3 mb-4">
+      {% for table, stats in report.quality.items() %}
+        <div class="col-sm-6 col-lg-4">
+          <div class="stat-card h-100">
+            <div class="stat-icon"><i class="bi {{ 'bi-check2-all' if stats.flagged == 0 else 'bi-exclamation-triangle' }}"></i></div>
+            <div class="stat-value">{{ stats.clean_percent }}%</div>
+            <div class="stat-label">{{ table.replace('_',' ')|title }} clean — {{ stats.rows }} rows, {{ stats.flagged }} flagged</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% if report.issues %}
+      <div class="table-wrap">
+        <table class="table table-modern align-middle">
+          <thead><tr><th>Table</th><th>Findings</th></tr></thead>
+          <tbody>
+            {% for table, rows in report.issues.items() %}
+              <tr>
+                <td><code>{{ table }}</code></td>
+                <td><ul class="list-check mb-0">{% for line in rows[:8] %}<li><i class="bi bi-exclamation-circle"></i><span class="cell-sub">{{ line }}</span></li>{% endfor %}{% if rows|length > 8 %}<li class="cell-sub">… and {{ rows|length - 8 }} more</li>{% endif %}</ul></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="text-success mb-0"><i class="bi bi-check2-circle me-1"></i> No quality issues found in the ingested data.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

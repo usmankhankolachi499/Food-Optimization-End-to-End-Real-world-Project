@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import restaurant_card %}
+{% block title %}Fast, optimized food delivery{% endblock %}
+
+{% block content %}
+<section class="mt-2">
+  <div class="hero">
+    <div class="row align-items-center gy-4">
+      <div class="col-lg-8">
+        <div class="eyebrow"><i class="bi bi-lightning-charge"></i> Serving Karachi — optimized for speed & reliability</div>
+        <h1>Dine under the <span>moonlight</span> — delivered smarter.</h1>
+        <p class="lead">Browse Karachi's best restaurants, track your order live on the map, and watch our nearest-available partner get there faster with intelligent order assignment, ETA prediction and batch route optimisation.</p>
+        <form class="hero-search" action="{{ url_for('main.restaurants') }}" method="get">
+          <i class="bi bi-search ms-2 text-muted"></i>
+          <input class="form-control" name="q" placeholder="Search for restaurants, cuisine or dish">
+          <select class="form-select" name="sort">
+            <option value="rating">Top rated</option>
+            <option value="name">A–Z</option>
+            <option value="new">Newest</option>
+          </select>
+          <button class="btn btn-brand"><i class="bi bi-search me-1"></i> Find food</button>
+        </form>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>{{ restaurants|length }}+</strong><span>Partner restaurants</span></div>
+          <div class="hero-stat"><strong>Real-time</strong><span>GPS tracking</span></div>
+          <div class="hero-stat"><strong>Optimised</strong><span>Routes & assignments</span></div>
+        </div>
+        <div class="hero-badges">
+          <span class="hero-badge"><i class="bi bi-signpost-split"></i> Route optimization</span>
+          <span class="hero-badge"><i class="bi bi-broadcast-pin"></i> Live location tracking</span>
+          <span class="hero-badge"><i class="bi bi-people"></i> Role-based dashboards</span>
+          <span class="hero-badge"><i class="bi bi-bar-chart-line"></i> Analytics & reports</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow"><i class="bi bi-stars"></i> Featured</div>
+      <h2>Restaurants in Karachi</h2>
+      <p>Hand-picked partners with great ratings and quick prep times.</p>
+    </div>
+    <a class="btn btn-ghost" href="{{ url_for('main.restaurants') }}">View all restaurants <i class="bi bi-arrow-right ms-1"></i></a>
+  </div>
+  <div class="restaurant-grid">
+    {% for restaurant in restaurants %}
+      {{ restaurant_card(restaurant, loop.index) }}
+    {% else %}
+      <div class="col-12 empty-state panel">
+        <div class="empty-icon"><i class="bi bi-shop"></i></div>
+        <h3>No restaurants yet</h3>
+        <p>Run <code>flask seed-demo --with-orders</code> or add restaurants from the admin panel.</p>
+        <a class="btn btn-brand btn-sm" href="{{ url_for('auth.login') }}">Sign in as admin</a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section-pad pt-0">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow"><i class="bi bi-list-check"></i> Platform capabilities</div>
+      <h2>Everything from SRS, ready to demo</h2>
+      <p>Web app built around user auth, orders, tracking, assignment, analytics and more.</p>
+    </div>
+  </div>
+  <div class="row g-3">
+    <div class="col-md-6 col-lg-4">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-person-bounding-box"></i></div>
+        <h3>User management & roles</h3>
+        <p>Customers, Delivery Partners and Admin with role-based access control, secure sessions and CSRF protection.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-cart-check"></i></div>
+        <h3>Order & restaurant management</h3>
+        <p>Menu catalogues, cart, checkout, order lifecycle, cancellation rules and customer profiles.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-broadcast-pin"></i></div>
+        <h3>Live GPS tracking</h3>
+        <p>Real-time partner location on Leaflet maps with trail history, auto-refresh and JSON API endpoints.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-signpost-split"></i></div>
+        <h3>Route optimization</h3>
+        <p>Nearest-neighbour pathing, pickup-before-drop for batches, traffic-aware ETAs and configurable parameters.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-diagram-3"></i></div>
+        <h3>Smart order assignment</h3>
+        <p>Assigns the nearest available partner while considering workload and delivery radius, with manual/admin override.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-bar-chart-line"></i></div>
+        <h3>Analytics, reports & alerts</h3>
+        <p>Delivery time, peak hours, partner performance, revenue trends, CSV exports and in-app notifications.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad pt-0">
+  <div class="panel">
+    <div class="panel-body p-lg-4">
+      <div class="row align-items-center gy-4">
+        <div class="col-lg-7">
+          <div class="eyebrow"><i class="bi bi-database"></i> Data & integrations</div>
+          <h2 class="mb-2">Built to plug into your ML pipeline</h2>
+          <p class="muted mb-3">The web layer stays fully functional on its own. If you add a <code class="code-chip">ml.predictor</code> module, ETAs and partner ranking switch to it automatically. Location logs can also mirror to MongoDB.</p>
+          <ul class="list-check">
+            <li><i class="bi bi-check-circle-fill"></i><span>SQL Server (T-SQL) storage via <code class="code-chip">pyodbc</code> — SQLite fallback included</span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span>Optional MongoDB store for high-volume tracking</span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span>Rest/JSON API for maps and clients</span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span>CLI tools: <code>flask init-db</code>, <code>flask seed-demo</code>, <code>flask create-admin</code></span></li>
+          </ul>
+        </div>
+        <div class="col-lg-5 text-center text-lg-end">
+          <a class="btn btn-brand btn-lg" href="{{ url_for('auth.register') }}"><i class="bi bi-person-plus me-1"></i> Get started</a>
+          <a class="btn btn-ghost btn-lg" href="{{ url_for('main.restaurants') }}"><i class="bi bi-shop me-1"></i> Browse restaurants</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import status_badge %}
+{% block title %}Delivery {{ order.order_number }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+  <a class="btn btn-ghost btn-sm" href="{{ url_for('delivery.assignments') }}"><i class="bi bi-arrow-left me-1"></i> Assignments</a>
+  <div class="d-flex gap-2">
+    <button class="btn btn-soft btn-sm" type="button" data-share-location data-order-id="{{ order.id }}" data-reload="1"><i class="bi bi-broadcast-pin me-1"></i> Share live location</button>
+    {% if order.customer.phone %}<a class="btn btn-ghost btn-sm" href="tel:{{ order.customer.phone }}"><i class="bi bi-telephone me-1"></i> Call customer</a>{% endif %}
+  </div>
+</div>
+
+<div class="track-card mb-4">
+  <div class="track-head">
+    <div>
+      <h2>{{ order.restaurant.name }} → {{ order.customer.name }}</h2>
+      <span class="order-no">Order {{ order.order_number }} · {{ order.item_count }} item{{ '' if order.item_count == 1 else 's' }} · {{ order.total|money }}</span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <span class="live-pill" style="color:#0e3b2e;background:#e8f5ef;border-color:#d5eadf;"><span class="live-dot" id="trackLiveDot"></span> <span id="trackStatusText">{{ order.status_label }}</span></span>
+      {{ status_badge(order) }}
+    </div>
+  </div>
+  <div class="px-3 pt-3">
+    <div class="d-flex justify-content-between tiny muted mb-1">
+      <span>Delivery progress</span>
+      <span id="trackLastUpdated">ETA {{ order.estimated_delivery_min }} min</span>
+    </div>
+    <div class="progress"><div class="progress-bar" id="trackProgressBar" style="width:{{ order.progress_percent }}%"></div></div>
+  </div>
+  <div class="track-steps" style="grid-template-columns:repeat({{ order.timeline|length }},1fr)">
+    {% for step in order.timeline %}
+      <div class="step {{ 'done' if step.done }} {{ 'current' if step.current }}">
+        <i class="bi bi-{{ step.icon }}"></i>{{ step.label }}
+      </div>
+    {% endfor %}
+  </div>
+  <div class="p-3">
+    <div class="map-box" id="trackingMap" data-order-id="{{ order.id }}" data-track="{{ tracking|tojson|forceescape }}" data-tracking-url="{{ url_for('api.order_tracking', order_id=order.id) }}"></div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-signpost-split me-2 text-brand"></i>Route</h2><span class="distance-chip">{{ route.distance_km }} km · {{ route.eta_minutes }} min</span></div>
+      <div class="panel-body pt-2">
+        {% for point in route.points %}
+          <div class="route-stop">
+            <span class="stop-num {{ 'pickup' if point.kind == 'restaurant' else '' }}">{{ loop.index }}</span>
+            <div class="flex-grow-1">
+              <strong>{{ point.label }}</strong>
+              <div class="tiny muted">{% if point.kind == 'restaurant' %}{{ order.restaurant.address or order.restaurant.city }}{% elif point.kind == 'customer' %}{{ order.delivery_address }}{% else %}Live partner position{% endif %}</div>
+            </div>
+          </div>
+        {% else %}
+          <p class="small-note mb-0">Route points are not available. Update your location and make sure the restaurant has coordinates.</p>
+        {% endfor %}
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <form method="post" action="{{ url_for('delivery.update_location', order_id=order.id) }}" class="row g-2 flex-grow-1">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="col-6"><input class="form-control form-control-sm" name="latitude" placeholder="Latitude" value="{{ profile.current_lat if profile.current_lat is not none else '' }}"></div>
+            <div class="col-6"><input class="form-control form-control-sm" name="longitude" placeholder="Longitude" value="{{ profile.current_lng if profile.current_lng is not none else '' }}"></div>
+            <div class="col-12"><button class="btn btn-soft btn-sm w-100" type="submit"><i class="bi bi-pin-map me-1"></i> Save manual location</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2><i class="bi bi-bag me-2 text-brand"></i>Pickup &amp; drop</h2></div>
+      <div class="panel-body pt-2">
+        <div class="partner-strip mb-3">
+          <div class="partner-avatar">🍽️</div>
+          <div>
+            <strong>{{ order.restaurant.name }}</strong>
+            <small>{{ order.restaurant.address or order.restaurant.city or '—' }}</small>
+          </div>
+        </div>
+        <div class="partner-strip mb-3">
+          <div class="partner-avatar">{{ order.customer.initials }}</div>
+          <div>
+            <strong>{{ order.customer.name }}</strong>
+            <small>{{ order.delivery_address }}</small>
+          </div>
+        </div>
+        {% if order.notes %}<div class="callout mb-3"><i class="bi bi-chat-left-text me-1"></i> {{ order.notes }}</div>{% endif %}
+        {% for item in order.items %}
+          <div class="d-flex justify-content-between py-1 small border-bottom" style="border-color:#f0f3ef!important">
+            <span>{{ item.quantity }} × {{ item.item_name }}</span>
+            <span class="fw-bold">{{ item.line_total|money }}</span>
+          </div>
+        {% endfor %}
+        <div class="summary-line total mt-3"><span>Collect / total</span><span class="value">{{ order.total|money }}</span></div>
+        <div class="kv"><span>Payment</span><span>{{ order.payment_method }} · {{ order.payment_status }}</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-arrow-right-circle me-2 text-brand"></i>Update status</h2></div>
+      <div class="panel-body pt-2">
+        {% set allowed = order.next_statuses %}
+        {% set delivery_allowed = allowed|select('in', ['prepared', 'dispatched', 'delivered'])|list %}
+        {% if delivery_allowed %}
+          <div class="d-grid gap-2">
+            {% for next_status in delivery_allowed %}
+              <form method="post" action="{{ url_for('delivery.update_status', order_id=order.id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="status" value="{{ next_status }}">
+                <button class="btn {{ 'btn-brand' if next_status == 'delivered' else 'btn-forest' }} w-100" type="submit">
+                  {% if next_status == 'prepared' %}<i class="bi bi-egg-fried me-1"></i> Mark food prepared
+                  {% elif next_status == 'dispatched' %}<i class="bi bi-bicycle me-1"></i> Start delivery (out for delivery)
+                  {% else %}<i class="bi bi-house-check me-1"></i> Mark delivered{% endif %}
+                </button>
+              </form>
+            {% endfor %}
+          </div>
+        {% elif order.is_delivered %}
+          <div class="empty-state small px-0"><div class="empty-icon"><i class="bi bi-check2-circle"></i></div><h3>Delivered</h3><p>This order is complete. Thank you!</p></div>
+        {% elif order.is_cancelled %}
+          <div class="empty-state small px-0"><div class="empty-icon"><i class="bi bi-x-circle"></i></div><h3>Cancelled</h3><p>{{ order.cancellation_reason or 'This order was cancelled.' }}</p></div>
+        {% else %}
+          <p class="small-note mb-0">No status changes are available right now.</p>
+        {% endif %}
+        <div class="form-hint mt-2">Status changes notify the customer instantly.</div>
+      </div>
+    </div>
+
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-broadcast-pin me-2 text-brand"></i>Live location</h2></div>
+      <div class="panel-body pt-2">
+        <div class="kv"><span>Current position</span><span data-live-coords>{% if profile.has_location %}{{ '%.5f'|format(profile.current_lat) }}, {{ '%.5f'|format(profile.current_lng) }}{% else %}Not set{% endif %}</span></div>
+        <div class="kv"><span>Last update</span><span>{{ profile.last_location_at|ago if profile.last_location_at else 'Never' }}</span></div>
+        <button class="btn btn-soft w-100 mt-3" type="button" data-share-location data-order-id="{{ order.id }}" data-reload="1"><i class="bi bi-crosshair me-1"></i> Use current GPS location</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2><i class="bi bi-clock-history me-2 text-brand"></i>Timeline</h2></div>
+      <div class="panel-body pt-2">
+        <div class="timeline">
+          {% for step in order.timeline %}
+            <div class="timeline-item {{ 'done' if step.done }} {{ 'current' if step.current }}">
+              <span class="timeline-dot"><i class="bi bi-{{ 'check-lg' if step.done else step.icon }}"></i></span>
+              <strong>{{ step.label }}</strong>
+              <time>{{ step.at|dt if step.at else 'Pending' }}</time>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

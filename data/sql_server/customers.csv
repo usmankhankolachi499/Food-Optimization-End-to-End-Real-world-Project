@@ -1,0 +1,801 @@
+customer_id,user_id,name,phone,address,area,latitude,longitude,food_preferences
+1,4,Hamza Iqbal,0341-4912574,"House 89, Street 35, North Nazimabad, Karachi",North Nazimabad,24.932054,67.053036,"Fast Food, Desserts, BBQ"
+2,5,Saad Siddiqui,0302-0005187,"House 35, Street 18, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.932837,67.088387,"Fast Food, Pizza, BBQ"
+3,6,Rabia Iqbal,0300-1468637,"House 26, Street 34, DHA, Karachi",DHA,24.802298,67.082713,Fast Food
+4,7,Saad Mirza,0335-2574519,"House 131, Street 30, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.914641,67.105817,"Fast Food, Pizza"
+5,8,Imran Farooqui,0339-1189103,"House 304, Street 4, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.938688,67.068804,"Karahi, BBQ, Fast Food"
+6,9,Hamza Qureshi,0348-1372112,"House 395, Street 26, DHA, Karachi",DHA,24.815302,67.066841,Karahi
+7,10,Faisal Baig,0306-2207979,"House 189, Street 26, Malir, Karachi",Malir,24.890013,67.20473,"Cafe, Desserts"
+8,11,Komal Malik,0305-0494591,"House 372, Street 24, PECHS, Karachi",PECHS,24.860148,67.051392,"Karahi, Fast Food, Cafe"
+9,12,Danish Raza,0343-5612230,"House 63, Street 16, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.900021,67.129151,Biryani
+10,13,Iqra Malik,0303-0010674,"House 4, Street 9, DHA, Karachi",DHA,24.791795,67.073547,"Chinese, Karahi"
+11,14,Sana Naqvi,0328-9355419,"House 190, Street 3, Federal B Area, Karachi",Federal B Area,24.93613,67.06859,"Biryani, Pizza"
+12,15,Hamza Sheikh,0304-2069851,"House 42, Street 17, Bahadurabad, Karachi",Bahadurabad,24.86772,67.060735,"Biryani, BBQ"
+13,16,Ayesha Qureshi,0312-0552704,"House 210, Street 14, Clifton, Karachi",Clifton,24.807294,67.023258,Fast Food
+14,17,Hamza Malik,0307-1074029,"House 21, Street 5, Malir, Karachi",Malir,24.885109,67.18814,"Biryani, Cafe"
+15,18,Junaid Chaudhry,0346-5260605,"House 58, Street 39, Tariq Road, Karachi",Tariq Road,24.88825,67.054556,Biryani
+16,19,Fahad Ahmed,0349-1703411,"House 320, Street 39, Saddar, Karachi",Saddar,24.867287,67.004234,"Biryani, Chinese"
+17,20,Hamza Raza,0324-1280526,"House 262, Street 13, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.898652,67.092865,"Karahi, Pizza"
+18,21,Imran Qureshi,0316-4086693,"House 176, Street 17, Malir, Karachi",Malir,24.90277,67.179987,Chinese
+19,22,Bushra Rizvi,0323-4618179,"House 117, Street 26, Tariq Road, Karachi",Tariq Road,24.856923,67.053284,"Chinese, Cafe, Fast Food"
+20,23,Taha Butt,0303-1660626,"House 200, Street 29, Tariq Road, Karachi",Tariq Road,24.882745,67.054615,Chinese
+21,24,Komal Memon,0315-8267898,"House 388, Street 37, Korangi, Karachi",Korangi,24.825528,67.129504,Chinese
+22,25,Faisal Chaudhry,0329-0046187,"House 247, Street 2, DHA, Karachi",DHA,24.82037,67.079493,"Karahi, Fast Food, Biryani"
+23,26,Hira Zaidi,0322-4657574,"House 181, Street 1, Korangi, Karachi",Korangi,24.82782,67.141936,"Desserts, BBQ"
+24,27,Fatima Iqbal,0320-2703417,"House 269, Street 7, Malir, Karachi",Malir,24.889768,67.210035,Desserts
+25,28,Fahad Iqbal,0348-1876092,"House 372, Street 24, DHA, Karachi",DHA,24.807576,67.073455,"Biryani, Cafe"
+26,29,Komal Naqvi,0326-9821442,"House 292, Street 24, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.896038,67.098143,"Cafe, Pizza"
+27,30,Laiba Baig,0340-2843971,"House 282, Street 12, Malir, Karachi",Malir,24.886525,67.1782,"Cafe, Desserts"
+28,31,Nida Shah,0335-6266386,"House 267, Street 5, Clifton, Karachi",Clifton,24.81756,67.015149,Pizza
+29,32,Danish Iqbal,0321-4922630,"House 138, Street 8, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.912288,67.139675,"BBQ, Pizza, Desserts"
+30,33,Hussain Farooqui,0326-9907413,"House 348, Street 35, Malir, Karachi",Malir,24.892701,67.19412,"BBQ, Desserts"
+31,34,Maryam Hashmi,0319-4785277,"House 383, Street 26, Bahadurabad, Karachi",Bahadurabad,24.884278,67.07439,Chinese
+32,35,Ahmed Qureshi,0338-9116066,"House 47, Street 12, North Nazimabad, Karachi",North Nazimabad,24.949159,67.038909,"Biryani, Fast Food"
+33,36,Hassan Khan,0345-7078884,"House 159, Street 31, Korangi, Karachi",Korangi,24.834662,67.126238,Cafe
+34,37,Fahad Lodhi,0300-6739377,"House 347, Street 5, Clifton, Karachi",Clifton,24.796468,67.03862,"Fast Food, Pizza, BBQ"
+35,38,Sara Farooqui,0347-3002013,"House 218, Street 16, Federal B Area, Karachi",Federal B Area,24.938291,67.074049,"Karahi, Desserts"
+36,39,Fatima Lodhi,0313-1948827,"House 157, Street 5, Korangi, Karachi",Korangi,24.844736,67.14226,"Pizza, Fast Food, Cafe"
+37,40,Hussain Javed,0346-0867615,"House 15, Street 13, Clifton, Karachi",Clifton,24.817164,67.020842,Cafe
+38,41,Bilal Shah,0349-0406453,"House 95, Street 22, Saddar, Karachi",Saddar,24.878623,67.016027,"Pizza, Karahi"
+39,42,Ahmed Hashmi,0319-2608180,"House 215, Street 26, DHA, Karachi",DHA,24.800083,67.059193,Chinese
+40,43,Hina Mirza,0303-1121820,"House 37, Street 19, Saddar, Karachi",Saddar,24.855812,67.032297,"Desserts, Chinese"
+41,44,Imran Memon,0305-4230164,"House 73, Street 25, Bahadurabad, Karachi",Bahadurabad,24.889711,67.07028,Desserts
+42,45,Hamza Qureshi,0339-7630187,"House 75, Street 33, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.900886,67.138244,"Karahi, BBQ, Cafe"
+43,46,Hussain Chaudhry,0324-9217259,"House 169, Street 38, Bahadurabad, Karachi",Bahadurabad,24.882369,67.069166,"BBQ, Cafe, Fast Food"
+44,47,Hassan Javed,0304-4943775,"House 358, Street 12, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.924387,67.12856,"Biryani, Chinese"
+45,48,Junaid Javed,0308-7705133,"House 252, Street 12, Clifton, Karachi",Clifton,24.818899,67.028948,"Chinese, Pizza, Desserts"
+46,49,Taha Baig,0315-0456365,"House 294, Street 20, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.91963,67.122754,"Fast Food, Pizza, Chinese"
+47,50,Junaid Farooqui,0307-2246136,"House 357, Street 29, Saddar, Karachi",Saddar,24.842324,67.011095,"BBQ, Fast Food"
+48,51,Saad Butt,0312-3280627,"House 212, Street 8, DHA, Karachi",DHA,24.790429,67.061093,BBQ
+49,52,Amna Javed,0312-2483641,"House 124, Street 15, Federal B Area, Karachi",Federal B Area,24.937776,67.061905,"Karahi, Fast Food, Pizza"
+50,53,Usman Zaidi,0327-1090104,"House 326, Street 9, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.910783,67.088464,"Pizza, BBQ"
+51,54,Fahad Baig,0314-3433557,"House 157, Street 29, Federal B Area, Karachi",Federal B Area,24.923754,67.083251,BBQ
+52,55,Kamran Naqvi,0333-8604570,"House 148, Street 36, Federal B Area, Karachi",Federal B Area,24.949975,67.071323,"Cafe, Biryani"
+53,56,Kamran Farooqui,0339-4715127,"House 245, Street 18, Federal B Area, Karachi",Federal B Area,24.922851,67.08312,"Chinese, Biryani"
+54,57,Laiba Mirza,0324-4919335,"House 163, Street 18, Korangi, Karachi",Korangi,24.825755,67.140789,"Cafe, Biryani, Chinese"
+55,58,Fatima Iqbal,0339-6679429,"House 349, Street 5, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.909852,67.112088,"Cafe, Desserts, BBQ"
+56,59,Laiba Siddiqui,0345-6146040,"House 119, Street 9, PECHS, Karachi",PECHS,24.87237,67.05895,"Cafe, Pizza, Chinese"
+57,60,Bilal Sheikh,0331-7398703,"House 71, Street 9, Saddar, Karachi",Saddar,24.852757,67.004183,"Desserts, Biryani, Fast Food"
+58,61,Bushra Lodhi,0348-4202688,"House 94, Street 38, PECHS, Karachi",PECHS,24.86608,67.061399,Karahi
+59,62,Saad Hashmi,0337-5788225,"House 151, Street 29, Malir, Karachi",Malir,24.891621,67.197297,"Fast Food, Chinese, Cafe"
+60,63,Rabia Shah,0312-8975588,"House 208, Street 29, Saddar, Karachi",Saddar,24.860294,67.020288,"Cafe, Desserts"
+61,64,Bushra Iqbal,0311-1728038,"House 79, Street 23, DHA, Karachi",DHA,24.803806,67.048791,Fast Food
+62,65,Asad Baig,0334-2431311,"House 369, Street 3, Bahadurabad, Karachi",Bahadurabad,24.8659,67.068262,"Biryani, Cafe, Chinese"
+63,66,Kamran Lodhi,0301-4035288,"House 186, Street 10, North Nazimabad, Karachi",North Nazimabad,24.939451,67.051327,"BBQ, Pizza"
+64,67,Zain Qureshi,0302-2756404,"House 54, Street 1, Federal B Area, Karachi",Federal B Area,24.927823,67.066162,"Chinese, BBQ"
+65,68,Komal Farooqui,0301-7866194,"House 256, Street 17, Tariq Road, Karachi",Tariq Road,24.904142,67.03723,"Cafe, Fast Food"
+66,69,Mahnoor Siddiqui,0302-5230254,"House 21, Street 34, Saddar, Karachi",Saddar,24.861924,67.021321,Desserts
+67,70,Amna Farooqui,0309-1059473,"House 291, Street 39, PECHS, Karachi",PECHS,24.861692,67.061459,"Biryani, Cafe"
+68,71,Fahad Ahmed,0307-6209553,"House 115, Street 17, Korangi, Karachi",Korangi,24.827962,67.115289,Desserts
+69,72,Usman Lodhi,0347-9610063,"House 365, Street 32, Saddar, Karachi",Saddar,24.860535,67.008808,"Desserts, Chinese"
+70,73,Kamran Iqbal,0307-8141982,"House 367, Street 7, North Nazimabad, Karachi",North Nazimabad,24.936144,67.037636,"BBQ, Desserts, Fast Food"
+71,74,Anum Memon,0310-5973825,"House 165, Street 25, Tariq Road, Karachi",Tariq Road,24.873973,67.072983,Cafe
+72,75,Amna Ali,0333-2495031,"House 308, Street 9, PECHS, Karachi",PECHS,24.863013,67.059107,"Desserts, Pizza"
+73,76,Hamza Sheikh,0315-6054321,"House 198, Street 19, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.913645,67.12274,"Biryani, Pizza, BBQ"
+74,77,Ahmed Baig,0317-5388470,"House 103, Street 21, Tariq Road, Karachi",Tariq Road,24.869617,67.057479,"Desserts, Fast Food, Cafe"
+75,78,Amna Sheikh,0332-7955295,"House 93, Street 16, North Nazimabad, Karachi",North Nazimabad,24.941784,67.027509,"Pizza, Cafe"
+76,79,Ali Hashmi,0304-1231088,"House 180, Street 3, Malir, Karachi",Malir,24.885066,67.191414,"Karahi, Cafe"
+77,80,Maryam Ansari,0345-1284955,"House 57, Street 11, Saddar, Karachi",Saddar,24.85836,67.00419,Fast Food
+78,81,Anum Qureshi,0301-3804250,"House 29, Street 3, Korangi, Karachi",Korangi,24.824163,67.124716,"Fast Food, Cafe, BBQ"
+79,82,Anum Ali,0328-3075330,"House 255, Street 18, Clifton, Karachi",Clifton,24.814776,67.020595,"Desserts, Biryani, Pizza"
+80,83,Ayesha Abbasi,0301-4207084,"House 318, Street 31, North Nazimabad, Karachi",North Nazimabad,24.934835,67.049146,Pizza
+81,84,Saad Baig,0340-8815475,"House 306, Street 9, DHA, Karachi",DHA,24.819774,67.070066,"BBQ, Karahi, Desserts"
+82,85,Zain Iqbal,0345-2487069,"House 116, Street 14, Saddar, Karachi",Saddar,24.852255,67.003811,Fast Food
+83,86,Fatima Malik,0326-6093873,"House 30, Street 30, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.932676,67.119693,"Biryani, Karahi, Fast Food"
+84,87,Fahad Ahmed,0347-7709630,"House 95, Street 33, Tariq Road, Karachi",Tariq Road,24.862833,67.063421,Pizza
+85,88,Rabia Raza,0339-9297859,"House 197, Street 38, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.92222,67.079047,"Pizza, Biryani"
+86,89,Ayesha Rizvi,0329-3348786,"House 197, Street 22, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.924624,67.138092,"Karahi, Pizza"
+87,90,Junaid Lodhi,0320-6461727,"House 173, Street 15, Malir, Karachi",Malir,24.87408,67.193016,"Cafe, BBQ"
+88,91,Iqra Farooqui,0326-1952278,"House 131, Street 16, North Nazimabad, Karachi",North Nazimabad,24.936743,67.036727,"Desserts, Biryani, Cafe"
+89,92,Maryam Ansari,0345-1564003,"House 302, Street 20, Tariq Road, Karachi",Tariq Road,24.875924,67.035791,Cafe
+90,93,Rabia Hashmi,0335-7507989,"House 397, Street 1, Malir, Karachi",Malir,24.870262,67.192738,"Karahi, BBQ"
+91,94,Anum Ali,0315-6681598,"House 333, Street 9, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.918892,67.070923,"Fast Food, Desserts"
+92,95,Zain Abbasi,0303-6368984,"House 219, Street 4, Bahadurabad, Karachi",Bahadurabad,24.895588,67.061239,"Chinese, Karahi, Desserts"
+93,96,Fatima Qureshi,0321-4300914,"House 76, Street 21, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.923696,67.089413,"Fast Food, Chinese, Karahi"
+94,97,Rabia Lodhi,0301-2552548,"House 262, Street 35, Bahadurabad, Karachi",Bahadurabad,24.859623,67.070327,"BBQ, Pizza, Biryani"
+95,98,Saad Zaidi,0326-2288850,"House 178, Street 27, Clifton, Karachi",Clifton,24.818551,67.023081,"Desserts, Cafe, Biryani"
+96,99,Fahad Memon,0321-5939913,"House 361, Street 14, Clifton, Karachi",Clifton,24.824041,67.032899,Biryani
+97,100,Fatima Zaidi,0305-9596817,"House 381, Street 34, DHA, Karachi",DHA,24.813719,67.059382,Karahi
+98,101,Omar Butt,0327-3590523,"House 8, Street 13, PECHS, Karachi",PECHS,24.888089,67.074253,"Karahi, Biryani, BBQ"
+99,102,Fahad Butt,0301-8647207,"House 190, Street 25, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.899364,67.131996,"Karahi, BBQ"
+100,103,Hina Zaidi,0301-1396939,"House 329, Street 23, Saddar, Karachi",Saddar,24.857336,67.004184,"BBQ, Pizza"
+101,104,Hira Baig,0329-5092709,"House 5, Street 35, Saddar, Karachi",Saddar,24.866029,67.0087,Cafe
+102,105,Iqra Javed,0330-0667053,"House 340, Street 3, Malir, Karachi",Malir,24.894355,67.182196,Chinese
+103,106,Hina Abbasi,0330-7028815,"House 292, Street 8, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.90384,67.140253,"BBQ, Karahi"
+104,107,Rabia Farooqui,0341-3769990,"House 88, Street 29, Bahadurabad, Karachi",Bahadurabad,24.879449,67.058076,"Biryani, Cafe, Karahi"
+105,108,Junaid Chaudhry,0332-5898317,"House 247, Street 19, Malir, Karachi",Malir,24.902935,67.176499,"Pizza, Chinese, Karahi"
+106,109,Hira Ali,0336-8576505,"House 136, Street 13, PECHS, Karachi",PECHS,24.857721,67.038196,"Pizza, BBQ"
+107,110,Hassan Memon,0335-3174899,"House 337, Street 2, Bahadurabad, Karachi",Bahadurabad,24.880564,67.072454,"Fast Food, Biryani"
+108,111,Fahad Mirza,0311-2707649,"House 61, Street 8, Malir, Karachi",Malir,24.887136,67.184139,"Karahi, Desserts"
+109,112,Sara Siddiqui,0334-5417161,"House 209, Street 11, Clifton, Karachi",Clifton,24.816184,67.029114,Pizza
+110,113,Saad Baig,0331-4133189,"House 6, Street 18, Clifton, Karachi",Clifton,24.830766,67.016596,Karahi
+111,114,Kamran Hashmi,0345-2052804,"House 237, Street 6, Bahadurabad, Karachi",Bahadurabad,24.881706,67.064396,Pizza
+112,115,Ali Rizvi,0310-9799045,"House 240, Street 10, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.913828,67.083937,"Biryani, Desserts, Cafe"
+113,116,Iqra Naqvi,0349-7371250,"House 17, Street 15, PECHS, Karachi",PECHS,24.873038,67.059085,Cafe
+114,117,Fahad Lodhi,0300-0778374,"House 181, Street 5, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.924019,67.077952,Cafe
+115,118,Rabia Farooqui,0301-2074864,"House 21, Street 29, PECHS, Karachi",PECHS,24.857355,67.077772,Pizza
+116,119,Komal Lodhi,0335-9869939,"House 388, Street 38, PECHS, Karachi",PECHS,24.869719,67.053397,"Fast Food, Biryani"
+117,120,Saad Naqvi,0328-8626658,"House 156, Street 13, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.908165,67.077282,Fast Food
+118,121,Ayesha Naqvi,0323-5630582,"House 80, Street 28, Malir, Karachi",Malir,24.885065,67.196595,Biryani
+119,122,Zainab Raza,0317-4602421,"House 187, Street 26, Saddar, Karachi",Saddar,24.850063,67.012946,"Pizza, Fast Food"
+120,123,Taha Ali,0323-7412285,"House 16, Street 23, Korangi, Karachi",Korangi,24.836604,67.134979,Cafe
+121,124,Omar Butt,0349-2263111,"House 243, Street 6, DHA, Karachi",DHA,24.833574,67.068665,Desserts
+122,125,Sara Memon,0345-7819237,"House 71, Street 18, North Nazimabad, Karachi",North Nazimabad,24.92553,67.057224,"BBQ, Biryani"
+123,126,Hina Hashmi,0341-7594568,"House 96, Street 14, Clifton, Karachi",Clifton,24.819107,67.02804,Biryani
+124,127,Saad Mirza,0313-3269668,"House 36, Street 24, Clifton, Karachi",Clifton,24.808064,67.017139,"Desserts, Fast Food, Pizza"
+125,128,Ali Sheikh,0335-9333102,"House 126, Street 2, Saddar, Karachi",Saddar,24.861584,67.020224,"Desserts, Biryani"
+126,129,Mahnoor Ahmed,0307-7142722,"House 322, Street 30, Federal B Area, Karachi",Federal B Area,24.936294,67.071319,Pizza
+127,130,Zain Ahmed,0316-1334227,"House 14, Street 27, Malir, Karachi",Malir,24.871919,67.205435,"Biryani, Karahi"
+128,131,Iqra Javed,0344-8517929,"House 17, Street 26, Federal B Area, Karachi",Federal B Area,24.944009,67.059527,"Desserts, Biryani"
+129,132,Fahad Raza,0302-8611068,"House 357, Street 36, PECHS, Karachi",PECHS,24.874894,67.057408,Cafe
+130,133,Asad Iqbal,0301-7667831,"House 141, Street 24, PECHS, Karachi",PECHS,24.870442,67.051909,"BBQ, Fast Food"
+131,134,Fatima Butt,0328-1660145,"House 57, Street 37, Tariq Road, Karachi",Tariq Road,24.885685,67.05598,"Karahi, Desserts, Biryani"
+132,135,Ayesha Butt,0309-9400624,"House 46, Street 14, Saddar, Karachi",Saddar,24.863191,67.022591,Fast Food
+133,136,Fatima Memon,0300-5088362,"House 205, Street 12, North Nazimabad, Karachi",North Nazimabad,24.933057,67.030573,Desserts
+134,137,Saad Ahmed,0311-2606424,"House 129, Street 5, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.901533,67.119244,Cafe
+135,138,Sana Hashmi,0318-2571911,"House 193, Street 31, North Nazimabad, Karachi",North Nazimabad,24.932561,67.034785,"Karahi, Biryani, Cafe"
+136,139,Hira Abbasi,0313-6828059,"House 181, Street 29, DHA, Karachi",DHA,24.833126,67.047908,"Fast Food, Desserts"
+137,140,Asad Ansari,0320-1164990,"House 261, Street 4, Saddar, Karachi",Saddar,24.86335,67.010517,"Cafe, Chinese"
+138,141,Hamza Chaudhry,0343-9387016,"House 147, Street 34, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.891375,67.119976,"Cafe, Chinese, Fast Food"
+139,142,Ayesha Raza,0301-6965052,"House 105, Street 12, PECHS, Karachi",PECHS,24.860689,67.050009,"Karahi, BBQ"
+140,143,Hina Ansari,0319-2993759,"House 209, Street 5, Tariq Road, Karachi",Tariq Road,24.866866,67.049605,"Pizza, Biryani, Chinese"
+141,144,Laiba Naqvi,0300-4437176,"House 225, Street 2, Federal B Area, Karachi",Federal B Area,24.936108,67.065658,"Pizza, Chinese, Cafe"
+142,145,Usman Zaidi,0327-5908392,"House 337, Street 21, Federal B Area, Karachi",Federal B Area,24.929019,67.063507,"Karahi, Chinese, Cafe"
+143,146,Amna Ahmed,0336-4883676,"House 168, Street 1, Clifton, Karachi",Clifton,24.815309,67.035793,Desserts
+144,147,Faisal Naqvi,0301-2750981,"House 117, Street 8, Tariq Road, Karachi",Tariq Road,24.890828,67.045765,"Biryani, Pizza, Cafe"
+145,148,Anum Siddiqui,0307-6167591,"House 18, Street 36, North Nazimabad, Karachi",North Nazimabad,24.926063,67.049426,"Karahi, Fast Food"
+146,149,Ali Abbasi,0314-8723413,"House 175, Street 4, North Nazimabad, Karachi",North Nazimabad,24.929634,67.039155,Pizza
+147,150,Hamza Iqbal,0340-3921717,"House 154, Street 1, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.923967,67.102846,"Desserts, Chinese"
+148,151,Faisal Iqbal,0344-6154640,"House 367, Street 33, Tariq Road, Karachi",Tariq Road,24.882894,67.061085,Desserts
+149,152,Ahmed Abbasi,0319-3314144,"House 84, Street 5, Clifton, Karachi",Clifton,24.820113,67.039084,Fast Food
+150,153,Faisal Siddiqui,0318-3070236,"House 56, Street 29, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.901659,67.104352,Pizza
+151,154,Asad Ali,0311-6974964,"House 28, Street 21, North Nazimabad, Karachi",North Nazimabad,24.946975,67.062774,"Karahi, Pizza"
+152,155,Nida Abbasi,0310-8883127,"House 23, Street 22, PECHS, Karachi",PECHS,24.881649,67.069277,"Chinese, Desserts, Karahi"
+153,156,Rabia Javed,0344-0280207,"House 200, Street 35, Saddar, Karachi",Saddar,24.855653,67.013694,Desserts
+154,157,Anum Memon,0308-1121700,"House 266, Street 36, DHA, Karachi",DHA,24.813264,67.067792,Pizza
+155,158,Zainab Iqbal,0323-6962289,"House 122, Street 30, PECHS, Karachi",PECHS,24.87405,67.082344,"Fast Food, Pizza"
+156,159,Kamran Shah,0321-4519952,"House 277, Street 38, Tariq Road, Karachi",Tariq Road,24.880167,67.032805,Chinese
+157,160,Rabia Ali,0317-1772722,"House 394, Street 11, Saddar, Karachi",Saddar,24.862608,67.009664,Biryani
+158,161,Ahmed Hashmi,0320-3061324,"House 238, Street 8, North Nazimabad, Karachi",North Nazimabad,24.948439,67.054795,"Desserts, Karahi"
+159,162,Anum Lodhi,0317-6917489,"House 301, Street 19, PECHS, Karachi",PECHS,24.863082,67.07502,"Pizza, Chinese"
+160,163,Laiba Memon,0326-9086247,"House 389, Street 20, Federal B Area, Karachi",Federal B Area,24.908136,67.071501,"BBQ, Fast Food, Desserts"
+161,164,Asad Qureshi,0300-8507434,"House 372, Street 30, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.946819,67.106801,"BBQ, Cafe"
+162,165,Usman Ali,0347-1060382,"House 28, Street 3, Saddar, Karachi",Saddar,24.858852,67.025929,Cafe
+163,166,Sara Shah,0346-1904944,"House 382, Street 3, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.909133,67.127263,"Cafe, Chinese, Desserts"
+164,167,Sana Qureshi,0302-6910936,"House 216, Street 14, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.921231,67.12955,"Pizza, Desserts"
+165,168,Junaid Shah,0337-1892409,"House 256, Street 12, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.917081,67.090167,"Pizza, Chinese, Karahi"
+166,169,Mahnoor Mirza,0348-5548337,"House 271, Street 13, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.91576,67.121341,"Biryani, Desserts, Fast Food"
+167,170,Hussain Memon,0313-7271322,"House 179, Street 33, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.892972,67.115586,"Chinese, Fast Food, Cafe"
+168,171,Amna Khan,0331-3757983,"House 78, Street 7, North Nazimabad, Karachi",North Nazimabad,24.937193,67.055499,Biryani
+169,172,Danish Abbasi,0343-8363859,"House 309, Street 32, Malir, Karachi",Malir,24.889832,67.208221,"Fast Food, BBQ, Biryani"
+170,173,Bushra Butt,0300-9664064,"House 369, Street 37, DHA, Karachi",DHA,24.78824,67.055169,Pizza
+171,174,Amna Rizvi,0336-7726153,"House 380, Street 20, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.911784,67.099397,"Desserts, Pizza, Chinese"
+172,175,Rabia Javed,0336-8805364,"House 185, Street 27, PECHS, Karachi",PECHS,24.865968,67.065411,"Desserts, Biryani"
+173,176,Asad Shah,0311-0209705,"House 91, Street 36, DHA, Karachi",DHA,24.785834,67.052406,Desserts
+174,177,Fatima Lodhi,0321-9626989,"House 365, Street 2, Saddar, Karachi",Saddar,24.855595,67.023225,"Cafe, Karahi, Fast Food"
+175,178,Laiba Abbasi,0320-0352819,"House 383, Street 36, Federal B Area, Karachi",Federal B Area,24.930365,67.049684,"Chinese, Cafe"
+176,179,Sana Qureshi,0323-8303806,"House 100, Street 6, Federal B Area, Karachi",Federal B Area,24.929642,67.068997,"Fast Food, Chinese, Pizza"
+177,180,Ayesha Naqvi,0325-2424413,"House 200, Street 5, Tariq Road, Karachi",Tariq Road,24.883153,67.047982,"Cafe, Fast Food"
+178,181,Maryam Iqbal,0340-8158415,"House 247, Street 24, Malir, Karachi",Malir,24.884519,67.202319,"BBQ, Fast Food, Biryani"
+179,182,Zainab Ali,0320-7260423,"House 40, Street 18, North Nazimabad, Karachi",North Nazimabad,24.943588,67.049053,Pizza
+180,183,Maryam Ahmed,0315-1585156,"House 248, Street 11, Malir, Karachi",Malir,24.891237,67.184135,"Karahi, Pizza"
+181,184,Sara Mirza,0310-6019972,"House 178, Street 34, Korangi, Karachi",Korangi,24.827862,67.111995,"Karahi, Biryani"
+182,185,Hamza Qureshi,0341-8182583,"House 118, Street 29, DHA, Karachi",DHA,24.816483,67.070422,"Chinese, Desserts, Cafe"
+183,186,Laiba Raza,0346-5223770,"House 183, Street 28, DHA, Karachi",DHA,24.811144,67.071312,"Pizza, Desserts"
+184,187,Iqra Raza,0318-9211968,"House 327, Street 21, Clifton, Karachi",Clifton,24.810681,67.050206,"Karahi, Cafe, BBQ"
+185,188,Omar Ansari,0318-5580099,"House 329, Street 36, Federal B Area, Karachi",Federal B Area,24.9262,67.049008,BBQ
+186,189,Laiba Hashmi,0304-7141211,"House 224, Street 14, Korangi, Karachi",Korangi,24.843282,67.146824,"Desserts, Cafe"
+187,190,Hamza Ahmed,0326-6989536,"House 208, Street 8, PECHS, Karachi",PECHS,24.89273,67.066399,"Pizza, Desserts"
+188,191,Fahad Sheikh,0347-9919681,"House 230, Street 12, Bahadurabad, Karachi",Bahadurabad,24.892663,67.083723,"BBQ, Karahi"
+189,192,Amna Malik,0309-1773287,"House 168, Street 10, PECHS, Karachi",PECHS,24.870827,67.074102,"Karahi, Biryani, Chinese"
+190,193,Bushra Memon,0325-5373370,"House 43, Street 30, North Nazimabad, Karachi",North Nazimabad,24.931773,67.052379,Pizza
+191,194,Imran Ansari,0328-3909041,"House 358, Street 24, Korangi, Karachi",Korangi,24.829122,67.132047,"Cafe, BBQ"
+192,195,Hassan Javed,0324-3092919,"House 233, Street 9, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.90482,67.100237,"Fast Food, Pizza"
+193,196,Omar Ali,0338-5828490,"House 341, Street 11, Bahadurabad, Karachi",Bahadurabad,24.872288,67.086574,Fast Food
+194,197,Bilal Ali,0302-4859666,"House 204, Street 7, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.919949,67.105531,"BBQ, Karahi"
+195,198,Komal Memon,0348-5430934,"House 13, Street 37, Tariq Road, Karachi",Tariq Road,24.875053,67.066402,"BBQ, Desserts"
+196,199,Danish Abbasi,0338-5595662,"House 284, Street 1, Korangi, Karachi",Korangi,24.824148,67.135886,Pizza
+197,200,Junaid Farooqui,0302-3007123,"House 100, Street 33, Korangi, Karachi",Korangi,24.846404,67.124864,"Chinese, Desserts"
+198,201,Usman Khan,0325-5168897,"House 205, Street 36, Korangi, Karachi",Korangi,24.821732,67.129793,"Pizza, Desserts"
+199,202,Bushra Malik,0347-3078334,"House 55, Street 7, Tariq Road, Karachi",Tariq Road,24.867999,67.051526,Karahi
+200,203,Danish Farooqui,0303-5522236,"House 109, Street 24, Korangi, Karachi",Korangi,24.829801,67.123443,Chinese
+201,204,Junaid Mirza,0340-3018195,"House 337, Street 21, Saddar, Karachi",Saddar,24.863655,67.025658,Chinese
+202,205,Faisal Sheikh,0331-7708116,"House 199, Street 39, Federal B Area, Karachi",Federal B Area,24.939956,67.063099,BBQ
+203,206,Ahmed Abbasi,0328-4057631,"House 319, Street 36, Saddar, Karachi",Saddar,24.840902,66.997205,Biryani
+204,207,Amna Farooqui,0331-5874786,"House 126, Street 2, North Nazimabad, Karachi",North Nazimabad,24.944953,67.041456,"Chinese, Desserts"
+205,208,Hassan Chaudhry,0349-2842817,"House 65, Street 12, Malir, Karachi",Malir,24.892109,67.188238,Desserts
+206,209,Mahnoor Sheikh,0325-1014933,"House 104, Street 21, Korangi, Karachi",Korangi,24.837065,67.129252,"Fast Food, Karahi"
+207,210,Usman Raza,0312-7617819,"House 277, Street 10, DHA, Karachi",DHA,24.79414,67.066757,Fast Food
+208,211,Sara Javed,0327-2239175,"House 395, Street 32, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.912452,67.090304,"Cafe, Karahi"
+209,212,Rabia Ahmed,0319-0096221,"House 197, Street 24, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.921244,67.087972,"Chinese, Desserts"
+210,213,Hassan Baig,0331-9035308,"House 67, Street 1, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.901685,67.112236,"Fast Food, Chinese"
+211,214,Ahmed Qureshi,0322-7665699,"House 239, Street 10, Korangi, Karachi",Korangi,24.81948,67.133915,"Biryani, Pizza"
+212,215,Fahad Ali,0349-9288240,"House 295, Street 3, Malir, Karachi",Malir,24.893315,67.197501,"Biryani, Cafe"
+213,216,Junaid Sheikh,0344-5466295,"House 185, Street 8, Saddar, Karachi",Saddar,24.85306,66.991786,BBQ
+214,217,Bushra Iqbal,0330-1901664,"House 314, Street 15, North Nazimabad, Karachi",North Nazimabad,24.937557,67.038362,"Chinese, BBQ"
+215,218,Fahad Butt,0320-0754264,"House 307, Street 29, Bahadurabad, Karachi",Bahadurabad,24.895045,67.063389,"Cafe, Chinese"
+216,219,Danish Chaudhry,0319-4635343,"House 264, Street 38, Tariq Road, Karachi",Tariq Road,24.869233,67.050505,"Fast Food, Chinese"
+217,220,Fahad Qureshi,0324-8349113,"House 50, Street 33, North Nazimabad, Karachi",North Nazimabad,24.934271,67.045603,"Fast Food, Pizza, BBQ"
+218,221,Asad Rizvi,0322-9221801,"House 48, Street 35, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.912945,67.093087,"Desserts, Cafe, Pizza"
+219,222,Imran Ali,0300-3146349,"House 220, Street 13, PECHS, Karachi",PECHS,24.865795,67.054662,"Cafe, Biryani"
+220,223,Hamza Raza,0331-1465468,"House 353, Street 39, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.906093,67.094989,"Pizza, Desserts"
+221,224,Fatima Chaudhry,0318-6230715,"House 225, Street 17, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.934939,67.120848,"Cafe, Fast Food"
+222,225,Usman Memon,0345-0576010,"House 163, Street 36, Bahadurabad, Karachi",Bahadurabad,24.882307,67.081963,"Karahi, Fast Food, Desserts"
+223,226,Danish Butt,0308-2441190,"House 102, Street 34, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.904323,67.123792,"Cafe, Biryani, Chinese"
+224,227,Amna Khan,0301-5897899,"House 102, Street 27, PECHS, Karachi",PECHS,24.885754,67.05939,"Karahi, BBQ, Biryani"
+225,228,Asad Chaudhry,0327-8819072,"House 369, Street 27, Bahadurabad, Karachi",Bahadurabad,24.869139,67.057426,"Chinese, BBQ"
+226,229,Mahnoor Raza,0301-9866259,"House 333, Street 9, North Nazimabad, Karachi",North Nazimabad,24.929264,67.02105,Karahi
+227,230,Usman Mirza,0315-7983508,"House 9, Street 38, Malir, Karachi",Malir,24.893964,67.193056,BBQ
+228,231,Maryam Naqvi,0347-5178785,"House 79, Street 14, Malir, Karachi",Malir,24.895115,67.191417,Pizza
+229,232,Sara Siddiqui,0307-5921787,"House 46, Street 11, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.914868,67.085378,Cafe
+230,233,Hira Butt,0302-4691334,"House 80, Street 26, Tariq Road, Karachi",Tariq Road,24.869396,67.040935,Cafe
+231,234,Kamran Siddiqui,0336-8750998,"House 70, Street 24, PECHS, Karachi",PECHS,24.8702,67.048009,"Chinese, BBQ, Karahi"
+232,235,Rabia Malik,0314-0607071,"House 385, Street 22, North Nazimabad, Karachi",North Nazimabad,24.955759,67.05831,Karahi
+233,236,Hira Siddiqui,0328-5630107,"House 20, Street 19, Saddar, Karachi",Saddar,24.853555,67.003238,"Biryani, Fast Food"
+234,237,Bushra Rizvi,0346-5940959,"House 187, Street 10, DHA, Karachi",DHA,24.813697,67.076782,Chinese
+235,238,Saad Javed,0303-0795055,"House 303, Street 30, Clifton, Karachi",Clifton,24.809787,67.022493,Chinese
+236,239,Saad Ansari,0342-0915598,"House 233, Street 13, PECHS, Karachi",PECHS,24.872272,67.076,"Pizza, BBQ, Cafe"
+237,240,Fahad Sheikh,0314-1412892,"House 156, Street 11, Tariq Road, Karachi",Tariq Road,24.849839,67.033718,"Chinese, Biryani"
+238,241,Rabia Shah,0313-2301031,"House 60, Street 39, Clifton, Karachi",Clifton,24.813526,67.033044,"Biryani, Fast Food"
+239,242,Usman Zaidi,0312-9242803,"House 269, Street 30, North Nazimabad, Karachi",North Nazimabad,24.939675,67.050281,"Chinese, Karahi"
+240,243,Fahad Baig,0312-8865579,"House 195, Street 4, Tariq Road, Karachi",Tariq Road,24.861554,67.047157,"BBQ, Chinese, Karahi"
+241,244,Bushra Rizvi,0312-5977793,"House 321, Street 18, Clifton, Karachi",Clifton,24.800586,67.025529,"Cafe, Desserts, BBQ"
+242,245,Usman Sheikh,0330-4484582,"House 127, Street 1, DHA, Karachi",DHA,24.828902,67.060146,"Fast Food, Cafe, Karahi"
+243,246,Ayesha Lodhi,0330-6088078,"House 309, Street 11, Clifton, Karachi",Clifton,24.833461,67.014522,"Karahi, Biryani, Desserts"
+244,247,Kamran Sheikh,0335-3162753,"House 372, Street 9, Saddar, Karachi",Saddar,24.856468,67.005788,Desserts
+245,248,Junaid Baig,0329-0474734,"House 106, Street 4, North Nazimabad, Karachi",North Nazimabad,24.943786,67.019553,"Cafe, Fast Food"
+246,249,Hamza Memon,0300-9593792,"House 282, Street 30, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.904553,67.137357,BBQ
+247,250,Zain Rizvi,0316-2551865,"House 150, Street 28, Clifton, Karachi",Clifton,24.801505,67.033571,"BBQ, Fast Food, Biryani"
+248,251,Sana Rizvi,0319-2728359,"House 260, Street 7, Clifton, Karachi",Clifton,24.81261,67.021102,"Karahi, Cafe"
+249,252,Hira Ansari,0302-5417385,"House 101, Street 6, Federal B Area, Karachi",Federal B Area,24.944236,67.079959,Karahi
+250,253,Hina Zaidi,0335-7610215,"House 228, Street 33, North Nazimabad, Karachi",North Nazimabad,24.935583,67.035255,"Biryani, Karahi, Pizza"
+251,254,Fatima Ahmed,0302-8270080,"House 162, Street 25, Clifton, Karachi",Clifton,24.813841,67.032565,"BBQ, Pizza, Cafe"
+252,255,Ahmed Javed,0318-1237873,"House 158, Street 8, Clifton, Karachi",Clifton,24.826476,67.021428,"BBQ, Fast Food, Biryani"
+253,256,Junaid Ansari,0317-9822306,"House 49, Street 38, Clifton, Karachi",Clifton,24.808576,67.025292,Pizza
+254,257,Komal Siddiqui,0308-6041342,"House 119, Street 39, Clifton, Karachi",Clifton,24.826182,67.023349,"Cafe, Biryani, BBQ"
+255,258,Zainab Zaidi,0316-0043636,"House 15, Street 20, Saddar, Karachi",Saddar,24.865913,66.99984,"Fast Food, Biryani, BBQ"
+256,259,Hina Abbasi,0309-0805449,"House 375, Street 29, Federal B Area, Karachi",Federal B Area,24.917065,67.06187,Biryani
+257,260,Bilal Shah,0302-5534313,"House 195, Street 28, DHA, Karachi",DHA,24.812488,67.058332,Chinese
+258,261,Imran Rizvi,0345-7615077,"House 124, Street 36, Federal B Area, Karachi",Federal B Area,24.936877,67.075461,"Pizza, BBQ"
+259,262,Bushra Abbasi,0302-1094873,"House 392, Street 4, North Nazimabad, Karachi",North Nazimabad,24.946684,67.033303,"Cafe, Biryani"
+260,263,Hina Hashmi,0316-0129933,"House 327, Street 11, Saddar, Karachi",Saddar,24.865374,67.029722,"BBQ, Chinese, Desserts"
+261,264,Hassan Ansari,0331-1390050,"House 315, Street 32, Korangi, Karachi",Korangi,24.838356,67.128861,Fast Food
+262,265,Anum Zaidi,0322-1121231,"House 53, Street 21, Bahadurabad, Karachi",Bahadurabad,24.87866,67.063918,BBQ
+263,266,Taha Ali,0312-3552043,"House 287, Street 13, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.920984,67.097467,BBQ
+264,267,Zainab Naqvi,0322-3455369,"House 113, Street 32, Malir, Karachi",Malir,24.883804,67.180823,"Biryani, Cafe"
+265,268,Hina Naqvi,0326-0373102,"House 111, Street 32, PECHS, Karachi",PECHS,24.852387,67.068631,"Fast Food, Cafe"
+266,269,Hussain Ali,0301-6961163,"House 119, Street 3, Federal B Area, Karachi",Federal B Area,24.935649,67.076901,Biryani
+267,270,Ali Raza,0343-1401797,"House 375, Street 38, Korangi, Karachi",Korangi,24.815779,67.121782,"Cafe, Desserts"
+268,271,Zain Chaudhry,0324-5333585,"House 57, Street 13, Saddar, Karachi",Saddar,24.870248,67.005817,"Desserts, Pizza"
+269,272,Komal Ali,0308-6387309,"House 13, Street 25, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.914797,67.133204,"Cafe, Biryani"
+270,273,Usman Baig,0337-5790266,"House 218, Street 20, Clifton, Karachi",Clifton,24.82397,67.034663,Chinese
+271,274,Kamran Raza,0344-3191739,"House 178, Street 10, Clifton, Karachi",Clifton,24.814654,67.013385,"Pizza, BBQ, Karahi"
+272,275,Amna Lodhi,0301-9333883,"House 322, Street 37, DHA, Karachi",DHA,24.811156,67.050472,"Pizza, BBQ, Biryani"
+273,276,Ayesha Butt,0300-0855576,"House 316, Street 13, Federal B Area, Karachi",Federal B Area,24.937413,67.079092,"BBQ, Karahi"
+274,277,Hamza Khan,0349-4065022,"House 37, Street 34, Malir, Karachi",Malir,24.89337,67.181562,"Chinese, Pizza"
+275,278,Laiba Farooqui,0300-2426740,"House 180, Street 15, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.931161,67.088296,Karahi
+276,279,Faisal Hashmi,0317-8217730,"House 150, Street 7, Tariq Road, Karachi",Tariq Road,24.876074,67.044078,"Chinese, Desserts"
+277,280,Faisal Ali,0333-3927100,"House 356, Street 2, North Nazimabad, Karachi",North Nazimabad,24.93687,67.031815,"Biryani, Chinese"
+278,281,Ayesha Ali,0315-5605994,"House 374, Street 19, Korangi, Karachi",Korangi,24.839611,67.1089,Fast Food
+279,282,Fatima Zaidi,0316-3303178,"House 234, Street 28, Saddar, Karachi",Saddar,24.873045,67.002595,"Desserts, BBQ, Chinese"
+280,283,Hamza Rizvi,0308-8551639,"House 5, Street 7, Tariq Road, Karachi",Tariq Road,24.870053,67.06054,Chinese
+281,284,Taha Farooqui,0340-2867439,"House 56, Street 34, North Nazimabad, Karachi",North Nazimabad,24.941515,67.045503,"Cafe, Pizza"
+282,285,Junaid Abbasi,0345-4392720,"House 57, Street 11, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.91704,67.11991,"Desserts, Chinese"
+283,286,Amna Siddiqui,0307-1101700,"House 31, Street 27, Tariq Road, Karachi",Tariq Road,24.883632,67.053383,"BBQ, Karahi, Desserts"
+284,287,Junaid Rizvi,0340-8779908,"House 326, Street 32, Korangi, Karachi",Korangi,24.839101,67.132839,Pizza
+285,288,Asad Farooqui,0339-1339772,"House 216, Street 20, Tariq Road, Karachi",Tariq Road,24.874653,67.036144,Desserts
+286,289,Ayesha Ahmed,0337-0573029,"House 26, Street 34, Bahadurabad, Karachi",Bahadurabad,24.86921,67.05372,Biryani
+287,290,Saad Shah,0326-0863596,"House 349, Street 35, Bahadurabad, Karachi",Bahadurabad,24.877676,67.072566,"BBQ, Fast Food"
+288,291,Sara Abbasi,0301-5619409,"House 396, Street 13, Bahadurabad, Karachi",Bahadurabad,24.871943,67.066548,"Pizza, Desserts, Karahi"
+289,292,Fahad Ansari,0300-0404319,"House 352, Street 15, Bahadurabad, Karachi",Bahadurabad,24.857408,67.072155,Desserts
+290,293,Hussain Naqvi,0340-6918796,"House 325, Street 22, DHA, Karachi",DHA,24.808031,67.066247,"BBQ, Fast Food"
+291,294,Maryam Khan,0341-9023032,"House 13, Street 1, Clifton, Karachi",Clifton,24.820052,67.027208,Fast Food
+292,295,Hassan Mirza,0330-7930207,"House 29, Street 25, PECHS, Karachi",PECHS,24.863311,67.059265,"Fast Food, Cafe"
+293,296,Danish Ansari,0327-5523327,"House 187, Street 16, Bahadurabad, Karachi",Bahadurabad,24.862734,67.062043,Chinese
+294,297,Danish Butt,0322-4421485,"House 136, Street 28, North Nazimabad, Karachi",North Nazimabad,24.921418,67.035057,"Cafe, BBQ"
+295,298,Hassan Shah,0322-5882685,"House 397, Street 1, Korangi, Karachi",Korangi,24.837097,67.146711,"Karahi, BBQ"
+296,299,Komal Shah,0333-3920424,"House 167, Street 34, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.922794,67.088419,"BBQ, Karahi"
+297,300,Laiba Memon,0327-4965588,"House 172, Street 32, Malir, Karachi",Malir,24.89008,67.188847,"Karahi, Desserts"
+298,301,Hina Zaidi,0342-9712613,"House 178, Street 36, Bahadurabad, Karachi",Bahadurabad,24.898771,67.077925,Biryani
+299,302,Laiba Iqbal,0326-8682391,"House 336, Street 5, Korangi, Karachi",Korangi,24.835262,67.123486,"Karahi, Desserts"
+300,303,Sana Memon,0349-4843842,"House 194, Street 2, Federal B Area, Karachi",Federal B Area,24.926266,67.08106,"BBQ, Desserts"
+301,304,Anum Khan,0317-5921769,"House 325, Street 7, Clifton, Karachi",Clifton,24.820842,67.049409,"Fast Food, Desserts"
+302,305,Kamran Ansari,0324-4800800,"House 389, Street 39, Tariq Road, Karachi",Tariq Road,24.882722,67.056018,"Cafe, BBQ, Fast Food"
+303,306,Bilal Ali,0310-7991074,"House 375, Street 20, Saddar, Karachi",Saddar,24.874211,67.019364,"Cafe, BBQ, Fast Food"
+304,307,Ayesha Abbasi,0348-1844459,"House 118, Street 38, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.919272,67.10338,"Cafe, Chinese"
+305,308,Hamza Mirza,0302-3070519,"House 355, Street 18, Federal B Area, Karachi",Federal B Area,24.940814,67.077329,"BBQ, Fast Food, Cafe"
+306,309,Saad Ansari,0300-7657391,"House 250, Street 31, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.924408,67.129582,"Cafe, Karahi"
+307,310,Hina Memon,0333-2925945,"House 178, Street 32, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.916358,67.118095,"Karahi, Biryani, Fast Food"
+308,311,Hassan Ansari,0343-9512799,"House 96, Street 18, Saddar, Karachi",Saddar,24.846062,67.003744,"Fast Food, Desserts, Chinese"
+309,312,Zainab Malik,0347-0040031,"House 200, Street 6, PECHS, Karachi",PECHS,24.870126,67.066568,Pizza
+310,313,Kamran Sheikh,0315-6150243,"House 7, Street 35, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.925682,67.133847,Pizza
+311,314,Hira Chaudhry,0332-2775111,"House 291, Street 18, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.93457,67.095519,"Karahi, Fast Food, Cafe"
+312,315,Bilal Shah,0302-1063886,"House 301, Street 38, Tariq Road, Karachi",Tariq Road,24.87852,67.05346,"Cafe, BBQ, Chinese"
+313,316,Ayesha Chaudhry,0312-8045460,"House 202, Street 21, Federal B Area, Karachi",Federal B Area,24.922573,67.058153,"Desserts, Pizza"
+314,317,Maryam Malik,0306-7558777,"House 112, Street 14, North Nazimabad, Karachi",North Nazimabad,24.945812,67.031737,Pizza
+315,318,Kamran Memon,0319-3092497,"House 216, Street 8, PECHS, Karachi",PECHS,24.886766,67.067173,Cafe
+316,319,Iqra Ansari,0302-2126747,"House 365, Street 36, Korangi, Karachi",Korangi,24.833633,67.129276,Chinese
+317,320,Junaid Naqvi,0311-5758216,"House 353, Street 15, Saddar, Karachi",Saddar,24.846625,67.01645,"Cafe, BBQ, Fast Food"
+318,321,Rabia Chaudhry,0343-3220340,"House 370, Street 23, North Nazimabad, Karachi",North Nazimabad,24.932003,67.03453,Desserts
+319,322,Zain Malik,0327-4870454,"House 37, Street 8, Korangi, Karachi",Korangi,24.854927,67.125724,Cafe
+320,323,Iqra Ali,0302-6002732,"House 249, Street 4, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.896105,67.144582,"Fast Food, Pizza"
+321,324,Mahnoor Butt,0327-8833452,"House 35, Street 10, Saddar, Karachi",Saddar,24.866451,67.002345,"Biryani, Cafe, Pizza"
+322,325,Asad Butt,0328-7341950,"House 286, Street 34, Malir, Karachi",Malir,24.882987,67.193482,"Pizza, Fast Food, BBQ"
+323,326,Faisal Iqbal,0348-9346832,"House 235, Street 19, Malir, Karachi",Malir,24.890463,67.180739,"Desserts, Karahi, Pizza"
+324,327,Bilal Rizvi,0338-9618861,"House 243, Street 10, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.908593,67.089364,"Karahi, Desserts"
+325,328,Fatima Javed,0307-9749627,"House 88, Street 10, DHA, Karachi",DHA,24.798526,67.06226,"Fast Food, Karahi, Chinese"
+326,329,Junaid Javed,0320-0901369,"House 45, Street 28, Malir, Karachi",Malir,24.898532,67.197191,"Fast Food, BBQ, Biryani"
+327,330,Imran Malik,0321-7513121,"House 252, Street 19, Korangi, Karachi",Korangi,24.834024,67.125705,"Karahi, Cafe, Biryani"
+328,331,Danish Hashmi,0301-9881764,"House 191, Street 13, Bahadurabad, Karachi",Bahadurabad,24.884879,67.075267,BBQ
+329,332,Asad Ali,0322-3369866,"House 89, Street 26, PECHS, Karachi",PECHS,24.876108,67.053131,Desserts
+330,333,Zain Rizvi,0324-7044582,"House 247, Street 4, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.899498,67.132678,"Karahi, Pizza, Cafe"
+331,334,Bushra Iqbal,0326-9278582,"House 78, Street 38, DHA, Karachi",DHA,24.791777,67.077828,"Desserts, Pizza, BBQ"
+332,335,Ayesha Siddiqui,0308-1535216,"House 41, Street 22, Malir, Karachi",Malir,24.88259,67.182188,"Fast Food, Chinese"
+333,336,Usman Rizvi,0302-2066298,"House 31, Street 13, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.926205,67.098682,"Fast Food, Biryani"
+334,337,Omar Qureshi,0336-9356836,"House 103, Street 32, PECHS, Karachi",PECHS,24.874553,67.062809,Desserts
+335,338,Hira Butt,0323-3902586,"House 396, Street 17, Korangi, Karachi",Korangi,24.84387,67.132285,Karahi
+336,339,Hassan Malik,0305-7229339,"House 147, Street 22, DHA, Karachi",DHA,24.833453,67.061252,"Fast Food, Biryani, Chinese"
+337,340,Zain Malik,0324-6209217,"House 313, Street 17, DHA, Karachi",DHA,24.797424,67.047916,Chinese
+338,341,Fatima Raza,0307-7950274,"House 175, Street 12, PECHS, Karachi",PECHS,24.862731,67.072993,Cafe
+339,342,Taha Zaidi,0335-2362675,"House 30, Street 12, Korangi, Karachi",Korangi,24.825033,67.128012,"Fast Food, Karahi"
+340,343,Ayesha Baig,0332-2198900,"House 152, Street 32, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.927403,67.09135,Pizza
+341,344,Bilal Baig,0312-9492528,"House 222, Street 13, North Nazimabad, Karachi",North Nazimabad,24.935605,67.026561,"Biryani, Chinese, Cafe"
+342,345,Saad Butt,0318-2036893,"House 66, Street 5, Clifton, Karachi",Clifton,24.794942,67.033751,BBQ
+343,346,Bushra Ali,0323-7174775,"House 209, Street 36, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.918206,67.092426,"BBQ, Desserts, Biryani"
+344,347,Junaid Javed,0344-2547724,"House 205, Street 6, Korangi, Karachi",Korangi,24.828288,67.113404,"Biryani, Desserts"
+345,348,Rabia Rizvi,0310-4000665,"House 348, Street 6, Bahadurabad, Karachi",Bahadurabad,24.883011,67.079829,"Desserts, Chinese"
+346,349,Fatima Qureshi,0321-3743678,"House 202, Street 27, Bahadurabad, Karachi",Bahadurabad,24.876951,67.064731,BBQ
+347,350,Hussain Mirza,0342-3863739,"House 221, Street 16, Bahadurabad, Karachi",Bahadurabad,24.881833,67.085604,"Biryani, Cafe, Pizza"
+348,351,Faisal Ansari,0318-8668420,"House 70, Street 14, Tariq Road, Karachi",Tariq Road,24.883542,67.05731,"Pizza, Karahi"
+349,352,Saad Abbasi,0340-1388513,"House 38, Street 36, Clifton, Karachi",Clifton,24.828111,67.032818,Karahi
+350,353,Maryam Farooqui,0314-3426881,"House 116, Street 26, Federal B Area, Karachi",Federal B Area,24.929121,67.07296,"Pizza, Chinese"
+351,354,Asad Raza,0303-6083007,"House 332, Street 7, Federal B Area, Karachi",Federal B Area,24.921891,67.075911,Desserts
+352,355,Imran Naqvi,0311-4254226,"House 134, Street 38, PECHS, Karachi",PECHS,24.858508,67.060103,Desserts
+353,356,Maryam Abbasi,0300-3959673,"House 136, Street 13, Federal B Area, Karachi",Federal B Area,24.946427,67.052842,"BBQ, Desserts, Cafe"
+354,357,Ayesha Siddiqui,0301-4320904,"House 28, Street 6, DHA, Karachi",DHA,24.800099,67.052881,"Fast Food, Pizza, Biryani"
+355,358,Maryam Abbasi,0306-2023086,"House 363, Street 3, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.916613,67.106066,Chinese
+356,359,Maryam Siddiqui,0322-2342256,"House 4, Street 15, North Nazimabad, Karachi",North Nazimabad,24.935864,67.037379,"Pizza, Chinese"
+357,360,Imran Ahmed,0348-9796216,"House 217, Street 17, Bahadurabad, Karachi",Bahadurabad,24.864015,67.056319,Pizza
+358,361,Nida Ahmed,0308-4531919,"House 287, Street 14, Korangi, Karachi",Korangi,24.814777,67.127689,Karahi
+359,362,Usman Qureshi,0300-4953006,"House 319, Street 6, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.895033,67.143526,"Fast Food, Cafe, BBQ"
+360,363,Asad Siddiqui,0304-5651481,"House 102, Street 22, Saddar, Karachi",Saddar,24.862214,67.013952,"BBQ, Cafe"
+361,364,Maryam Malik,0304-3148784,"House 170, Street 36, Federal B Area, Karachi",Federal B Area,24.937901,67.055782,"Desserts, BBQ"
+362,365,Nida Mirza,0321-3550600,"House 309, Street 25, PECHS, Karachi",PECHS,24.873965,67.062086,"Desserts, Pizza, Karahi"
+363,366,Imran Butt,0345-3788425,"House 17, Street 33, Federal B Area, Karachi",Federal B Area,24.931977,67.07703,Desserts
+364,367,Laiba Baig,0313-2650772,"House 134, Street 15, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.921099,67.08473,"Cafe, Pizza, Chinese"
+365,368,Hassan Javed,0341-2930376,"House 124, Street 38, Bahadurabad, Karachi",Bahadurabad,24.889832,67.063711,"Pizza, Fast Food, Karahi"
+366,369,Usman Memon,0301-7891420,"House 263, Street 11, Bahadurabad, Karachi",Bahadurabad,24.870052,67.059556,"Pizza, Chinese, BBQ"
+367,370,Nida Zaidi,0300-0290716,"House 325, Street 16, Federal B Area, Karachi",Federal B Area,24.932961,67.073127,"Fast Food, Cafe, Chinese"
+368,371,Fahad Rizvi,0312-7292712,"House 43, Street 13, Bahadurabad, Karachi",Bahadurabad,24.871941,67.06378,"Fast Food, BBQ"
+369,372,Junaid Farooqui,0307-7648129,"House 230, Street 33, Korangi, Karachi",Korangi,24.826951,67.123097,"Desserts, Karahi, Biryani"
+370,373,Fahad Qureshi,0333-6867539,"House 205, Street 36, DHA, Karachi",DHA,24.813952,67.067733,BBQ
+371,374,Fahad Ansari,0309-7120010,"House 21, Street 29, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.90162,67.141663,"Fast Food, Cafe"
+372,375,Sana Naqvi,0323-7678573,"House 127, Street 11, Bahadurabad, Karachi",Bahadurabad,24.895087,67.079676,"Desserts, Cafe"
+373,376,Amna Chaudhry,0344-3852470,"House 169, Street 39, Tariq Road, Karachi",Tariq Road,24.866126,67.045353,"Chinese, Desserts, Cafe"
+374,377,Hina Siddiqui,0337-6268162,"House 20, Street 17, Clifton, Karachi",Clifton,24.81975,67.022754,"Pizza, Cafe"
+375,378,Usman Farooqui,0331-7957086,"House 254, Street 16, DHA, Karachi",DHA,24.803488,67.064686,"Biryani, Desserts"
+376,379,Ali Farooqui,0310-0312409,"House 40, Street 27, Federal B Area, Karachi",Federal B Area,24.93061,67.078894,Pizza
+377,380,Mahnoor Baig,0304-9076959,"House 15, Street 3, Clifton, Karachi",Clifton,24.822458,67.037135,"Chinese, Karahi"
+378,381,Zainab Baig,0343-3963598,"House 66, Street 25, Saddar, Karachi",Saddar,24.861814,67.014153,Chinese
+379,382,Ahmed Sheikh,0328-9620143,"House 80, Street 28, North Nazimabad, Karachi",North Nazimabad,24.938427,67.038397,Karahi
+380,383,Zain Lodhi,0335-9858532,"House 373, Street 26, PECHS, Karachi",PECHS,24.866044,67.0549,Fast Food
+381,384,Zainab Naqvi,0346-1041346,"House 366, Street 6, Saddar, Karachi",Saddar,24.859802,67.001817,"Fast Food, Pizza, Cafe"
+382,385,Bilal Ahmed,0349-2797957,"House 396, Street 21, Malir, Karachi",Malir,24.89552,67.172354,"Desserts, Chinese"
+383,386,Hira Ali,0300-6144274,"House 12, Street 30, DHA, Karachi",DHA,24.797219,67.083504,"Chinese, BBQ, Biryani"
+384,387,Hira Iqbal,0317-6992708,"House 96, Street 14, Saddar, Karachi",Saddar,24.865585,67.003572,Karahi
+385,388,Hassan Baig,0333-0711688,"House 77, Street 39, PECHS, Karachi",PECHS,24.862936,67.052664,Biryani
+386,389,Kamran Zaidi,0308-2184113,"House 226, Street 35, Bahadurabad, Karachi",Bahadurabad,24.879118,67.080101,Pizza
+387,390,Sara Chaudhry,0346-0327572,"House 188, Street 29, Korangi, Karachi",Korangi,24.833498,67.129287,Karahi
+388,391,Danish Iqbal,0344-5369999,"House 250, Street 26, North Nazimabad, Karachi",North Nazimabad,24.943053,67.038539,Desserts
+389,392,Maryam Iqbal,0343-0207868,"House 390, Street 8, Malir, Karachi",Malir,24.87159,67.190943,"Karahi, Cafe, Pizza"
+390,393,Hina Mirza,0346-0706507,"House 337, Street 2, PECHS, Karachi",PECHS,24.863148,67.054403,"Chinese, Pizza"
+391,394,Fatima Raza,0349-6858673,"House 282, Street 20, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.926833,67.078545,"Pizza, Desserts, Chinese"
+392,395,Hamza Baig,0347-8624783,"House 38, Street 9, Bahadurabad, Karachi",Bahadurabad,24.886071,67.070737,"Cafe, Pizza, Desserts"
+393,396,Amna Ahmed,0309-3553644,"House 52, Street 25, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.900501,67.084143,"Chinese, Karahi"
+394,397,Mahnoor Siddiqui,0331-0843448,"House 104, Street 3, Clifton, Karachi",Clifton,24.817795,67.026324,"Karahi, BBQ, Chinese"
+395,398,Faisal Ahmed,0329-5330406,"House 120, Street 27, Federal B Area, Karachi",Federal B Area,24.921569,67.072833,"Pizza, BBQ"
+396,399,Bushra Raza,0321-3442577,"House 309, Street 37, PECHS, Karachi",PECHS,24.891201,67.073896,"Biryani, BBQ, Chinese"
+397,400,Ali Rizvi,0304-6196773,"House 178, Street 37, Clifton, Karachi",Clifton,24.819339,67.028669,"Desserts, Karahi"
+398,401,Bushra Iqbal,0308-2015516,"House 356, Street 22, Clifton, Karachi",Clifton,24.809936,67.04623,"Karahi, Biryani, Pizza"
+399,402,Hamza Ahmed,0308-4740562,"House 11, Street 33, Clifton, Karachi",Clifton,24.807116,67.039049,"Biryani, Karahi, Cafe"
+400,403,Zainab Ahmed,0348-1274266,"House 8, Street 5, PECHS, Karachi",PECHS,24.872261,67.059213,Chinese
+401,404,Zainab Butt,0334-8771753,"House 291, Street 21, DHA, Karachi",DHA,24.794514,67.05748,Cafe
+402,405,Fahad Mirza,0304-8924814,"House 96, Street 27, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.936157,67.089323,Chinese
+403,406,Amna Abbasi,0317-5418488,"House 372, Street 26, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.904126,67.103176,Karahi
+404,407,Laiba Lodhi,0320-2840058,"House 351, Street 5, Malir, Karachi",Malir,24.880988,67.198678,"Pizza, Desserts, Chinese"
+405,408,Asad Farooqui,0337-1952416,"House 290, Street 35, DHA, Karachi",DHA,24.794173,67.068946,Pizza
+406,409,Imran Khan,0345-9152772,"House 201, Street 12, Malir, Karachi",Malir,24.886217,67.180415,"Pizza, BBQ"
+407,410,Ayesha Siddiqui,0330-3593390,"House 219, Street 18, Federal B Area, Karachi",Federal B Area,24.922859,67.063199,"Fast Food, Biryani, Karahi"
+408,411,Hina Qureshi,0305-2731332,"House 309, Street 19, Bahadurabad, Karachi",Bahadurabad,24.884511,67.067386,"Chinese, Karahi, Desserts"
+409,412,Laiba Chaudhry,0307-7424892,"House 91, Street 6, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.921602,67.092003,"Chinese, Pizza, BBQ"
+410,413,Hina Malik,0316-1803114,"House 206, Street 24, Malir, Karachi",Malir,24.893705,67.192459,"Karahi, BBQ, Biryani"
+411,414,Kamran Sheikh,0312-0298321,"House 384, Street 13, Tariq Road, Karachi",Tariq Road,24.876001,67.040043,"BBQ, Pizza"
+412,415,Bushra Naqvi,0313-2963874,"House 139, Street 12, Federal B Area, Karachi",Federal B Area,24.912288,67.088369,"Pizza, Biryani, Desserts"
+413,416,Junaid Khan,0309-4580585,"House 274, Street 15, PECHS, Karachi",PECHS,24.87029,67.057501,Chinese
+414,417,Omar Raza,0338-6604522,"House 132, Street 21, PECHS, Karachi",PECHS,24.873585,67.051062,"Pizza, Cafe"
+415,418,Kamran Hashmi,0347-4209116,"House 261, Street 17, North Nazimabad, Karachi",North Nazimabad,24.925355,67.029728,Karahi
+416,419,Taha Ansari,0348-2354751,"House 38, Street 36, Saddar, Karachi",Saddar,24.863525,67.01339,"Pizza, Fast Food, BBQ"
+417,420,Hira Malik,0328-2378353,"House 258, Street 33, Clifton, Karachi",Clifton,24.821161,67.014453,"Karahi, Biryani"
+418,421,Asad Lodhi,0346-2802009,"House 131, Street 31, Bahadurabad, Karachi",Bahadurabad,24.878677,67.065276,"BBQ, Chinese"
+419,422,Faisal Ali,0342-9961272,"House 298, Street 5, Federal B Area, Karachi",Federal B Area,24.926196,67.067167,Desserts
+420,423,Ali Malik,0334-0188515,"House 269, Street 18, Clifton, Karachi",Clifton,24.803046,67.020768,"Desserts, BBQ"
+421,424,Mahnoor Chaudhry,0303-7563071,"House 50, Street 13, Federal B Area, Karachi",Federal B Area,24.929515,67.065344,"Karahi, Pizza"
+422,425,Iqra Chaudhry,0316-4312149,"House 346, Street 12, Federal B Area, Karachi",Federal B Area,24.929445,67.053024,"Biryani, Chinese"
+423,426,Hina Iqbal,0339-8505619,"House 164, Street 29, Malir, Karachi",Malir,24.90236,67.193114,Cafe
+424,427,Ahmed Butt,0316-6539731,"House 343, Street 19, Clifton, Karachi",Clifton,24.806843,67.019961,"Karahi, Pizza, Cafe"
+425,428,Omar Farooqui,0319-0486674,"House 75, Street 2, DHA, Karachi",DHA,24.810288,67.06878,Biryani
+426,429,Asad Lodhi,0311-7257083,"House 185, Street 12, North Nazimabad, Karachi",North Nazimabad,24.930375,67.043331,"Cafe, Chinese"
+427,430,Imran Ahmed,0335-7241072,"House 159, Street 1, Bahadurabad, Karachi",Bahadurabad,24.880193,67.084004,"Fast Food, BBQ, Cafe"
+428,431,Taha Zaidi,0339-7550263,"House 85, Street 2, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.903782,67.127322,"Biryani, Desserts, Karahi"
+429,432,Maryam Butt,0314-8486686,"House 336, Street 8, Malir, Karachi",Malir,24.895385,67.18988,"Karahi, BBQ"
+430,433,Zain Mirza,0336-7906014,"House 378, Street 34, Malir, Karachi",Malir,24.898868,67.183217,Karahi
+431,434,Iqra Lodhi,0348-2354520,"House 348, Street 20, North Nazimabad, Karachi",North Nazimabad,24.942157,67.039581,"Biryani, Fast Food, Desserts"
+432,435,Komal Javed,0322-1818154,"House 366, Street 13, Clifton, Karachi",Clifton,24.810598,67.047595,Desserts
+433,436,Ali Memon,0337-3218291,"House 375, Street 34, Bahadurabad, Karachi",Bahadurabad,24.875215,67.048476,"Karahi, Fast Food"
+434,437,Laiba Sheikh,0310-6751707,"House 288, Street 19, North Nazimabad, Karachi",North Nazimabad,24.93299,67.056016,Pizza
+435,438,Bushra Ansari,0326-5121864,"House 114, Street 9, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.919807,67.104722,Chinese
+436,439,Maryam Abbasi,0348-3309207,"House 191, Street 8, Federal B Area, Karachi",Federal B Area,24.927111,67.052612,"Cafe, Chinese"
+437,440,Faisal Malik,0317-6485122,"House 384, Street 3, Tariq Road, Karachi",Tariq Road,24.885393,67.043127,Chinese
+438,441,Rabia Hashmi,0324-0389587,"House 140, Street 11, Clifton, Karachi",Clifton,24.816701,67.047942,"BBQ, Biryani, Pizza"
+439,442,Fatima Lodhi,0344-1262414,"House 272, Street 5, North Nazimabad, Karachi",North Nazimabad,24.950578,67.042723,"Karahi, Pizza, BBQ"
+440,443,Zainab Baig,0338-9164332,"House 163, Street 18, Federal B Area, Karachi",Federal B Area,24.931367,67.061809,"Chinese, Pizza, Karahi"
+441,444,Bilal Ahmed,0346-2737004,"House 274, Street 7, Bahadurabad, Karachi",Bahadurabad,24.884624,67.077915,"Fast Food, Desserts"
+442,445,Fahad Ansari,0300-1113649,"House 164, Street 6, Malir, Karachi",Malir,24.887725,67.195012,Karahi
+443,446,Sara Ahmed,0343-3478706,"House 10, Street 12, Federal B Area, Karachi",Federal B Area,24.921017,67.074459,"Fast Food, Karahi, Cafe"
+444,447,Saad Baig,0344-3999512,"House 153, Street 27, Bahadurabad, Karachi",Bahadurabad,24.883626,67.06102,"Chinese, BBQ, Pizza"
+445,448,Asad Memon,0327-3423150,"House 351, Street 15, Saddar, Karachi",Saddar,24.857048,67.014676,"Pizza, Cafe"
+446,449,Saad Siddiqui,0300-3464067,"House 188, Street 31, Korangi, Karachi",Korangi,24.845459,67.132401,Pizza
+447,450,Junaid Sheikh,0314-5903692,"House 24, Street 20, PECHS, Karachi",PECHS,24.866403,67.063303,"Biryani, BBQ"
+448,451,Taha Siddiqui,0307-3366070,"House 284, Street 32, Bahadurabad, Karachi",Bahadurabad,24.878843,67.071896,"Desserts, Chinese"
+449,452,Kamran Malik,0316-2366759,"House 354, Street 36, Clifton, Karachi",Clifton,24.809573,67.02334,"Cafe, Fast Food"
+450,453,Danish Javed,0314-7791385,"House 146, Street 12, Federal B Area, Karachi",Federal B Area,24.91894,67.069581,"Chinese, Cafe, BBQ"
+451,454,Fatima Ahmed,0349-1108043,"House 368, Street 8, Saddar, Karachi",Saddar,24.849667,66.992401,Pizza
+452,455,Kamran Farooqui,0326-9894399,"House 162, Street 3, Clifton, Karachi",Clifton,24.782363,67.019561,"Chinese, BBQ"
+453,456,Hira Abbasi,0326-2724885,"House 215, Street 26, PECHS, Karachi",PECHS,24.869577,67.051646,"Chinese, Karahi"
+454,457,Hassan Butt,0316-0044009,"House 7, Street 18, North Nazimabad, Karachi",North Nazimabad,24.944268,67.035519,Fast Food
+455,458,Komal Khan,0317-6554913,"House 220, Street 13, Federal B Area, Karachi",Federal B Area,24.920551,67.053772,Desserts
+456,459,Maryam Lodhi,0333-1368317,"House 55, Street 27, Malir, Karachi",Malir,24.903043,67.197952,"BBQ, Desserts, Karahi"
+457,460,Fahad Raza,0312-1814544,"House 399, Street 8, Federal B Area, Karachi",Federal B Area,24.932755,67.083209,Chinese
+458,461,Fahad Raza,0324-8147753,"House 387, Street 29, North Nazimabad, Karachi",North Nazimabad,24.941009,67.033768,"BBQ, Pizza, Biryani"
+459,462,Hassan Memon,0338-5077088,"House 155, Street 37, North Nazimabad, Karachi",North Nazimabad,24.951072,67.042931,"Chinese, BBQ"
+460,463,Zainab Baig,0329-5523847,"House 143, Street 28, Clifton, Karachi",Clifton,24.824591,67.03008,Cafe
+461,464,Fahad Malik,0309-4139873,"House 336, Street 31, Bahadurabad, Karachi",Bahadurabad,24.885753,67.074222,"Fast Food, Pizza"
+462,465,Mahnoor Naqvi,0316-8265478,"House 354, Street 3, Saddar, Karachi",Saddar,24.851171,67.004165,"Karahi, Chinese"
+463,466,Asad Khan,0326-2749316,"House 276, Street 17, Federal B Area, Karachi",Federal B Area,24.920935,67.069492,Pizza
+464,467,Saad Memon,0307-7754244,"House 14, Street 8, Clifton, Karachi",Clifton,24.817049,67.026734,Pizza
+465,468,Taha Javed,0336-0232604,"House 221, Street 11, Clifton, Karachi",Clifton,24.813763,67.022189,"Biryani, Chinese, Desserts"
+466,469,Bushra Farooqui,0313-2378640,"House 82, Street 18, DHA, Karachi",DHA,24.80312,67.067524,"Cafe, Chinese, Karahi"
+467,470,Hira Rizvi,0322-5544195,"House 317, Street 9, Tariq Road, Karachi",Tariq Road,24.860705,67.072849,"BBQ, Chinese"
+468,471,Sana Zaidi,0333-3403006,"House 280, Street 34, PECHS, Karachi",PECHS,24.898575,67.063011,"Desserts, Chinese"
+469,472,Usman Shah,0343-2250236,"House 396, Street 11, Federal B Area, Karachi",Federal B Area,24.946009,67.072,Karahi
+470,473,Junaid Baig,0319-5063740,"House 249, Street 35, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.92865,67.0835,Biryani
+471,474,Sara Mirza,0339-5721633,"House 136, Street 35, North Nazimabad, Karachi",North Nazimabad,24.931498,67.043132,"Cafe, Desserts"
+472,475,Omar Ali,0348-3239795,"House 26, Street 32, Saddar, Karachi",Saddar,24.842744,66.978895,"BBQ, Biryani, Pizza"
+473,476,Danish Javed,0315-8797764,"House 264, Street 19, DHA, Karachi",DHA,24.800525,67.060739,"Cafe, Fast Food, Karahi"
+474,477,Faisal Hashmi,0315-7577165,"House 345, Street 25, Korangi, Karachi",Korangi,24.84977,67.123954,Fast Food
+475,478,Zainab Iqbal,0318-7243600,"House 393, Street 25, PECHS, Karachi",PECHS,24.869602,67.061748,Desserts
+476,479,Ayesha Qureshi,0340-5951809,"House 190, Street 31, Tariq Road, Karachi",Tariq Road,24.87029,67.048277,"Pizza, Cafe, Desserts"
+477,480,Bushra Rizvi,0319-2366840,"House 173, Street 34, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.891101,67.116843,"Pizza, BBQ, Cafe"
+478,481,Ayesha Sheikh,0325-2436967,"House 85, Street 10, Clifton, Karachi",Clifton,24.825804,67.034036,"BBQ, Chinese"
+479,482,Hamza Khan,0338-0708004,"House 68, Street 13, Clifton, Karachi",Clifton,24.822824,67.036306,"Chinese, Cafe"
+480,483,Sara Shah,0343-9140047,"House 43, Street 36, Malir, Karachi",Malir,24.887653,67.202117,"Pizza, BBQ"
+481,484,Iqra Sheikh,0316-6331057,"House 222, Street 8, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.916663,67.135084,BBQ
+482,485,Imran Abbasi,0334-3553598,"House 264, Street 24, PECHS, Karachi",PECHS,24.870957,67.048125,Fast Food
+483,486,Hamza Sheikh,0333-2181491,"House 208, Street 26, Malir, Karachi",Malir,24.89937,67.195784,Chinese
+484,487,Saad Iqbal,0336-6507798,"House 336, Street 28, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.907216,67.134414,Karahi
+485,488,Bushra Memon,0337-1969664,"House 26, Street 12, Saddar, Karachi",Saddar,24.865594,66.995328,Cafe
+486,489,Rabia Farooqui,0345-8791134,"House 187, Street 25, Federal B Area, Karachi",Federal B Area,24.942552,67.073082,"Cafe, Chinese"
+487,490,Hamza Rizvi,0301-0074564,"House 340, Street 34, PECHS, Karachi",PECHS,24.882406,67.067851,"Karahi, Chinese"
+488,491,Hassan Ahmed,0305-8845149,"House 380, Street 30, Federal B Area, Karachi",Federal B Area,24.919117,67.081968,"Fast Food, Cafe"
+489,492,Usman Sheikh,0311-9988915,"House 239, Street 9, Saddar, Karachi",Saddar,24.868279,67.011871,Pizza
+490,493,Bushra Mirza,0324-5585640,"House 308, Street 5, Malir, Karachi",Malir,24.904957,67.200566,Cafe
+491,494,Ayesha Mirza,0335-0554859,"House 223, Street 7, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.914817,67.094568,Cafe
+492,495,Nida Siddiqui,0329-6235751,"House 17, Street 14, Korangi, Karachi",Korangi,24.827356,67.122431,Fast Food
+493,496,Danish Malik,0325-9843140,"House 245, Street 9, Saddar, Karachi",Saddar,24.868442,67.0213,"BBQ, Pizza"
+494,497,Danish Raza,0304-5813513,"House 174, Street 17, Bahadurabad, Karachi",Bahadurabad,24.85875,67.076089,Desserts
+495,498,Taha Ahmed,0318-4122306,"House 7, Street 30, Korangi, Karachi",Korangi,24.823504,67.131258,"Karahi, Fast Food, Cafe"
+496,499,Rabia Hashmi,0336-8279241,"House 389, Street 34, Bahadurabad, Karachi",Bahadurabad,24.852612,67.065536,"Biryani, Karahi"
+497,500,Kamran Butt,0342-4505398,"House 343, Street 7, Federal B Area, Karachi",Federal B Area,24.931958,67.052885,Karahi
+498,501,Bushra Malik,0333-9360475,"House 34, Street 5, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.916554,67.100273,"Fast Food, Chinese"
+499,502,Ali Abbasi,0335-3068338,"House 43, Street 17, Saddar, Karachi",Saddar,24.856567,67.017807,"Fast Food, Chinese"
+500,503,Saad Butt,0345-9765799,"House 72, Street 12, Federal B Area, Karachi",Federal B Area,24.932346,67.054094,"Biryani, BBQ"
+501,504,Hira Qureshi,0302-0398856,"House 342, Street 9, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.895885,67.146744,Chinese
+502,505,Hamza Shah,0313-8349444,"House 32, Street 35, North Nazimabad, Karachi",North Nazimabad,24.948834,67.032232,"Cafe, Karahi"
+503,506,Mahnoor Raza,0311-0627632,"House 142, Street 1, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.908299,67.138247,"Biryani, Cafe, Desserts"
+504,507,Asad Ansari,0345-1256533,"House 347, Street 17, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.92863,67.084288,"Cafe, Desserts"
+505,508,Hina Rizvi,0338-6256827,"House 283, Street 33, PECHS, Karachi",PECHS,24.848729,67.073724,"Cafe, Biryani, BBQ"
+506,509,Komal Ahmed,0300-5042103,"House 388, Street 21, North Nazimabad, Karachi",North Nazimabad,24.950952,67.032693,Chinese
+507,510,Fahad Rizvi,0343-0226539,"House 291, Street 21, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.921844,67.081516,"Biryani, Fast Food"
+508,511,Fahad Naqvi,0331-8803548,"House 44, Street 38, PECHS, Karachi",PECHS,24.878909,67.05323,"Biryani, Karahi"
+509,512,Zainab Baig,0308-1702303,"House 119, Street 18, PECHS, Karachi",PECHS,24.87039,67.064154,"Desserts, Fast Food"
+510,513,Taha Qureshi,0307-0731806,"House 359, Street 18, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.907792,67.137103,BBQ
+511,514,Amna Sheikh,0303-2928468,"House 29, Street 5, DHA, Karachi",DHA,24.808047,67.069798,"Pizza, BBQ, Desserts"
+512,515,Omar Ali,0329-1376347,"House 22, Street 1, Tariq Road, Karachi",Tariq Road,24.864779,67.046222,"Pizza, Cafe"
+513,516,Taha Qureshi,0323-4050267,"House 304, Street 28, DHA, Karachi",DHA,24.801201,67.062399,BBQ
+514,517,Sana Rizvi,0322-1387076,"House 389, Street 12, North Nazimabad, Karachi",North Nazimabad,24.956465,67.045855,Karahi
+515,518,Hussain Ansari,0324-2014565,"House 220, Street 5, Korangi, Karachi",Korangi,24.815774,67.126719,Biryani
+516,519,Sara Mirza,0335-8758166,"House 398, Street 24, DHA, Karachi",DHA,24.807634,67.065814,"Desserts, Biryani"
+517,520,Taha Baig,0308-8856629,"House 334, Street 15, Federal B Area, Karachi",Federal B Area,24.934135,67.074614,"Chinese, Fast Food"
+518,521,Kamran Ahmed,0324-9563399,"House 263, Street 35, North Nazimabad, Karachi",North Nazimabad,24.923182,67.041127,BBQ
+519,522,Sana Mirza,0305-7313939,"House 304, Street 38, Korangi, Karachi",Korangi,24.829167,67.130466,"Karahi, Chinese, Cafe"
+520,523,Hamza Ansari,0328-3071312,"House 201, Street 24, Malir, Karachi",Malir,24.889468,67.175198,"Chinese, Biryani, BBQ"
+521,524,Nida Ansari,0322-9913980,"House 258, Street 10, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.932318,67.137264,"Desserts, Cafe"
+522,525,Hamza Malik,0335-3354459,"House 66, Street 1, Korangi, Karachi",Korangi,24.843935,67.112592,Desserts
+523,526,Taha Rizvi,0319-3469600,"House 114, Street 25, Clifton, Karachi",Clifton,24.817653,67.019228,"Karahi, Pizza, BBQ"
+524,527,Sara Hashmi,0314-0864841,"House 317, Street 25, DHA, Karachi",DHA,24.810114,67.068276,"Biryani, Pizza"
+525,528,Rabia Shah,0332-9212305,"House 308, Street 18, Tariq Road, Karachi",Tariq Road,24.872804,67.057523,Cafe
+526,529,Bilal Hashmi,0333-6950633,"House 288, Street 26, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.895303,67.119995,"Pizza, Fast Food, BBQ"
+527,530,Saad Mirza,0347-5824297,"House 339, Street 12, Saddar, Karachi",Saddar,24.85286,67.002173,Chinese
+528,531,Danish Ahmed,0335-6577563,"House 250, Street 26, North Nazimabad, Karachi",North Nazimabad,24.953538,67.043921,"BBQ, Chinese, Pizza"
+529,532,Mahnoor Naqvi,0330-0772660,"House 339, Street 6, PECHS, Karachi",PECHS,24.854135,67.054584,"Fast Food, Pizza, Cafe"
+530,533,Mahnoor Naqvi,0315-1453377,"House 196, Street 39, Bahadurabad, Karachi",Bahadurabad,24.888489,67.063012,"Karahi, Fast Food, Biryani"
+531,534,Bushra Khan,0331-2163995,"House 234, Street 33, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.913249,67.121241,"Fast Food, Cafe"
+532,535,Imran Sheikh,0301-1907609,"House 161, Street 18, Federal B Area, Karachi",Federal B Area,24.934872,67.057586,"BBQ, Desserts, Biryani"
+533,536,Zain Abbasi,0326-4116443,"House 124, Street 13, Saddar, Karachi",Saddar,24.85895,66.994929,"Pizza, Biryani"
+534,537,Zain Ansari,0301-5527510,"House 157, Street 29, Tariq Road, Karachi",Tariq Road,24.880903,67.048388,"BBQ, Chinese, Desserts"
+535,538,Omar Hashmi,0311-7747025,"House 275, Street 13, DHA, Karachi",DHA,24.795052,67.074083,Cafe
+536,539,Sana Qureshi,0319-3847946,"House 399, Street 20, North Nazimabad, Karachi",North Nazimabad,24.957708,67.044803,"Desserts, Pizza, Biryani"
+537,540,Iqra Iqbal,0342-8173895,"House 258, Street 37, Clifton, Karachi",Clifton,24.819996,67.033973,Cafe
+538,541,Bilal Chaudhry,0332-0918480,"House 203, Street 33, Clifton, Karachi",Clifton,24.831839,67.031346,"Pizza, Fast Food"
+539,542,Junaid Qureshi,0332-9605304,"House 190, Street 11, Clifton, Karachi",Clifton,24.812027,67.029736,"Karahi, Fast Food, BBQ"
+540,543,Kamran Mirza,0325-7475058,"House 357, Street 7, Tariq Road, Karachi",Tariq Road,24.868451,67.046595,"Cafe, Biryani"
+541,544,Komal Abbasi,0306-6853152,"House 253, Street 5, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.913876,67.13399,"BBQ, Pizza"
+542,545,Ahmed Ali,0326-0966254,"House 149, Street 25, Federal B Area, Karachi",Federal B Area,24.93315,67.081314,"Pizza, Karahi, Biryani"
+543,546,Maryam Ahmed,0325-5730961,"House 263, Street 39, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.92434,67.135042,"Desserts, Cafe, Biryani"
+544,547,Iqra Khan,0342-9125825,"House 310, Street 35, DHA, Karachi",DHA,24.813681,67.04564,Biryani
+545,548,Bushra Siddiqui,0318-3234192,"House 184, Street 34, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.929236,67.126761,"Desserts, Karahi"
+546,549,Taha Malik,0326-1127160,"House 187, Street 25, Korangi, Karachi",Korangi,24.837502,67.133071,"Desserts, BBQ, Pizza"
+547,550,Hamza Shah,0324-1011432,"House 266, Street 21, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.918334,67.089492,"Cafe, Desserts"
+548,551,Hussain Raza,0304-1927428,"House 177, Street 6, North Nazimabad, Karachi",North Nazimabad,24.95146,67.027481,Chinese
+549,552,Hina Butt,0349-3063462,"House 55, Street 8, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.893811,67.121714,"Biryani, Fast Food"
+550,553,Usman Abbasi,0343-7521650,"House 181, Street 12, Korangi, Karachi",Korangi,24.812369,67.141883,"Desserts, Chinese, Pizza"
+551,554,Imran Chaudhry,0324-5998914,"House 17, Street 22, Bahadurabad, Karachi",Bahadurabad,24.880308,67.059148,"Cafe, Chinese"
+552,555,Sana Malik,0303-3502301,"House 247, Street 7, Clifton, Karachi",Clifton,24.797368,67.036123,"Cafe, Pizza, Biryani"
+553,556,Kamran Rizvi,0342-3638467,"House 251, Street 4, PECHS, Karachi",PECHS,24.877155,67.053734,"Chinese, Cafe, Fast Food"
+554,557,Saad Qureshi,0340-1480332,"House 325, Street 1, Malir, Karachi",Malir,24.900188,67.180615,"Cafe, BBQ, Karahi"
+555,558,Zainab Farooqui,0347-7521382,"House 187, Street 28, Tariq Road, Karachi",Tariq Road,24.882278,67.05447,"Desserts, Biryani, Chinese"
+556,559,Fatima Memon,0342-5686598,"House 28, Street 12, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.901297,67.147578,Pizza
+557,560,Sana Raza,0309-5698398,"House 97, Street 25, Malir, Karachi",Malir,24.896242,67.198992,"BBQ, Chinese"
+558,561,Zainab Naqvi,0302-8972836,"House 181, Street 36, Clifton, Karachi",Clifton,24.821868,67.044768,"Chinese, Desserts"
+559,562,Ayesha Butt,0336-0471249,"House 181, Street 28, Bahadurabad, Karachi",Bahadurabad,24.882692,67.059388,"Cafe, Pizza"
+560,563,Mahnoor Malik,0349-6055916,"House 391, Street 3, Malir, Karachi",Malir,24.890165,67.204169,"Pizza, BBQ"
+561,564,Maryam Baig,0308-6076955,"House 137, Street 29, PECHS, Karachi",PECHS,24.867455,67.036454,Cafe
+562,565,Hina Iqbal,0309-4207338,"House 61, Street 3, Clifton, Karachi",Clifton,24.8197,67.037233,Karahi
+563,566,Amna Ali,0311-7969713,"House 252, Street 31, Bahadurabad, Karachi",Bahadurabad,24.880742,67.060546,"BBQ, Fast Food, Biryani"
+564,567,Ahmed Memon,0322-1827276,"House 393, Street 35, PECHS, Karachi",PECHS,24.883044,67.044589,"Karahi, Biryani"
+565,568,Usman Baig,0347-7994657,"House 64, Street 6, North Nazimabad, Karachi",North Nazimabad,24.930125,67.046784,"Desserts, BBQ"
+566,569,Mahnoor Javed,0319-6960409,"House 379, Street 11, North Nazimabad, Karachi",North Nazimabad,24.94217,67.037723,"BBQ, Biryani"
+567,570,Sana Naqvi,0316-5491405,"House 92, Street 21, Tariq Road, Karachi",Tariq Road,24.863454,67.046057,"Chinese, Desserts"
+568,571,Hina Naqvi,0318-8675815,"House 210, Street 15, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.90946,67.091348,Pizza
+569,572,Amna Qureshi,0309-7693299,"House 42, Street 35, North Nazimabad, Karachi",North Nazimabad,24.947186,67.03842,"Karahi, Biryani"
+570,573,Kamran Butt,0330-2910981,"House 70, Street 5, DHA, Karachi",DHA,24.799208,67.051567,BBQ
+571,574,Sana Naqvi,0336-5363106,"House 36, Street 17, North Nazimabad, Karachi",North Nazimabad,24.932268,67.045091,"Cafe, Desserts, Biryani"
+572,575,Bushra Naqvi,0349-6860475,"House 256, Street 5, Bahadurabad, Karachi",Bahadurabad,24.886212,67.081248,"Cafe, Pizza, Karahi"
+573,576,Asad Qureshi,0303-0685601,"House 269, Street 35, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.936521,67.081452,"Biryani, Karahi, Cafe"
+574,577,Anum Mirza,0315-8864004,"House 55, Street 27, Federal B Area, Karachi",Federal B Area,24.931703,67.079347,"Desserts, Cafe, Fast Food"
+575,578,Iqra Naqvi,0330-9140605,"House 68, Street 15, Federal B Area, Karachi",Federal B Area,24.946898,67.083422,Cafe
+576,579,Kamran Javed,0300-1831403,"House 373, Street 38, Clifton, Karachi",Clifton,24.814814,67.032295,"Fast Food, Karahi"
+577,580,Asad Lodhi,0303-6094888,"House 90, Street 6, Clifton, Karachi",Clifton,24.809892,67.028928,"Karahi, BBQ, Fast Food"
+578,581,Iqra Raza,0343-7446459,"House 137, Street 37, Bahadurabad, Karachi",Bahadurabad,24.875151,67.082288,BBQ
+579,582,Bushra Raza,0338-8013173,"House 63, Street 35, North Nazimabad, Karachi",North Nazimabad,24.959182,67.020041,"Chinese, Fast Food"
+580,583,Rabia Sheikh,0323-7239272,"House 348, Street 4, Malir, Karachi",Malir,24.901508,67.193639,"Chinese, Karahi"
+581,584,Danish Lodhi,0349-8146662,"House 314, Street 32, Korangi, Karachi",Korangi,24.810121,67.114851,"Pizza, BBQ, Biryani"
+582,585,Anum Raza,0336-5193761,"House 242, Street 36, Federal B Area, Karachi",Federal B Area,24.924518,67.068275,"Biryani, BBQ, Cafe"
+583,586,Ayesha Rizvi,0326-5087608,"House 136, Street 29, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.924362,67.10202,"Chinese, Desserts"
+584,587,Amna Zaidi,0335-7165401,"House 197, Street 21, Federal B Area, Karachi",Federal B Area,24.933861,67.070283,"Desserts, Pizza, Chinese"
+585,588,Hina Mirza,0325-6959336,"House 121, Street 33, Saddar, Karachi",Saddar,24.854685,67.028954,Fast Food
+586,589,Junaid Javed,0337-2481718,"House 138, Street 21, DHA, Karachi",DHA,24.818711,67.071007,Pizza
+587,590,Ayesha Mirza,0309-8739915,"House 354, Street 20, Tariq Road, Karachi",Tariq Road,24.881589,67.077011,"Cafe, Fast Food, Chinese"
+588,591,Amna Raza,0316-5674065,"House 61, Street 19, Clifton, Karachi",Clifton,24.814003,67.020051,Chinese
+589,592,Hussain Naqvi,0341-0236974,"House 384, Street 10, North Nazimabad, Karachi",North Nazimabad,24.948672,67.008681,"Karahi, Desserts, Cafe"
+590,593,Asad Ahmed,0335-0306669,"House 115, Street 26, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.914725,67.131523,"Pizza, Cafe, Fast Food"
+591,594,Sara Javed,0306-6371084,"House 223, Street 12, Malir, Karachi",Malir,24.901474,67.176645,"Karahi, Biryani, Fast Food"
+592,595,Sana Ali,0334-1764022,"House 9, Street 28, Bahadurabad, Karachi",Bahadurabad,24.886613,67.052183,Chinese
+593,596,Anum Malik,0343-4924998,"House 152, Street 2, Saddar, Karachi",Saddar,24.865207,67.018685,Karahi
+594,597,Danish Malik,0348-5885137,"House 129, Street 21, Bahadurabad, Karachi",Bahadurabad,24.883247,67.081171,Biryani
+595,598,Ayesha Shah,0344-5291762,"House 384, Street 3, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.924718,67.057913,BBQ
+596,599,Imran Mirza,0322-8813887,"House 223, Street 25, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.922825,67.087129,Desserts
+597,600,Usman Chaudhry,0305-5290105,"House 221, Street 11, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.920957,67.103104,Chinese
+598,601,Hina Malik,0315-4657513,"House 281, Street 1, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.915508,67.089217,"Desserts, Karahi"
+599,602,Usman Javed,0347-8172722,"House 257, Street 35, Federal B Area, Karachi",Federal B Area,24.920879,67.06272,Chinese
+600,603,Kamran Ahmed,0320-2398105,"House 227, Street 16, DHA, Karachi",DHA,24.795067,67.06892,"BBQ, Biryani, Pizza"
+601,604,Maryam Rizvi,0304-2641916,"House 68, Street 3, Malir, Karachi",Malir,24.89701,67.201178,"Chinese, BBQ, Pizza"
+602,605,Ayesha Zaidi,0328-0455806,"House 211, Street 17, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.926165,67.097724,"BBQ, Pizza"
+603,606,Imran Rizvi,0300-1555955,"House 393, Street 20, Federal B Area, Karachi",Federal B Area,24.933417,67.066173,"Fast Food, Cafe"
+604,607,Bilal Ansari,0332-3855561,"House 156, Street 2, Malir, Karachi",Malir,24.915284,67.186088,"Biryani, Cafe, Fast Food"
+605,608,Nida Farooqui,0300-6659147,"House 362, Street 20, Bahadurabad, Karachi",Bahadurabad,24.889264,67.062293,"Chinese, Fast Food, Karahi"
+606,609,Usman Farooqui,0315-9500344,"House 381, Street 19, PECHS, Karachi",PECHS,24.877327,67.069622,"Fast Food, Cafe, Chinese"
+607,610,Maryam Ali,0329-8159310,"House 26, Street 34, Bahadurabad, Karachi",Bahadurabad,24.871585,67.067251,"Karahi, Biryani, Chinese"
+608,611,Taha Mirza,0339-8541473,"House 152, Street 31, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.926326,67.085925,"BBQ, Pizza"
+609,612,Hussain Shah,0309-1564121,"House 178, Street 33, Tariq Road, Karachi",Tariq Road,24.899478,67.056775,"Cafe, Chinese, BBQ"
+610,613,Omar Javed,0341-8710858,"House 315, Street 6, North Nazimabad, Karachi",North Nazimabad,24.951321,67.036378,"Biryani, Chinese, Karahi"
+611,614,Nida Ali,0309-9940904,"House 147, Street 35, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.919152,67.100287,"Pizza, Fast Food, Biryani"
+612,615,Junaid Naqvi,0327-0055994,"House 300, Street 31, Saddar, Karachi",Saddar,24.87674,67.014338,Pizza
+613,616,Bushra Lodhi,0314-5021327,"House 286, Street 17, Federal B Area, Karachi",Federal B Area,24.928379,67.071354,"Biryani, Chinese"
+614,617,Bilal Butt,0322-8081848,"House 44, Street 35, Clifton, Karachi",Clifton,24.830045,67.032034,"Cafe, Biryani, Fast Food"
+615,618,Nida Rizvi,0343-4867193,"House 317, Street 9, Korangi, Karachi",Korangi,24.827058,67.127575,"Karahi, Fast Food"
+616,619,Ali Malik,0300-1829889,"House 41, Street 32, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.918958,67.135913,Pizza
+617,620,Usman Farooqui,0301-0330592,"House 47, Street 23, North Nazimabad, Karachi",North Nazimabad,24.924158,67.028387,"Desserts, Biryani"
+618,621,Zainab Ahmed,0318-3486264,"House 14, Street 29, Malir, Karachi",Malir,24.896632,67.162213,Biryani
+619,622,Zainab Ahmed,0347-3745494,"House 172, Street 3, Clifton, Karachi",Clifton,24.845882,67.007268,BBQ
+620,623,Ahmed Farooqui,0342-8351614,"House 289, Street 17, Clifton, Karachi",Clifton,24.815098,67.020883,"Karahi, BBQ"
+621,624,Amna Lodhi,0314-2611720,"House 81, Street 38, Saddar, Karachi",Saddar,24.859327,67.029076,"Cafe, Chinese, Karahi"
+622,625,Fatima Memon,0305-3643844,"House 53, Street 27, Clifton, Karachi",Clifton,24.811801,67.029494,"Desserts, Cafe, Pizza"
+623,626,Faisal Hashmi,0320-1166459,"House 42, Street 12, Malir, Karachi",Malir,24.904984,67.187934,Cafe
+624,627,Hamza Rizvi,0308-1831806,"House 65, Street 18, PECHS, Karachi",PECHS,24.87181,67.055042,"Karahi, BBQ, Fast Food"
+625,628,Sara Qureshi,0336-6501628,"House 159, Street 31, Federal B Area, Karachi",Federal B Area,24.946134,67.072032,Fast Food
+626,629,Nida Ansari,0318-4225170,"House 84, Street 4, North Nazimabad, Karachi",North Nazimabad,24.910142,67.045452,"BBQ, Cafe, Karahi"
+627,630,Fatima Baig,0330-5618469,"House 368, Street 14, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.92197,67.083324,BBQ
+628,631,Faisal Butt,0336-9809809,"House 158, Street 17, PECHS, Karachi",PECHS,24.869042,67.042919,"Cafe, Chinese, Pizza"
+629,632,Fatima Memon,0319-3715023,"House 397, Street 17, Federal B Area, Karachi",Federal B Area,24.938547,67.047977,"Pizza, Karahi"
+630,633,Ali Khan,0330-7194586,"House 52, Street 11, Malir, Karachi",Malir,24.886971,67.195438,"BBQ, Chinese"
+631,634,Sara Chaudhry,0327-0441451,"House 43, Street 17, Federal B Area, Karachi",Federal B Area,24.937766,67.069403,"Desserts, BBQ"
+632,635,Junaid Iqbal,0324-4983238,"House 124, Street 22, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.898029,67.149894,Biryani
+633,636,Omar Qureshi,0319-0313916,"House 59, Street 33, PECHS, Karachi",PECHS,24.859481,67.057661,Biryani
+634,637,Ayesha Khan,0323-6956176,"House 151, Street 8, Bahadurabad, Karachi",Bahadurabad,24.880901,67.07499,"Fast Food, BBQ, Karahi"
+635,638,Ayesha Baig,0326-1134315,"House 341, Street 19, Tariq Road, Karachi",Tariq Road,24.861679,67.062955,"Biryani, BBQ"
+636,639,Bilal Ansari,0348-2256523,"House 175, Street 14, Saddar, Karachi",Saddar,24.845508,67.001876,"Desserts, Pizza"
+637,640,Hussain Ahmed,0330-1772670,"House 171, Street 2, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.917115,67.14812,"Pizza, Chinese"
+638,641,Bilal Mirza,0343-6162572,"House 96, Street 15, DHA, Karachi",DHA,24.81517,67.074911,Karahi
+639,642,Faisal Mirza,0345-9197774,"House 394, Street 26, Saddar, Karachi",Saddar,24.854401,67.027423,Fast Food
+640,643,Bushra Ali,0304-7044290,"House 288, Street 18, Malir, Karachi",Malir,24.882789,67.187264,"Pizza, BBQ"
+641,644,Taha Shah,0308-4613157,"House 28, Street 9, Saddar, Karachi",Saddar,24.848719,67.005168,BBQ
+642,645,Hina Chaudhry,0316-6564171,"House 77, Street 30, Federal B Area, Karachi",Federal B Area,24.927137,67.055483,Karahi
+643,646,Asad Ahmed,0327-5046652,"House 85, Street 38, Tariq Road, Karachi",Tariq Road,24.873582,67.0567,"Biryani, Fast Food, Cafe"
+644,647,Saad Hashmi,0301-7960163,"House 127, Street 32, Tariq Road, Karachi",Tariq Road,24.889477,67.071747,"Karahi, Desserts, Cafe"
+645,648,Hira Rizvi,0328-5214871,"House 241, Street 7, Federal B Area, Karachi",Federal B Area,24.909395,67.082871,Cafe
+646,649,Hamza Javed,0310-7094208,"House 343, Street 7, Korangi, Karachi",Korangi,24.827956,67.147635,Biryani
+647,650,Hamza Shah,0338-4887404,"House 257, Street 24, Clifton, Karachi",Clifton,24.816666,67.023634,"Cafe, Biryani, Pizza"
+648,651,Anum Sheikh,0308-8465395,"House 299, Street 23, Saddar, Karachi",Saddar,24.880832,67.023261,"Cafe, Chinese"
+649,652,Saad Memon,0324-4694895,"House 338, Street 30, Clifton, Karachi",Clifton,24.817203,67.022322,Fast Food
+650,653,Amna Memon,0349-9055926,"House 38, Street 35, PECHS, Karachi",PECHS,24.850587,67.056188,"Chinese, Karahi"
+651,654,Hamza Baig,0335-4948485,"House 296, Street 27, Tariq Road, Karachi",Tariq Road,24.873284,67.06355,Pizza
+652,655,Laiba Iqbal,0314-9427645,"House 41, Street 20, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.908611,67.138484,"Cafe, Chinese, BBQ"
+653,656,Rabia Raza,0349-3590128,"House 250, Street 17, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.922952,67.090068,"Pizza, BBQ"
+654,657,Kamran Qureshi,0316-2044747,"House 145, Street 12, Tariq Road, Karachi",Tariq Road,24.868745,67.067131,"Fast Food, Karahi"
+655,658,Zainab Naqvi,0343-6585711,"House 173, Street 30, PECHS, Karachi",PECHS,24.879041,67.053066,BBQ
+656,659,Hina Qureshi,0305-6260208,"House 394, Street 13, Saddar, Karachi",Saddar,24.857021,67.0097,"Desserts, Pizza, Karahi"
+657,660,Faisal Siddiqui,0325-8136783,"House 351, Street 7, Tariq Road, Karachi",Tariq Road,24.873435,67.052623,"BBQ, Pizza"
+658,661,Hamza Qureshi,0336-9622138,"House 45, Street 9, DHA, Karachi",DHA,24.800154,67.077265,Biryani
+659,662,Fahad Rizvi,0324-9467868,"House 208, Street 21, DHA, Karachi",DHA,24.807411,67.062324,Chinese
+660,663,Hira Siddiqui,0316-5278203,"House 278, Street 27, DHA, Karachi",DHA,24.793397,67.065123,"Karahi, Chinese"
+661,664,Asad Iqbal,0311-4667066,"House 371, Street 6, PECHS, Karachi",PECHS,24.870516,67.04853,BBQ
+662,665,Hira Memon,0311-5069071,"House 347, Street 13, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.889715,67.135368,"Pizza, Chinese"
+663,666,Amna Shah,0348-2256092,"House 8, Street 6, Saddar, Karachi",Saddar,24.838444,67.015634,"Chinese, Desserts"
+664,667,Kamran Zaidi,0319-4908315,"House 176, Street 11, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.911941,67.092742,"Fast Food, Biryani"
+665,668,Saad Zaidi,0311-7388430,"House 133, Street 28, Malir, Karachi",Malir,24.871283,67.177487,"Chinese, Pizza, Biryani"
+666,669,Sara Malik,0320-6072077,"House 306, Street 39, Clifton, Karachi",Clifton,24.823708,67.050975,"Karahi, Desserts"
+667,670,Zainab Butt,0314-3476720,"House 278, Street 30, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.922282,67.097503,Pizza
+668,671,Hussain Raza,0334-0205430,"House 109, Street 39, Malir, Karachi",Malir,24.89977,67.176282,"Desserts, Cafe, Chinese"
+669,672,Taha Malik,0306-4419771,"House 101, Street 19, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.920153,67.132396,"Desserts, Fast Food"
+670,673,Faisal Hashmi,0349-7729953,"House 80, Street 2, Saddar, Karachi",Saddar,24.863793,66.996378,"BBQ, Chinese"
+671,674,Laiba Abbasi,0330-1484430,"House 312, Street 7, PECHS, Karachi",PECHS,24.860146,67.071883,Desserts
+672,675,Imran Iqbal,0337-2106041,"House 136, Street 12, Saddar, Karachi",Saddar,24.851832,67.030704,Cafe
+673,676,Hassan Lodhi,0341-3026915,"House 109, Street 2, Saddar, Karachi",Saddar,24.871469,67.001594,"Fast Food, Biryani"
+674,677,Ali Farooqui,0337-0506666,"House 201, Street 18, Saddar, Karachi",Saddar,24.856536,67.027114,Fast Food
+675,678,Omar Qureshi,0332-8923062,"House 75, Street 10, Bahadurabad, Karachi",Bahadurabad,24.875496,67.071263,Cafe
+676,679,Bilal Abbasi,0320-7216215,"House 378, Street 11, North Nazimabad, Karachi",North Nazimabad,24.939424,67.036096,"Biryani, Desserts"
+677,680,Zain Shah,0301-3809845,"House 175, Street 34, Tariq Road, Karachi",Tariq Road,24.859949,67.049633,Desserts
+678,681,Sara Siddiqui,0345-4381782,"House 372, Street 27, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.929143,67.127468,"Biryani, Desserts, Fast Food"
+679,682,Nida Butt,0328-6451859,"House 107, Street 24, Federal B Area, Karachi",Federal B Area,24.916184,67.068188,"Karahi, Fast Food"
+680,683,Taha Baig,0343-8207357,"House 379, Street 24, Saddar, Karachi",Saddar,24.869027,67.010729,"Cafe, Fast Food"
+681,684,Hina Javed,0300-9667375,"House 340, Street 34, Saddar, Karachi",Saddar,24.878907,67.009047,Chinese
+682,685,Hamza Farooqui,0349-9995181,"House 308, Street 14, North Nazimabad, Karachi",North Nazimabad,24.95486,67.049647,Fast Food
+683,686,Mahnoor Sheikh,0308-1143955,"House 399, Street 11, Korangi, Karachi",Korangi,24.820955,67.131971,Chinese
+684,687,Danish Siddiqui,0304-7152050,"House 165, Street 11, Federal B Area, Karachi",Federal B Area,24.940929,67.077836,"BBQ, Chinese, Biryani"
+685,688,Asad Farooqui,0321-8516495,"House 376, Street 10, DHA, Karachi",DHA,24.821219,67.064918,Fast Food
+686,689,Ali Malik,0349-6418132,"House 209, Street 23, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.924817,67.091783,"Fast Food, Chinese, Biryani"
+687,690,Taha Qureshi,0334-2629140,"House 196, Street 5, Tariq Road, Karachi",Tariq Road,24.872238,67.062558,"Karahi, Pizza, Desserts"
+688,691,Hira Zaidi,0317-6282310,"House 38, Street 4, PECHS, Karachi",PECHS,24.872492,67.061637,"Cafe, Karahi, Chinese"
+689,692,Ali Ahmed,0335-9892352,"House 252, Street 27, PECHS, Karachi",PECHS,24.867846,67.053383,Karahi
+690,693,Omar Farooqui,0332-4242266,"House 168, Street 13, PECHS, Karachi",PECHS,24.869717,67.05232,"Karahi, Cafe"
+691,694,Nida Naqvi,0337-8062205,"House 381, Street 19, PECHS, Karachi",PECHS,24.850273,67.059593,Karahi
+692,695,Hassan Qureshi,0330-1371978,"House 137, Street 17, Korangi, Karachi",Korangi,24.858001,67.137582,"Pizza, Cafe, Desserts"
+693,696,Anum Naqvi,0344-5937862,"House 16, Street 33, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.903131,67.134135,BBQ
+694,697,Fatima Sheikh,0325-4510673,"House 309, Street 3, PECHS, Karachi",PECHS,24.874144,67.062189,"Chinese, Fast Food"
+695,698,Faisal Naqvi,0335-5566698,"House 365, Street 10, Korangi, Karachi",Korangi,24.839194,67.133761,"Fast Food, Pizza, Chinese"
+696,699,Zain Chaudhry,0325-6059772,"House 172, Street 7, Bahadurabad, Karachi",Bahadurabad,24.894112,67.058286,"Pizza, Cafe, Karahi"
+697,700,Bilal Siddiqui,0334-8405764,"House 210, Street 25, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.905665,67.129604,"Biryani, Chinese, Pizza"
+698,701,Taha Baig,0320-3894449,"House 128, Street 2, Korangi, Karachi",Korangi,24.828739,67.123423,"BBQ, Biryani"
+699,702,Kamran Malik,0334-0982845,"House 245, Street 39, DHA, Karachi",DHA,24.787597,67.069616,"Desserts, Pizza, Cafe"
+700,703,Usman Khan,0313-0606149,"House 305, Street 1, Korangi, Karachi",Korangi,24.822948,67.142521,"Chinese, Fast Food"
+701,704,Komal Ali,0321-6919214,"House 75, Street 1, Tariq Road, Karachi",Tariq Road,24.85897,67.059896,Desserts
+702,705,Fahad Malik,0342-4136602,"House 359, Street 10, Clifton, Karachi",Clifton,24.810142,67.038446,"Biryani, Karahi, Fast Food"
+703,706,Komal Ahmed,0330-8320684,"House 144, Street 19, PECHS, Karachi",PECHS,24.863894,67.054758,"Chinese, Fast Food"
+704,707,Omar Mirza,0340-5163894,"House 211, Street 16, PECHS, Karachi",PECHS,24.876417,67.062229,"Desserts, Pizza"
+705,708,Rabia Memon,0315-6169732,"House 118, Street 3, Clifton, Karachi",Clifton,24.788801,67.019183,"Pizza, BBQ"
+706,709,Sana Rizvi,0343-3748031,"House 315, Street 13, DHA, Karachi",DHA,24.816042,67.059099,"Desserts, Chinese"
+707,710,Hassan Javed,0301-5557121,"House 380, Street 7, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.908855,67.135097,"Pizza, Desserts"
+708,711,Omar Memon,0337-5262907,"House 36, Street 38, PECHS, Karachi",PECHS,24.856639,67.060776,"Cafe, Biryani"
+709,712,Zainab Baig,0323-1922601,"House 308, Street 25, Korangi, Karachi",Korangi,24.827593,67.12433,"Cafe, Fast Food, Biryani"
+710,713,Sana Qureshi,0343-4898877,"House 185, Street 2, DHA, Karachi",DHA,24.813194,67.060256,Cafe
+711,714,Iqra Butt,0337-4939211,"House 233, Street 25, Tariq Road, Karachi",Tariq Road,24.872844,67.065716,"Chinese, Karahi"
+712,715,Usman Malik,0348-8957944,"House 290, Street 28, Federal B Area, Karachi",Federal B Area,24.927352,67.065816,"Cafe, BBQ, Biryani"
+713,716,Omar Lodhi,0325-2018184,"House 156, Street 38, DHA, Karachi",DHA,24.824927,67.058576,"Biryani, Cafe, Chinese"
+714,717,Taha Lodhi,0317-2333716,"House 72, Street 13, Korangi, Karachi",Korangi,24.816159,67.12601,"BBQ, Fast Food"
+715,718,Sana Sheikh,0300-3247566,"House 185, Street 21, Saddar, Karachi",Saddar,24.857517,67.01439,Fast Food
+716,719,Zain Hashmi,0333-5672578,"House 128, Street 18, PECHS, Karachi",PECHS,24.865343,67.056748,"Chinese, Cafe"
+717,720,Usman Hashmi,0317-6778722,"House 388, Street 5, DHA, Karachi",DHA,24.80499,67.060098,Cafe
+718,721,Komal Ahmed,0348-4255928,"House 281, Street 11, Korangi, Karachi",Korangi,24.831843,67.122179,"Karahi, Cafe"
+719,722,Mahnoor Chaudhry,0312-1544194,"House 41, Street 5, Bahadurabad, Karachi",Bahadurabad,24.89516,67.081219,"Desserts, Biryani"
+720,723,Rabia Abbasi,0317-5270980,"House 287, Street 28, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.928313,67.11273,Pizza
+721,724,Rabia Ansari,0346-3703274,"House 175, Street 30, Clifton, Karachi",Clifton,24.820561,67.047851,"Karahi, Desserts"
+722,725,Kamran Chaudhry,0317-5945687,"House 243, Street 30, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.936302,67.097251,"Karahi, Biryani"
+723,726,Bilal Iqbal,0315-9121370,"House 44, Street 13, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.90856,67.122017,"Cafe, BBQ"
+724,727,Ahmed Lodhi,0336-6439579,"House 19, Street 28, North Nazimabad, Karachi",North Nazimabad,24.955466,67.048838,Fast Food
+725,728,Ali Naqvi,0325-5485519,"House 117, Street 24, Korangi, Karachi",Korangi,24.848722,67.129523,"BBQ, Karahi"
+726,729,Komal Memon,0327-9670721,"House 152, Street 5, Federal B Area, Karachi",Federal B Area,24.918322,67.080823,"Karahi, Desserts, Cafe"
+727,730,Amna Rizvi,0342-3567924,"House 134, Street 7, Bahadurabad, Karachi",Bahadurabad,24.895359,67.066341,"BBQ, Karahi, Pizza"
+728,731,Mahnoor Butt,0305-5976381,"House 324, Street 23, Bahadurabad, Karachi",Bahadurabad,24.883557,67.062767,"BBQ, Chinese"
+729,732,Nida Iqbal,0307-8207116,"House 348, Street 8, Korangi, Karachi",Korangi,24.845201,67.125228,"Fast Food, Chinese"
+730,733,Iqra Iqbal,0319-6291979,"House 77, Street 24, Clifton, Karachi",Clifton,24.80621,67.037779,"Pizza, BBQ, Cafe"
+731,734,Bushra Ahmed,0317-9069552,"House 101, Street 21, Clifton, Karachi",Clifton,24.808398,67.02945,Biryani
+732,735,Mahnoor Mirza,0330-9015743,"House 206, Street 24, DHA, Karachi",DHA,24.815591,67.067731,"Desserts, Karahi, Chinese"
+733,736,Faisal Farooqui,0325-0736118,"House 367, Street 39, Clifton, Karachi",Clifton,24.823004,67.018617,"Fast Food, Desserts, Biryani"
+734,737,Sana Khan,0300-5533733,"House 204, Street 39, Tariq Road, Karachi",Tariq Road,24.867096,67.062428,"Chinese, Fast Food, Pizza"
+735,738,Omar Lodhi,0339-8996927,"House 324, Street 1, Federal B Area, Karachi",Federal B Area,24.942303,67.088873,"Biryani, Fast Food"
+736,739,Hina Sheikh,0331-1026943,"House 322, Street 29, PECHS, Karachi",PECHS,24.892395,67.064783,Chinese
+737,740,Saad Naqvi,0349-9623452,"House 62, Street 15, Saddar, Karachi",Saddar,24.864812,67.004143,"Biryani, Pizza, Fast Food"
+738,741,Hamza Ansari,0319-4293708,"House 16, Street 5, Tariq Road, Karachi",Tariq Road,24.873638,67.042877,"Fast Food, BBQ"
+739,742,Hassan Memon,0300-2733433,"House 58, Street 3, PECHS, Karachi",PECHS,24.867692,67.067952,"Pizza, Fast Food, BBQ"
+740,743,Danish Memon,0337-2170463,"House 245, Street 12, DHA, Karachi",DHA,24.794488,67.061255,"Desserts, Fast Food, Biryani"
+741,744,Danish Farooqui,0347-8090462,"House 102, Street 33, Saddar, Karachi",Saddar,24.849665,66.995399,"Desserts, Pizza, Fast Food"
+742,745,Danish Mirza,0332-2715653,"House 47, Street 8, Korangi, Karachi",Korangi,24.830392,67.130529,BBQ
+743,746,Anum Ansari,0330-2634892,"House 247, Street 19, Tariq Road, Karachi",Tariq Road,24.858704,67.046575,"Pizza, Desserts"
+744,747,Saad Hashmi,0318-5719023,"House 340, Street 3, Clifton, Karachi",Clifton,24.811798,67.040458,Desserts
+745,748,Mahnoor Malik,0314-1473346,"House 372, Street 38, Tariq Road, Karachi",Tariq Road,24.877052,67.040985,BBQ
+746,749,Fatima Chaudhry,0338-2298874,"House 118, Street 26, North Nazimabad, Karachi",North Nazimabad,24.932742,67.034522,"Chinese, Pizza, Desserts"
+747,750,Iqra Memon,0319-9977573,"House 350, Street 13, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.921996,67.149555,BBQ
+748,751,Bushra Raza,0320-3094099,"House 185, Street 27, Korangi, Karachi",Korangi,24.839512,67.137064,"Cafe, Chinese, Fast Food"
+749,752,Fatima Siddiqui,0323-7128807,"House 100, Street 30, Bahadurabad, Karachi",Bahadurabad,24.897231,67.067795,Chinese
+750,753,Asad Ali,0332-5584811,"House 33, Street 29, Federal B Area, Karachi",Federal B Area,24.953974,67.080871,"Karahi, Fast Food, Cafe"
+751,754,Ahmed Lodhi,0344-1930832,"House 50, Street 7, Korangi, Karachi",Korangi,24.835322,67.149692,"Fast Food, Desserts"
+752,755,Anum Chaudhry,0323-7179326,"House 263, Street 8, Tariq Road, Karachi",Tariq Road,24.879035,67.043877,"Cafe, Biryani"
+753,756,Omar Farooqui,0331-6494847,"House 334, Street 14, Bahadurabad, Karachi",Bahadurabad,24.880342,67.076962,BBQ
+754,757,Usman Khan,0314-2588529,"House 336, Street 18, Tariq Road, Karachi",Tariq Road,24.860393,67.046094,Chinese
+755,758,Danish Zaidi,0313-1629572,"House 225, Street 26, Tariq Road, Karachi",Tariq Road,24.859203,67.051661,"Desserts, Fast Food"
+756,759,Taha Farooqui,0333-9559842,"House 246, Street 6, Bahadurabad, Karachi",Bahadurabad,24.873384,67.084778,Pizza
+757,760,Asad Naqvi,0339-4023286,"House 244, Street 22, PECHS, Karachi",PECHS,24.863996,67.067673,"Karahi, Biryani, Chinese"
+758,761,Ahmed Khan,0339-6587426,"House 391, Street 24, Korangi, Karachi",Korangi,24.846803,67.130785,Cafe
+759,762,Ayesha Mirza,0311-1956496,"House 101, Street 9, Korangi, Karachi",Korangi,24.840981,67.117071,Cafe
+760,763,Fahad Qureshi,0302-3192902,"House 341, Street 8, DHA, Karachi",DHA,24.806411,67.070714,"Chinese, Biryani"
+761,764,Mahnoor Lodhi,0317-6058488,"House 234, Street 31, Malir, Karachi",Malir,24.909646,67.199011,Karahi
+762,765,Komal Hashmi,0314-7035872,"House 268, Street 32, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.932111,67.085115,"Chinese, Desserts"
+763,766,Ahmed Raza,0325-5139385,"House 117, Street 34, North Nazimabad, Karachi",North Nazimabad,24.939144,67.044106,"Karahi, Cafe, Desserts"
+764,767,Taha Chaudhry,0333-0509539,"House 302, Street 35, North Nazimabad, Karachi",North Nazimabad,24.936661,67.030877,"Fast Food, Cafe"
+765,768,Omar Mirza,0313-6289096,"House 146, Street 36, Malir, Karachi",Malir,24.889126,67.183069,"BBQ, Biryani"
+766,769,Zainab Hashmi,0330-3924168,"House 143, Street 26, PECHS, Karachi",PECHS,24.864532,67.063304,"BBQ, Karahi, Desserts"
+767,770,Ayesha Chaudhry,0341-9135426,"House 139, Street 32, Bahadurabad, Karachi",Bahadurabad,24.885698,67.080315,"BBQ, Desserts, Chinese"
+768,771,Hira Ali,0347-1444513,"House 215, Street 26, PECHS, Karachi",PECHS,24.879903,67.071668,"Fast Food, BBQ"
+769,772,Hina Lodhi,0331-8790443,"House 370, Street 19, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.895906,67.136073,"Fast Food, BBQ, Chinese"
+770,773,Hamza Farooqui,0312-3868228,"House 223, Street 11, Federal B Area, Karachi",Federal B Area,24.922292,67.064618,"BBQ, Karahi"
+771,774,Usman Memon,0340-4585838,"House 267, Street 13, North Nazimabad, Karachi",North Nazimabad,24.932293,67.03442,"Desserts, Karahi"
+772,775,Imran Ahmed,0335-3492694,"House 67, Street 38, North Nazimabad, Karachi",North Nazimabad,24.93789,67.035602,Desserts
+773,776,Danish Baig,0344-3611733,"House 115, Street 26, DHA, Karachi",DHA,24.811114,67.077092,Biryani
+774,777,Fatima Memon,0324-2850529,"House 253, Street 35, Malir, Karachi",Malir,24.891372,67.177488,"Desserts, Biryani, Karahi"
+775,778,Kamran Ahmed,0325-2643162,"House 128, Street 6, Tariq Road, Karachi",Tariq Road,24.876672,67.041328,Karahi
+776,779,Hassan Khan,0328-3843238,"House 330, Street 28, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.925441,67.14386,Biryani
+777,780,Saad Siddiqui,0337-8971098,"House 144, Street 33, Clifton, Karachi",Clifton,24.817181,67.025588,Karahi
+778,781,Asad Qureshi,0349-9254488,"House 199, Street 12, DHA, Karachi",DHA,24.795937,67.059274,Pizza
+779,782,Ahmed Shah,0309-9572191,"House 171, Street 17, Korangi, Karachi",Korangi,24.842554,67.124294,"BBQ, Chinese"
+780,783,Asad Hashmi,0302-7896515,"House 167, Street 22, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.922236,67.086756,"BBQ, Biryani"
+781,784,Mahnoor Siddiqui,0301-2160905,"House 91, Street 29, Bahadurabad, Karachi",Bahadurabad,24.868718,67.071777,BBQ
+782,785,Laiba Shah,0323-2547714,"House 68, Street 13, Malir, Karachi",Malir,24.889149,67.181247,"Pizza, Desserts, BBQ"
+783,786,Iqra Farooqui,0325-2114711,"House 324, Street 30, Saddar, Karachi",Saddar,24.861141,66.997373,"Karahi, Chinese"
+784,787,Zain Javed,0344-2060911,"House 46, Street 35, North Nazimabad, Karachi",North Nazimabad,24.933222,67.043809,Fast Food
+785,788,Sara Raza,0316-4964058,"House 62, Street 30, Saddar, Karachi",Saddar,24.870988,67.000578,BBQ
+786,789,Omar Qureshi,0337-7154929,"House 255, Street 6, North Nazimabad, Karachi",North Nazimabad,24.944269,67.049065,"Karahi, Desserts, Cafe"
+787,790,Amna Khan,0343-8800559,"House 293, Street 32, Bahadurabad, Karachi",Bahadurabad,24.896744,67.062806,"BBQ, Biryani"
+788,791,Rabia Javed,0333-3694242,"House 238, Street 19, North Nazimabad, Karachi",North Nazimabad,24.945551,67.044212,Desserts
+789,792,Hamza Raza,0337-9558192,"House 114, Street 22, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.926217,67.097664,Biryani
+790,793,Omar Javed,0305-9062157,"House 229, Street 38, Gulistan-e-Johar, Karachi",Gulistan-e-Johar,24.931619,67.127467,"Pizza, BBQ, Desserts"
+791,794,Taha Khan,0323-1773336,"House 395, Street 32, North Nazimabad, Karachi",North Nazimabad,24.94544,67.036035,Fast Food
+792,795,Taha Hashmi,0313-4245560,"House 147, Street 36, Federal B Area, Karachi",Federal B Area,24.928068,67.073886,"Pizza, Biryani"
+793,796,Ayesha Farooqui,0318-0195499,"House 188, Street 7, PECHS, Karachi",PECHS,24.863843,67.061639,"Desserts, Fast Food, Biryani"
+794,797,Usman Khan,0325-6617593,"House 188, Street 1, Saddar, Karachi",Saddar,24.852695,67.007201,"Cafe, Karahi, Chinese"
+795,798,Hassan Farooqui,0346-8482755,"House 299, Street 25, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.919802,67.08263,"Pizza, Karahi, Cafe"
+796,799,Ahmed Chaudhry,0337-5124803,"House 20, Street 34, DHA, Karachi",DHA,24.81173,67.060471,"Karahi, Chinese"
+797,800,Junaid Zaidi,0329-1668711,"House 117, Street 8, Korangi, Karachi",Korangi,24.828432,67.14336,"Fast Food, Pizza"
+798,801,Usman Sheikh,0302-3912792,"House 278, Street 2, Gulshan-e-Iqbal, Karachi",Gulshan-e-Iqbal,24.919534,67.092524,"Cafe, BBQ, Karahi"
+799,802,Saad Hashmi,0346-3835518,"House 85, Street 26, North Nazimabad, Karachi",North Nazimabad,24.938951,67.018764,"Desserts, BBQ, Biryani"
+800,803,Kamran Lodhi,0306-0071711,"House 127, Street 35, Bahadurabad, Karachi",Bahadurabad,24.874363,67.065936,"Biryani, BBQ"

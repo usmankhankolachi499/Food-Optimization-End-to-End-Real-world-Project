@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import restaurant_card, order_row, empty_state %}
+{% block title %}Customer dashboard{% endblock %}
+{% block content %}
+<div class="welcome-banner mb-4">
+  <div>
+    <span class="live-pill mb-2"><span class="live-dot"></span> Live delivery updates</span>
+    <h1>Hi {{ current_user.name.split(' ')[0] }}, what are you craving?</h1>
+    <p>Order from nearby restaurants and follow your delivery on the map in real time.</p>
+  </div>
+  <div class="cta-row">
+    <a class="btn btn-brand" href="{{ url_for('main.restaurants') }}"><i class="bi bi-shop me-1"></i> Browse restaurants</a>
+    <a class="btn btn-ghost" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff" href="{{ url_for('customer.orders') }}"><i class="bi bi-bag me-1"></i> My orders</a>
+  </div>
+</div>
+
+<div class="stat-grid mb-4">
+  <div class="stat-card">
+    <div class="stat-icon"><i class="bi bi-bag-check"></i></div>
+    <div class="stat-value">{{ stats.orders }}</div>
+    <div class="stat-label">Total orders</div>
+  </div>
+  <div class="stat-card amber">
+    <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
+    <div class="stat-value">{{ stats.active }}</div>
+    <div class="stat-label">Active now</div>
+  </div>
+  <div class="stat-card green">
+    <div class="stat-icon"><i class="bi bi-house-check"></i></div>
+    <div class="stat-value">{{ stats.delivered }}</div>
+    <div class="stat-label">Delivered</div>
+  </div>
+  <div class="stat-card blue">
+    <div class="stat-icon"><i class="bi bi-wallet2"></i></div>
+    <div class="stat-value">{{ stats.spent|money }}</div>
+    <div class="stat-label">Total spent</div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="panel mb-4">
+      <div class="panel-head">
+        <h2><i class="bi bi-broadcast-pin me-2 text-brand"></i>Active orders</h2>
+        {% if active_orders %}<span class="live-pill" style="color:#0e3b2e;background:#e8f5ef;border-color:#d5eadf;"><span class="live-dot"></span> Tracking live</span>{% endif %}
+      </div>
+      <div class="panel-body pt-2">
+        {% if active_orders %}
+          <div class="order-list">
+            {% for order in active_orders %}
+              <div>
+                {{ order_row(order) }}
+                <div class="progress mt-2" style="height:6px"><div class="progress-bar" style="width:{{ order.progress_percent }}%"></div></div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="empty-state small">
+            <div class="empty-icon"><i class="bi bi-bag"></i></div>
+            <h3>No active orders</h3>
+            <p>When you place an order, its live status will appear here.</p>
+            <a class="btn btn-brand btn-sm" href="{{ url_for('main.restaurants') }}">Order some food</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2><i class="bi bi-clock-history me-2 text-brand"></i>Recent orders</h2>
+        <a class="link" href="{{ url_for('customer.orders') }}">View all <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="panel-body pt-2">
+        {% if recent_orders %}
+          <div class="order-list">
+            {% for order in recent_orders %}{{ order_row(order) }}{% endfor %}
+          </div>
+        {% else %}
+          <p class="small-note mb-0">You have not placed any orders yet.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="quick-grid mb-4">
+      <a class="quick-link" href="{{ url_for('customer.profile') }}"><i class="bi bi-person"></i> Profile &amp; addresses</a>
+      <a class="quick-link" href="{{ url_for('customer.cart') }}"><i class="bi bi-bag-heart"></i> My cart {% if cart_count %}<span class="badge bg-brand ms-auto">{{ cart_count }}</span>{% endif %}</a>
+      <a class="quick-link" href="{{ url_for('customer.orders') }}"><i class="bi bi-receipt"></i> Order history</a>
+      <a class="quick-link" href="{{ url_for('main.restaurants') }}"><i class="bi bi-search"></i> Discover food</a>
+    </div>
+
+    <div class="section-head mb-2">
+      <div><h2 style="font-size:1.15rem">Recommended for you</h2></div>
+    </div>
+    <div class="d-grid gap-3">
+      {% for restaurant in recommended %}
+        {{ restaurant_card(restaurant, loop.index) }}
+      {% else %}
+        <div class="panel">{{ empty_state('shop', 'No restaurants yet', 'Please check back soon.') }}</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

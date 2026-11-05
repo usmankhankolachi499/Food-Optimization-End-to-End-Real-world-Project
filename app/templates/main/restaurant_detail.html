@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import stars, empty_state %}
+{% block title %}{{ restaurant.name }}{% endblock %}
+{% block content %}
+<div class="mb-3">
+  <a class="btn btn-ghost btn-sm" href="{{ url_for('main.restaurants') }}"><i class="bi bi-arrow-left me-1"></i> All restaurants</a>
+</div>
+
+<div class="menu-hero mb-4">
+  <div>
+    <span class="cuisine-chip">{{ restaurant.cuisine or 'Multi-cuisine' }}</span>
+    <h1>{{ restaurant.name }}</h1>
+    <p>{{ restaurant.description or 'Freshly prepared food delivered with live tracking.' }}</p>
+    <div class="d-flex flex-wrap gap-3 mt-3 small" style="color:#c6ded3;">
+      <span><i class="bi bi-star-fill me-1" style="color:#ffb072;"></i>{{ restaurant.rating_display }}{% if restaurant.rating_count %} ({{ restaurant.rating_count }} ratings){% endif %}</span>
+      <span><i class="bi bi-clock me-1"></i>{{ restaurant.hours_label }}</span>
+      <span><i class="bi bi-geo-alt me-1"></i>{{ restaurant.address or restaurant.city }}</span>
+      <span class="badge {{ 'bg-success' if restaurant.is_open_now else 'bg-secondary' }}">{{ 'Open now' if restaurant.is_open_now else 'Closed' }}</span>
+    </div>
+  </div>
+  <div class="text-lg-end">
+    <div class="hero-badge mb-2"><i class="bi bi-bag"></i> {{ restaurant.available_menu_count }} dishes available</div>
+    {% if current_user and current_user.is_admin %}
+      <a class="btn btn-ghost btn-sm" href="{{ url_for('admin.menu', restaurant_id=restaurant.id) }}"><i class="bi bi-pencil me-1"></i> Manage menu</a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-8">
+    {% if grouped_menu %}
+      {% for category, items in grouped_menu.items() %}
+        <section class="menu-category {{ 'mt-0' if loop.first }}">
+          <h2><i class="bi bi-egg-fried text-brand"></i> {{ category }}</h2>
+          <div class="menu-grid">
+            {% for item in items %}
+              <article class="menu-item">
+                <div class="menu-top">
+                  <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                      <span class="veg-dot {{ '' if item.is_veg else 'nonveg-dot' }}" title="{{ 'Vegetarian' if item.is_veg else 'Non-vegetarian' }}"></span>
+                      <h3>{{ item.name }}</h3>
+                    </div>
+                    <span class="tiny muted"><i class="bi bi-clock me-1"></i>{{ item.prep_time_min }} min prep</span>
+                  </div>
+                  <span class="price">{{ item.price|money }}</span>
+                </div>
+                <p class="desc">{{ item.description or 'Freshly prepared to order.' }}</p>
+                <div class="menu-bottom">
+                  {% if not item.is_available %}
+                    <span class="chip"><i class="bi bi-slash-circle"></i> Currently unavailable</span>
+                  {% elif current_user and current_user.is_customer %}
+                    <form class="add-form" method="post" action="{{ url_for('customer.cart_add', item_id=item.id) }}">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                      <input type="hidden" name="next" value="{{ request.full_path }}">
+                      <input class="form-control form-control-sm qty-input" type="number" name="quantity" value="1" min="1" max="20" aria-label="Quantity">
+                      <button class="btn btn-brand btn-sm" type="submit"><i class="bi bi-plus-lg me-1"></i> Add</button>
+                    </form>
+                    {% if cart_quantities.get(item.id) %}
+                      <span class="badge badge-soft">{{ cart_quantities.get(item.id) }} in cart</span>
+                    {% endif %}
+                  {% elif current_user %}
+                    <span class="tiny muted">Only customers can place orders.</span>
+                  {% else %}
+                    <a class="btn btn-outline-brand btn-sm" href="{{ url_for('auth.login', next=request.path) }}">Sign in to order</a>
+                  {% endif %}
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+        </section>
+      {% endfor %}
+    {% else %}
+      <div class="panel">{{ empty_state('egg-fried', 'Menu coming soon', 'This restaurant has not added any dishes yet.') }}</div>
+    {% endif %}
+
+    <section class="panel mt-4">
+      <div class="panel-head">
+        <h2><i class="bi bi-chat-square-quote me-2 text-brand"></i>Customer reviews</h2>
+        <span class="tiny muted">{{ restaurant.rating_count }} ratings</span>
+      </div>
+      <div class="panel-body pt-2">
+        {% for review in feedback %}
+          <div class="review-item">
+            <div class="review-head">
+              <span class="table-avatar">{{ review.customer.initials }}</span>
+              <strong>{{ review.customer.name }}</strong>
+              {{ stars(review.restaurant_rating) }}
+              <span class="tiny muted ms-auto">{{ review.created_at|ago }}</span>
+            </div>
+            <p>{{ review.comment or 'No comment provided.' }}</p>
+          </div>
+        {% else %}
+          <p class="small-note mb-0">No reviews yet. Order and be the first to rate this restaurant.</p>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="summary-card">
+      <div class="panel">
+        <div class="panel-head"><h2><i class="bi bi-bag-heart me-2 text-brand"></i>Your cart</h2><span class="tiny muted">{{ cart_count }} item{{ '' if cart_count == 1 else 's' }}</span></div>
+        <div class="panel-body pt-2">
+          {% if current_user and current_user.is_customer %}
+            {% if cart_count %}
+              <a class="btn btn-brand w-100" href="{{ url_for('customer.cart') }}"><i class="bi bi-cart-check me-1"></i> Review cart & checkout</a>
+            {% else %}
+              <div class="empty-state small px-0">
+                <div class="empty-icon"><i class="bi bi-bag"></i></div>
+                <h3>Cart is empty</h3>
+                <p>Add a dish from the menu to get started.</p>
+              </div>
+            {% endif %}
+          {% elif not current_user %}
+            <p class="small-note">Sign in as a customer to add dishes and place an order.</p>
+            <a class="btn btn-brand w-100" href="{{ url_for('auth.login', next=request.path) }}">Sign in</a>
+          {% else %}
+            <p class="small-note mb-0">You are signed in as {{ current_user.role_label }}. Customer ordering is disabled for this role.</p>
+          {% endif %}
+          <hr class="hr-soft">
+          <div class="kv"><span>Delivery hours</span><span>{{ restaurant.hours_label }}</span></div>
+          <div class="kv"><span>Location</span><span>{{ restaurant.city or '—' }}</span></div>
+          <div class="kv"><span>Rating</span><span>{{ restaurant.rating_display }}{% if restaurant.rating_count %} ({{ restaurant.rating_count }}){% endif %}</span></div>
+          {% if current_user and current_user.is_customer %}
+            <a class="btn btn-soft w-100 mt-3" href="{{ url_for('customer.orders') }}"><i class="bi bi-clock-history me-1"></i> My orders</a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="callout mt-3"><i class="bi bi-lightning-charge me-1"></i> ETAs include preparation time, distance and the current traffic factor.</div>
+    </div>
+  </div>
+</div>
+{% endblock %}

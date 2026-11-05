@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}Checkout{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-credit-card"></i> Checkout</div>
+    <h1>Confirm your delivery</h1>
+    <p>Review your order from {{ restaurant.name }} and choose where it should arrive.</p>
+  </div>
+  <a class="btn btn-ghost" href="{{ url_for('customer.cart') }}"><i class="bi bi-arrow-left me-1"></i> Back to cart</a>
+</div>
+
+<form method="post" class="row g-4">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="col-lg-7">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-geo-alt me-2 text-brand"></i>Delivery address</h2></div>
+      <div class="panel-body">
+        <label class="form-label" for="delivery_address">Full delivery address</label>
+        <textarea class="form-control mb-3" id="delivery_address" name="delivery_address" rows="3" required minlength="8" placeholder="Flat / house number, building, street, area, city">{{ profile.full_address if profile.address else '' }}</textarea>
+
+        <div class="location-picker" data-lat-input="latitude" data-lng-input="longitude">
+          <div class="map-box sm mb-3" id="checkoutMap"></div>
+          <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+            <button class="btn btn-soft btn-sm" type="button" data-use-location><i class="bi bi-crosshair me-1"></i> Use my current location</button>
+            <span class="tiny muted" data-location-status>Drag the pin or click the map to fine-tune the drop point.</span>
+          </div>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="form-label" for="latitude">Latitude</label>
+              <input class="form-control" id="latitude" name="latitude" value="{{ profile.latitude if profile.latitude is not none else '' }}" placeholder="18.520430">
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label" for="longitude">Longitude</label>
+              <input class="form-control" id="longitude" name="longitude" value="{{ profile.longitude if profile.longitude is not none else '' }}" placeholder="73.856744">
+            </div>
+          </div>
+          <div class="form-hint">A precise location helps the partner find you and improves the delivery estimate.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-wallet2 me-2 text-brand"></i>Payment method</h2></div>
+      <div class="panel-body">
+        <div class="row g-2">
+          <div class="col-md-4">
+            <input class="btn-check" type="radio" name="payment_method" id="pay_cod" value="COD" checked>
+            <label class="btn btn-ghost w-100 text-start" for="pay_cod"><i class="bi bi-cash-coin me-1"></i> Cash on delivery</label>
+          </div>
+          <div class="col-md-4">
+            <input class="btn-check" type="radio" name="payment_method" id="pay_easypaisa" value="Easypaisa">
+            <label class="btn btn-ghost w-100 text-start" for="pay_easypaisa"><i class="bi bi-phone me-1"></i> Easypaisa</label>
+          </div>
+          <div class="col-md-4">
+            <input class="btn-check" type="radio" name="payment_method" id="pay_card" value="Card">
+            <label class="btn btn-ghost w-100 text-start" for="pay_card"><i class="bi bi-credit-card-2-front me-1"></i> Card</label>
+          </div>
+        </div>
+        <div class="form-hint mt-2">This is a demo checkout: online methods are marked paid without contacting a payment gateway.</div>
+
+        <div class="form-section">
+          <label class="form-label" for="notes">Delivery notes (optional)</label>
+          <textarea class="form-control" id="notes" name="notes" rows="2" maxlength="500" placeholder="Gate code, landmark, instructions for the rider…"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="summary-card">
+      <div class="panel mb-3">
+        <div class="panel-head">
+          <h2><i class="bi bi-bag me-2 text-brand"></i>Your items</h2>
+          <a class="link" href="{{ url_for('customer.cart') }}">Edit</a>
+        </div>
+        <div class="panel-body pt-2">
+          {% for entry in cart['items'] %}
+            <div class="summary-line">
+              <span>{{ entry.quantity }} × {{ entry.item.name }}</span>
+              <span class="value">{{ entry.line_total|money }}</span>
+            </div>
+          {% endfor %}
+          <hr class="hr-soft">
+          <div class="summary-line"><span>Subtotal</span><span class="value">{{ cart['subtotal']|money }}</span></div>
+          <div class="summary-line"><span>Delivery fee{% if distance %} ({{ '%.2f'|format(distance) }} km){% endif %}</span><span class="value">{{ delivery_fee|money }}</span></div>
+          <div class="summary-line total"><span>Total</span><span class="value">{{ total|money }}</span></div>
+        </div>
+      </div>
+
+      <div class="panel mb-3">
+        <div class="panel-body">
+          <div class="partner-strip mb-3">
+            <div class="partner-avatar">🍽️</div>
+            <div>
+              <strong>{{ restaurant.name }}</strong>
+              <small>{{ restaurant.cuisine or 'Multi-cuisine' }} · {{ restaurant.city or 'Local' }}</small>
+            </div>
+          </div>
+          <div class="kv"><span>Preparation</span><span>Freshly cooked</span></div>
+          <div class="kv"><span>Estimated delivery</span><span>Calculated after order</span></div>
+          <div class="kv"><span>Delivery distance</span><span>{{ '%.2f'|format(distance) }} km</span></div>
+          <button class="btn btn-brand w-100 mt-3" type="submit"><i class="bi bi-check2-circle me-1"></i> Place order · {{ total|money }}</button>
+          <p class="small-note text-center mt-2 mb-0">Your cart is cleared once the order is placed.</p>
+        </div>
+      </div>
+      <div class="callout"><i class="bi bi-shield-check me-1"></i> All requests are CSRF-protected and your account session is secured.</div>
+    </div>
+  </div>
+</form>
+{% endblock %}

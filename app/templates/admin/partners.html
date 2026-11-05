@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import stars, empty_state %}
+{% block title %}Delivery partners{% endblock %}
+{% block content %}
+{% set stats = namespace(available=0, busy=0, active=0, deliveries=0) %}
+{% for row in partners %}
+  {% if row.partner.is_active %}
+    {% if row.profile.is_available %}{% set stats.available = stats.available + 1 %}{% else %}{% set stats.busy = stats.busy + 1 %}{% endif %}
+  {% endif %}
+  {% set stats.active = stats.active + row.active %}
+  {% set stats.deliveries = stats.deliveries + row.deliveries %}
+{% endfor %}
+
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-bicycle"></i> Fleet &amp; assignment</div>
+    <h1>Delivery partners</h1>
+    <p>{{ partners|length }} partner{{ '' if partners|length == 1 else 's' }} on the fleet · {{ unassigned|length }} order{{ '' if unassigned|length == 1 else 's' }} waiting for a partner.</p>
+  </div>
+  <div class="d-flex gap-2 flex-wrap">
+    <a class="btn btn-ghost" href="{{ url_for('admin.report_partners', days=30) }}"><i class="bi bi-download me-1"></i> Partner report</a>
+    <a class="btn btn-brand" href="{{ url_for('admin.user_new') }}"><i class="bi bi-person-plus me-1"></i> Add partner</a>
+  </div>
+</div>
+
+<div class="stat-grid mb-4">
+  <div class="stat-card">
+    <div class="stat-icon"><i class="bi bi-people"></i></div>
+    <div class="stat-value">{{ partners|length }}</div>
+    <div class="stat-label">Fleet size</div>
+    <div class="stat-sub">{{ stats.busy }} busy · {{ partners|length - stats.available - stats.busy }} inactive</div>
+  </div>
+  <div class="stat-card green">
+    <div class="stat-icon"><i class="bi bi-broadcast"></i></div>
+    <div class="stat-value">{{ stats.available }}</div>
+    <div class="stat-label">Available now</div>
+    <div class="stat-sub">Ready to receive assignments</div>
+  </div>
+  <div class="stat-card amber">
+    <div class="stat-icon"><i class="bi bi-box-seam"></i></div>
+    <div class="stat-value">{{ stats.active }}</div>
+    <div class="stat-label">Active deliveries</div>
+    <div class="stat-sub">Across the fleet right now</div>
+  </div>
+  <div class="stat-card blue">
+    <div class="stat-icon"><i class="bi bi-check2-circle"></i></div>
+    <div class="stat-value">{{ stats.deliveries }}</div>
+    <div class="stat-label">Delivered (30d)</div>
+    <div class="stat-sub">Completed by all partners</div>
+  </div>
+</div>
+
+<div class="panel mb-4">
+  <div class="panel-head">
+    <h2><i class="bi bi-person-exclamation me-2 text-brand"></i>Waiting for a partner</h2>
+    <a class="link" href="{{ url_for('admin.orders', assignment='unassigned') }}">Open order queue</a>
+  </div>
+  <div class="panel-body pt-2">
+    {% if unassigned %}
+      <div class="table-responsive">
+        <table class="table table-modern align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th>Restaurant</th>
+              <th>Customer</th>
+              <th>Distance</th>
+              <th>Total</th>
+              <th>Waiting</th>
+              <th class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in unassigned %}
+              <tr>
+                <td>
+                  <span class="cell-title">{{ order.order_number }}</span>
+                  <div class="cell-sub">{{ order.item_count }} item{{ '' if order.item_count == 1 else 's' }}</div>
+                </td>
+                <td>{{ order.restaurant.name }}<div class="cell-sub">{{ order.restaurant.city or 'Local' }}</div></td>
+                <td>{{ order.customer.name }}<div class="cell-sub">{{ order.customer.phone or order.customer.email }}</div></td>
+                <td>{{ '%.1f'|format(order.distance_km or 0) }} km</td>
+                <td>{{ order.total|money }}</td>
+                <td><span class="tiny muted">{{ order.placed_at|ago }}</span></td>
+                <td class="text-end">
+                  <a class="btn btn-brand btn-sm" href="{{ url_for('admin.order_detail', order_id=order.id) }}">
+                    <i class="bi bi-person-check me-1"></i> Assign
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="small-note mb-0"><i class="bi bi-check2-circle me-1 text-success"></i> Every active order already has a delivery partner.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% if partners %}
+  <div class="table-wrap">
+    <div class="table-responsive">
+      <table class="table table-modern align-middle">
+        <thead>
+          <tr>
+            <th>Partner</th>
+            <th>Vehicle</th>
+            <th>Status</th>
+            <th>Active orders</th>
+            <th>Deliveries (30d)</th>
+            <th>Avg time</th>
+            <th>Rating</th>
+            <th>Earnings (30d)</th>
+            <th>Last signal</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in partners %}
+            <tr>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <span class="table-avatar">{{ row.partner.initials }}</span>
+                  <div>
+                    <span class="cell-title">{{ row.partner.name }}</span>
+                    <div class="cell-sub">{{ row.partner.email }}</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="cell-title" style="font-weight:600">{{ row.profile.vehicle_type or 'Bike' }}</div>
+                <div class="cell-sub">{{ row.profile.vehicle_number or 'No plate on file' }}</div>
+              </td>
+              <td><span class="badge bg-{{ row.profile.status_color }}">{{ row.profile.status_label }}</span></td>
+              <td>
+                <span class="cell-title">{{ row.active }}</span>
+                <div class="cell-sub">{{ 'on a delivery' if row.active else 'idle' }}</div>
+              </td>
+              <td>
+                <span class="cell-title">{{ row.deliveries }}</span>
+                <div class="cell-sub">{{ row.total_deliveries }} lifetime</div>
+              </td>
+              <td>{{ row.avg_delivery_min }} min</td>
+              <td>{{ stars(row.rating, row.rating_count) }}</td>
+              <td>{{ row.earnings|money }}</td>
+              <td>
+                {% if row.profile.last_location_at %}
+                  <span class="tiny muted">{{ row.profile.last_location_at|ago }}</span>
+                {% else %}
+                  <span class="tiny muted">No location yet</span>
+                {% endif %}
+              </td>
+              <td class="text-end">
+                <div class="d-flex justify-content-end gap-1">
+                  <a class="btn btn-ghost btn-sm" href="{{ url_for('admin.user_edit', user_id=row.partner.id) }}" title="Edit partner account">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                  <form method="post" action="{{ url_for('admin.partner_availability', user_id=row.partner.id) }}" onsubmit="return confirm('Change availability for {{ row.partner.name|e }}?');">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-ghost btn-sm" type="submit" title="{{ 'Mark unavailable' if row.profile.is_available else 'Mark available' }}" {{ 'disabled' if not row.partner.is_active }}>
+                      <i class="bi bi-{{ 'pause-circle' if row.profile.is_available else 'play-circle' }}"></i>
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="small-note mt-3 mb-0"><i class="bi bi-info-circle me-1"></i> Partner accounts, roles and vehicle details are managed under <a class="link" href="{{ url_for('admin.users', role='delivery') }}">Users</a>. Availability changes take effect for new assignments immediately.</p>
+{% else %}
+  <div class="panel">{{ empty_state('bicycle', 'No delivery partners yet', 'Create a delivery partner account to start assigning orders.', url_for('admin.user_new'), 'Add a partner') }}</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import empty_state %}
+{% block title %}My cart{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-bag-heart"></i> Your order</div>
+    <h1>Shopping cart</h1>
+    <p>{{ cart['count'] }} item{{ '' if cart['count'] == 1 else 's' }}{% if cart['restaurant'] %} from {{ cart['restaurant'].name }}{% endif %}.</p>
+  </div>
+  <a class="btn btn-ghost" href="{{ url_for('main.restaurants') }}"><i class="bi bi-plus-lg me-1"></i> Add more food</a>
+</div>
+
+{% if cart['items'] %}
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="cart-list mb-3">
+        {% for entry in cart['items'] %}
+          {% set item = entry.item %}
+          <div class="cart-item">
+            <div class="cart-emoji">🍽️</div>
+            <div>
+              <h3>{{ item.name }}</h3>
+              <div class="cart-meta">
+                <span class="veg-dot {{ '' if item.is_veg else 'nonveg-dot' }}"></span>
+                {{ item.category or 'Menu' }} · {{ item.price|money }} each
+              </div>
+            </div>
+            <div class="cart-actions">
+              <form method="post" action="{{ url_for('customer.cart_update', item_id=item.id) }}" class="cart-qty">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" name="quantity" value="{{ entry.quantity - 1 }}" aria-label="Decrease quantity">−</button>
+                <input type="number" name="quantity" value="{{ entry.quantity }}" min="1" max="20" onchange="this.form.submit()" aria-label="Quantity for {{ item.name }}">
+                <button type="submit" name="quantity" value="{{ entry.quantity + 1 }}" aria-label="Increase quantity">+</button>
+              </form>
+              <span class="fw-bold">{{ entry.line_total|money }}</span>
+              <form method="post" action="{{ url_for('customer.cart_remove', item_id=item.id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="btn btn-ghost btn-sm btn-icon" type="submit" title="Remove item"><i class="bi bi-trash"></i></button>
+              </form>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <form method="post" action="{{ url_for('customer.cart_clear') }}" onsubmit="return confirm('Remove every item from your cart?');">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn btn-ghost btn-sm" type="submit"><i class="bi bi-x-circle me-1"></i> Clear cart</button>
+        </form>
+        <a class="btn btn-soft btn-sm" href="{{ url_for('main.restaurant_detail', restaurant_id=cart['restaurant'].id) }}"><i class="bi bi-shop me-1"></i> Back to {{ cart['restaurant'].name }}</a>
+      </div>
+      <div class="callout mt-3"><i class="bi bi-info-circle me-1"></i> You can only order from one restaurant at a time. Adding food from a different restaurant will clear this cart.</div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="summary-card">
+        <div class="panel">
+          <div class="panel-head"><h2><i class="bi bi-receipt me-2 text-brand"></i>Order summary</h2></div>
+          <div class="panel-body pt-2">
+            <div class="summary-line"><span>Subtotal</span><span class="value">{{ cart['subtotal']|money }}</span></div>
+            <div class="summary-line"><span>Delivery fee{% if distance %} ({{ '%.2f'|format(distance) }} km){% endif %}</span><span class="value">{{ delivery_fee|money }}</span></div>
+            <div class="summary-line total"><span>Total</span><span class="value">{{ total|money }}</span></div>
+            <a class="btn btn-brand w-100 mt-3" href="{{ url_for('customer.checkout') }}"><i class="bi bi-credit-card me-1"></i> Proceed to checkout</a>
+            <a class="btn btn-ghost w-100 mt-2" href="{{ url_for('main.restaurants') }}">Keep browsing</a>
+            <p class="small-note mt-3 mb-0"><i class="bi bi-truck me-1"></i> Delivery fee is calculated from the distance between the restaurant and your saved location.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% else %}
+  <div class="panel">
+    {{ empty_state('bag', 'Your cart is empty', 'Browse restaurants and add a few dishes to get started.', url_for('main.restaurants'), 'Find restaurants') }}
+  </div>
+{% endif %}
+{% endblock %}

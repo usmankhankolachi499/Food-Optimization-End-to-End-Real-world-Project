@@ -1,0 +1,74 @@
+{% macro status_badge(order) -%}
+<span class="badge status-badge bg-{{ order.status_color }}"><i class="bi bi-{{ order.status_icon }}"></i>{{ order.status_label }}</span>
+{%- endmacro %}
+
+{% macro role_badge(user) -%}
+<span class="role-badge role-{{ user.role }}">{{ user.role_label }}</span>
+{%- endmacro %}
+
+{% macro stars(value, count=None) -%}
+{% set rounded = (value or 0)|round|int %}
+<span class="stars" title="{{ '%.1f'|format(value or 0) }}{% if count %} from {{ count }} ratings{% endif %}">
+  {% for i in range(1, 6) %}<i class="bi {{ 'bi-star-fill' if i <= rounded else 'bi-star' }}"></i>{% endfor %}
+  {% if value %}<span class="ms-1 text-muted tiny">{{ '%.1f'|format(value) }}</span>{% endif %}
+</span>
+{%- endmacro %}
+
+{% macro empty_state(icon, title, text, action_url=None, action_label=None) -%}
+<div class="empty-state">
+  <div class="empty-icon"><i class="bi bi-{{ icon }}"></i></div>
+  <h3>{{ title }}</h3>
+  <p>{{ text }}</p>
+  {% if action_url %}<a class="btn btn-brand btn-sm" href="{{ action_url }}">{{ action_label or 'Continue' }}</a>{% endif %}
+</div>
+{%- endmacro %}
+
+{% macro restaurant_card(restaurant, index=1) -%}
+{% set cuisine = restaurant.cuisine or '' %}
+{% set emoji = '🍕' if 'italian' in cuisine|lower else ('🥗' if ('healthy' in cuisine|lower or 'salad' in cuisine|lower) else ('🍛' if ('biryani' in cuisine|lower or 'rice' in cuisine|lower or 'hyderabadi' in cuisine|lower) else ('🍢' if ('pakistani' in cuisine|lower or 'bbq' in cuisine|lower or 'desi' in cuisine|lower or 'indian' in cuisine|lower) else ('🍜' if ('asian' in cuisine|lower or 'chaat' in cuisine|lower or 'street' in cuisine|lower) else ('🐟' if ('seafood' in cuisine|lower or 'fish' in cuisine|lower) else '🍽️'))))) %}
+<a class="restaurant-card" href="{{ url_for('main.restaurant_detail', restaurant_id=restaurant.id) }}">
+  <div class="restaurant-cover cover-{{ (index % 4) + 1 }}" {% if restaurant.image_url %}style="background-image:linear-gradient(to top, rgba(8,30,22,.5), rgba(8,30,22,.05)), url('{{ restaurant.image_url }}');"{% endif %}>
+    <span class="cover-emoji">{{ emoji }}</span>
+    <span class="open-pill {{ 'open' if restaurant.is_open_now else 'closed' }}">{{ 'Open now' if restaurant.is_open_now else 'Closed' }}</span>
+  </div>
+  <div class="restaurant-body">
+    <div class="d-flex justify-content-between align-items-start gap-2">
+      <div>
+        <h3>{{ restaurant.name }}</h3>
+        <span class="cuisine-tag">{{ restaurant.cuisine or 'Multi-cuisine' }}</span>
+      </div>
+      <span class="rating-pill {{ '' if restaurant.rating_count else 'new' }}">
+        {% if restaurant.rating_count %}<i class="bi bi-star-fill"></i>{{ restaurant.rating_display }}{% else %}New{% endif %}
+      </span>
+    </div>
+    <p class="desc">{{ restaurant.description or 'Freshly prepared food delivered with live tracking.' }}</p>
+    <div class="restaurant-meta mb-2">
+      <span><i class="bi bi-geo-alt"></i> {{ restaurant.city or 'Local' }}</span>
+      <span>·</span>
+      <span><i class="bi bi-clock"></i> {{ restaurant.hours_label }}</span>
+    </div>
+    <div class="restaurant-foot">
+      <span class="time"><i class="bi bi-egg-fried"></i> {{ restaurant.available_menu_count }} dishes</span>
+      <span class="btn btn-outline-brand btn-sm">View menu <i class="bi bi-arrow-right"></i></span>
+    </div>
+  </div>
+</a>
+{%- endmacro %}
+
+{% macro order_row(order, link_endpoint='customer.order_detail') -%}
+<div class="order-row">
+  <div class="order-thumb">🍲</div>
+  <div class="order-main">
+    <h3><a class="text-reset" href="{{ url_for(link_endpoint, order_id=order.id) }}">{{ order.restaurant.name }}</a></h3>
+    <div class="order-sub">
+      <span><i class="bi bi-hash"></i>{{ order.order_number }}</span>
+      <span><i class="bi bi-clock"></i>{{ order.placed_at|dt('%d %b, %I:%M %p') }}</span>
+      <span><i class="bi bi-bag"></i>{{ order.item_count }} item{{ '' if order.item_count == 1 else 's' }}</span>
+    </div>
+  </div>
+  <div class="order-side">
+    {{ status_badge(order) }}
+    <span class="amount">{{ order.total|money }}</span>
+  </div>
+</div>
+{%- endmacro %}

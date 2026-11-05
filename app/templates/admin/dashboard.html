@@ -1,0 +1,173 @@
+﻿{% extends "base.html" %}
+{% from "partials/macros.html" import status_badge, empty_state %}
+{% block title %}Admin dashboard{% endblock %}
+{% block content %}
+<div class="welcome-banner mb-4">
+  <div>
+    <span class="live-pill mb-2"><span class="live-dot"></span> Operations overview</span>
+    <h1>Good to see you, {{ current_user.name.split(' ')[0] }}</h1>
+    <p>{{ summary.total_orders }} orders in the last 30 days · {{ today_orders }} placed today · {{ available_partners }} partners available.</p>
+  </div>
+  <div class="cta-row">
+    <a class="btn btn-brand" href="{{ url_for('admin.orders') }}"><i class="bi bi-receipt me-1"></i> Manage orders</a>
+    <a class="btn btn-ghost" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff" href="{{ url_for('admin.analytics_page') }}"><i class="bi bi-bar-chart-line me-1"></i> Analytics</a>
+  </div>
+</div>
+
+<div class="stat-grid mb-4">
+  <div class="stat-card">
+    <div class="stat-icon"><i class="bi bi-receipt"></i></div>
+    <div class="stat-value">{{ summary.total_orders }}</div>
+    <div class="stat-label">Orders (30d)</div>
+    <div class="stat-sub">{{ summary.delivered_orders }} delivered · {{ summary.cancelled_orders }} cancelled</div>
+  </div>
+  <div class="stat-card green">
+    <div class="stat-icon"><i class="bi bi-cash-stack"></i></div>
+    <div class="stat-value">{{ summary.revenue|money }}</div>
+    <div class="stat-label">Revenue (30d)</div>
+    <div class="stat-sub">Avg order {{ summary.avg_order_value|money }}</div>
+  </div>
+  <div class="stat-card amber">
+    <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
+    <div class="stat-value">{{ summary.active_orders }}</div>
+    <div class="stat-label">Active orders</div>
+    <div class="stat-sub">{{ summary.completion_rate }}% completion rate</div>
+  </div>
+  <div class="stat-card blue">
+    <div class="stat-icon"><i class="bi bi-stopwatch"></i></div>
+    <div class="stat-value">{{ summary.avg_delivery_min }}m</div>
+    <div class="stat-label">Avg delivery time</div>
+    <div class="stat-sub">{{ summary.avg_prep_min }}m average prep</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon"><i class="bi bi-star"></i></div>
+    <div class="stat-value">{{ '%.2f'|format(summary.avg_rating) if summary.feedback_count else '—' }}</div>
+    <div class="stat-label">Average rating</div>
+    <div class="stat-sub">{{ summary.feedback_count }} reviews (30d)</div>
+  </div>
+</div>
+
+<div class="row g-4 mb-4">
+  <div class="col-lg-8">
+    <div class="panel h-100">
+      <div class="panel-head"><h2><i class="bi bi-graph-up me-2 text-brand"></i>Order trend</h2><span class="tiny muted">Last 7 days</span></div>
+      <div class="panel-body pt-2">
+        <div class="chart-box"><canvas id="miniTrendChart" height="130"></canvas><div class="chart-fallback">Charts need Chart.js (CDN). Order totals are still available in the table below.</div></div>
+        <script type="application/json" id="dashboardTrendData">{{ trend|tojson }}</script>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="panel h-100">
+      <div class="panel-head"><h2><i class="bi bi-lightning me-2 text-brand"></i>Quick actions</h2></div>
+      <div class="panel-body pt-2">
+        <div class="d-grid gap-2">
+          <a class="quick-link" href="{{ url_for('admin.order_detail', order_id=pending_orders[0].id) if pending_orders else url_for('admin.orders', assignment='unassigned') }}"><i class="bi bi-person-check"></i> Assign pending orders</a>
+          <a class="quick-link" href="{{ url_for('admin.restaurant_new') }}"><i class="bi bi-shop"></i> Add a restaurant</a>
+          <a class="quick-link" href="{{ url_for('admin.user_new') }}"><i class="bi bi-person-plus"></i> Create a user</a>
+          <a class="quick-link" href="{{ url_for('admin.settings') }}"><i class="bi bi-sliders"></i> Optimization settings</a>
+          <a class="quick-link" href="{{ url_for('admin.report_orders', days=30) }}"><i class="bi bi-download"></i> Download orders report</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="panel mb-4">
+      <div class="panel-head">
+        <h2><i class="bi bi-person-exclamation me-2 text-brand"></i>Waiting for a partner</h2>
+        <a class="link" href="{{ url_for('admin.orders', assignment='unassigned') }}">All unassigned</a>
+      </div>
+      <div class="panel-body pt-2">
+        {% if pending_orders %}
+          <div class="order-list">
+            {% for order in pending_orders %}
+              <div class="order-row">
+                <div class="order-thumb">🍲</div>
+                <div class="order-main">
+                  <h3><a class="text-reset" href="{{ url_for('admin.order_detail', order_id=order.id) }}">{{ order.order_number }}</a></h3>
+                  <div class="order-sub">
+                    <span><i class="bi bi-shop"></i>{{ order.restaurant.name }}</span>
+                    <span><i class="bi bi-person"></i>{{ order.customer.name }}</span>
+                    <span><i class="bi bi-clock"></i>{{ order.placed_at|ago }}</span>
+                  </div>
+                </div>
+                <div class="order-side"><span class="amount">{{ order.total|money }}</span><span class="tiny muted">{{ order.delivery_address|truncate(24) }}</span></div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="small-note mb-0"><i class="bi bi-check2-circle me-1 text-success"></i> Every active order has a delivery partner.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2><i class="bi bi-clock-history me-2 text-brand"></i>Recent orders</h2>
+        <a class="link" href="{{ url_for('admin.orders') }}">All orders</a>
+      </div>
+      <div class="panel-body pt-2">
+        {% if recent_orders %}
+          <div class="order-list">
+            {% for order in recent_orders %}
+              <div class="order-row">
+                <div class="order-thumb">🍲</div>
+                <div class="order-main">
+                  <h3><a class="text-reset" href="{{ url_for('admin.order_detail', order_id=order.id) }}">{{ order.order_number }} · {{ order.customer.name }}</a></h3>
+                  <div class="order-sub">
+                    <span><i class="bi bi-shop"></i>{{ order.restaurant.name }}</span>
+                    <span><i class="bi bi-clock"></i>{{ order.placed_at|dt('%d %b, %I:%M %p') }}</span>
+                    <span><i class="bi bi-bicycle"></i>{{ order.delivery_partner.name if order.delivery_partner else 'Unassigned' }}</span>
+                  </div>
+                </div>
+                <div class="order-side">{{ status_badge(order) }}<span class="amount">{{ order.total|money }}</span></div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="empty-state small"><div class="empty-icon"><i class="bi bi-receipt"></i></div><h3>No orders yet</h3><p>New orders will appear here as soon as customers check out.</p></div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-bicycle me-2 text-brand"></i>Top partners</h2><a class="link" href="{{ url_for('admin.partners') }}">All partners</a></div>
+      <div class="panel-body pt-2">
+        {% for row in partners %}
+          <div class="d-flex align-items-center gap-2 py-2 border-bottom" style="border-color:#f0f3ef!important">
+            <span class="table-avatar">{{ row.partner.initials }}</span>
+            <div class="flex-grow-1 min-w-0">
+              <strong class="d-block" style="font-size:.84rem">{{ row.partner.name }}</strong>
+              <span class="tiny muted">{{ row.deliveries }} deliveries · {{ row.avg_delivery_min }}m avg</span>
+            </div>
+            <span class="distance-chip">{{ '%.1f'|format(row.rating) if row.rating_count else 'New' }} ★</span>
+          </div>
+        {% else %}
+          <p class="small-note mb-0">No delivery partners yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2><i class="bi bi-info-circle me-2 text-brand"></i>System</h2></div>
+      <div class="panel-body pt-2">
+        <div class="kv"><span>Orders today</span><span>{{ today_orders }}</span></div>
+        <div class="kv"><span>Available partners</span><span>{{ available_partners }}</span></div>
+        <div class="kv"><span>Active orders</span><span>{{ summary.active_orders }}</span></div>
+        <div class="kv"><span>Completion rate</span><span>{{ summary.completion_rate }}%</span></div>
+        <a class="btn btn-soft w-100 mt-3" href="{{ url_for('admin.settings') }}"><i class="bi bi-gear me-1"></i> Configure optimization</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% block title %}Route optimizer{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-signpost-split"></i> Optimization</div>
+    <h1>Route optimizer</h1>
+    <p>Select active orders (optionally with a starting partner) to compute an optimized pickup-before-drop route with traffic-aware legs (SRS 3.7).</p>
+  </div>
+</div>
+
+<div class="panel mb-4">
+  <div class="panel-body">
+    <form class="row g-2 align-items-end" method="get">
+      <div class="col-lg-4">
+        <label class="form-label" for="q">Search orders</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input class="form-control" id="q" name="q" value="{{ q }}" placeholder="Order number, customer or restaurant">
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <label class="form-label" for="status">Filter</label>
+        <select class="form-select" id="status" name="status">
+          <option value="" {{ 'selected' if not status }}>All active orders</option>
+          <option value="unassigned" {{ 'selected' if status == 'unassigned' }}>Unassigned only</option>
+          <option value="assigned" {{ 'selected' if status == 'assigned' }}>Assigned only</option>
+        </select>
+      </div>
+      <div class="col-12 col-lg-auto d-flex gap-2">
+        <button class="btn btn-brand" type="submit"><i class="bi bi-funnel me-1"></i> Apply</button>
+        <a class="btn btn-ghost" href="{{ url_for('admin.optimizer_page') }}">Reset</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if orders %}
+  <form class="panel mb-4" method="get" id="optimizerForm">
+    <div class="panel-head d-flex justify-content-between"><h2><i class="bi bi-ui-checks-grid me-2 text-brand"></i>Active orders</h2><span class="muted small">Select the orders to batch into one run</span></div>
+    <div class="panel-body">
+      <table class="table table-modern align-middle">
+        <thead><tr><th style="width:38px;">Batch</th><th>Order</th><th>Customer → Restaurant</th><th>Distance</th><th>Status</th></tr></thead>
+        <tbody>
+          {% for order in orders %}
+            <tr>
+              <td><input class="form-check-input" type="checkbox" name="orders" value="{{ order.id }}" {{ 'checked' if order.id in selected_ids }} {{ 'disabled' if not (order.restaurant and order.restaurant.has_location) and (order.delivery_lat is none or order.delivery_lng is none) }}></td>
+              <td>
+                {% if order.delivery_lat is not none and order.delivery_lng is not none and order.restaurant and order.restaurant.has_location %}
+                  <span class="cell-title">{{ order.order_number }}</span>
+                {% else %}
+                  <a class="cell-title" href="{{ url_for('admin.order_detail', order_id=order.id) }}">{{ order.order_number }}</a>
+                  <span class="cell-sub text-warning">no coordinates</span>
+                {% endif %}
+                {% if order.restaurant and order.restaurant.has_location %}
+                {% endif %}
+              </td>
+              <td>{{ order.restaurant.name }}<div class="cell-sub">→ {{ (order.delivery_address or 'customer')[:48] }}</div></td>
+              <td>{{ order.distance_km or 0 }} km</td>
+              <td><span class="badge bg-{{ order.status_color }}">{{ order.status_label }}</span>{% if order.delivery_partner %}<div class="cell-sub">{{ order.delivery_partner.name }}</div>{% endif %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="row g-2 align-items-end">
+        <div class="col-lg-5">
+          <label class="form-label" for="partner_id">Start route from partner location (optional)</label>
+          <select class="form-select" id="partner_id" name="partner_id">
+            <option value="0">Start from first pickup</option>
+            {% for partner in partners %}
+              <option value="{{ partner.id }}" {{ 'selected' if partner.id == partner_id }}>{{ partner.name }} — {{ partner.partner_profile.vehicle_type }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-lg-auto d-flex gap-2">
+          <button class="btn btn-brand" type="submit"><i class="bi bi-arrow-repeat me-1"></i> Optimize route</button>
+          <button class="btn btn-ghost" type="button" onclick="document.querySelectorAll('#optimizerForm input[type=checkbox]').forEach(c => c.checked = false)"><i class="bi bi-x-circle me-1"></i> Clear</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  {% if route and route.stops %}
+    <div class="row g-4">
+      <div class="col-lg-5">
+        <div class="panel mb-3">
+          <div class="panel-head"><h2><i class="bi bi-rulers me-2 text-brand"></i>Optimized run</h2></div>
+          <div class="panel-body">
+            <div class="d-flex gap-4 mb-3">
+              <div>
+                <div class="stat-value">{{ route.distance_km }} km</div>
+                <div class="stat-label">Total distance</div>
+              </div>
+              <div>
+                <div class="stat-value">{{ route.eta_minutes }} min</div>
+                <div class="stat-label">Traffic-aware ETA</div>
+              </div>
+              <div>
+                <div class="stat-value">{{ route.stops|length - 1 }}</div>
+                <div class="stat-label">Stops</div>
+              </div>
+            </div>
+            <p class="muted small">Orders batched: {{ route.order_numbers|join(', ') }}</p>
+            <div class="list-check mb-0">
+              {% for stop in route.stops[1:] %}
+                <li><i class="bi {{ 'bi-basket-fill' if stop.kind == 'pickup' else 'bi-house-check-fill' }}"></i><span>
+                  <strong>{{ loop.index }}. {{ stop.label }}</strong>
+                  <span class="cell-sub d-block">+{{ stop.leg_km }} km leg · {{ stop.address or '' }}</span>
+                </span></li>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="panel h-100">
+          <div class="panel-head"><h2><i class="bi bi-geo-alt me-2 text-brand"></i>Map</h2></div>
+          <div class="panel-body">
+            <div id="routeMap" class="map-box lg"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% elif route %}
+    <div class="panel"><div class="empty-state"><div class="empty-icon"><i class="bi bi-signpost-2"></i></div><h3>No routable coordinates</h3><p>The selected orders do not have both restaurant and delivery coordinates yet.</p></div></div>
+  {% endif %}
+{% else %}
+  <div class="panel"><div class="empty-state"><div class="empty-icon"><i class="bi bi-inbox"></i></div><h3>No active orders</h3><p>Nothing to optimize right now — all active orders are delivered. </p></div></div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if route and route.stops %}
+<script>
+(function () {
+  const route = {{ route | tojson }};
+  const stops = (route.stops || []).filter(s => s.lat != null && s.lng != null);
+  if (!stops.length || typeof L === 'undefined') return;
+
+  const map = L.map('routeMap');
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const ICONS = {
+    partner: L.divIcon({ html: '<span style="font-size:20px">📍</span>', className: 'map-emoji', iconSize: [28, 28], iconAnchor: [14, 14] }),
+    pickup:  L.divIcon({ html: '<span style="font-size:20px">🍗</span>', className: 'map-emoji', iconSize: [28, 28], iconAnchor: [14, 14] }),
+    drop:    L.divIcon({ html: '<span style="font-size:20px">🏠</span>', className: 'map-emoji', iconSize: [28, 28], iconAnchor: [14, 14] })
+  };
+
+  const latlngs = [];
+  stops.forEach(function (stop, index) {
+    const ll = [stop.lat, stop.lng];
+    latlngs.push(ll);
+    L.marker(ll, { icon: ICONS[stop.kind] || ICONS.partner }).addTo(map)
+      .bindPopup(
+        '<strong>' + (stop.label || stop.kind) + '</strong>' +
+        (stop.leg_km != null ? '<br><small>+' + stop.leg_km + ' km leg</small>' : '') +
+        (stop.address ? '<br><small>' + stop.address + '</small>' : '')
+      );
+    if (index > 0 && stop.sequence) {
+      L.tooltip({ permanent: true, direction: 'top', className: 'route-seq' })
+        .setContent(String(stop.sequence))
+        .setLatLng(ll)
+        .addTo(map);
+    }
+  });
+
+  L.polyline(latlngs, { color: '#7c3aed', weight: 4, opacity: 0.85, dashArray: '1, 6', lineCap: 'round' }).addTo(map);
+  map.fitBounds(L.latLngBounds(latlngs).pad(0.25));
+})();
+</script>
+{% endif %}
+{% endblock %}

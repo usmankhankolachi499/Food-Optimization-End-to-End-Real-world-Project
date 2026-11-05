@@ -1,0 +1,119 @@
+﻿{% extends "base.html" %}
+{% block title %}{{ 'Edit restaurant' if editing else 'New restaurant' }}{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-shop"></i> {{ 'Edit restaurant' if editing else 'New restaurant' }}</div>
+    <h1>{{ editing.name if editing else 'Add a restaurant' }}</h1>
+    <p>{{ 'Update the listing, hours, location and availability.' if editing else 'Create a restaurant profile and then add menu items.' }}</p>
+  </div>
+  <a class="btn btn-ghost" href="{{ url_for('admin.restaurants') }}"><i class="bi bi-arrow-left me-1"></i> Restaurants</a>
+</div>
+
+<form method="post" action="{{ url_for('admin.restaurant_edit', restaurant_id=editing.id) if editing else url_for('admin.restaurant_new') }}" class="row g-4">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="col-lg-8">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-card-text me-2 text-brand"></i>Basic information</h2></div>
+      <div class="panel-body">
+        <div class="row g-3">
+          <div class="col-md-8">
+            <label class="form-label" for="name">Restaurant name</label>
+            <input class="form-control" id="name" name="name" value="{{ values.name }}" required minlength="2">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="cuisine">Cuisine</label>
+            <input class="form-control" id="cuisine" name="cuisine" value="{{ values.cuisine }}" required placeholder="Pakistani / BBQ">
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3" maxlength="500">{{ values.description }}</textarea>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="phone">Phone</label>
+            <input class="form-control" id="phone" name="phone" value="{{ values.phone }}" placeholder="+92 38220 11001">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="email">Email</label>
+            <input class="form-control" id="email" name="email" type="email" value="{{ values.email }}" placeholder="hello@restaurant.test">
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="image_url">Cover image URL (optional)</label>
+            <input class="form-control" id="image_url" name="image_url" value="{{ values.image_url }}" placeholder="https://…">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-geo-alt me-2 text-brand"></i>Address &amp; coordinates</h2></div>
+      <div class="panel-body">
+        <div class="row g-3">
+          <div class="col-md-8">
+            <label class="form-label" for="address">Street address</label>
+            <input class="form-control" id="address" name="address" value="{{ values.address }}">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="city">City</label>
+            <input class="form-control" id="city" name="city" value="{{ values.city }}">
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label" for="latitude">Latitude</label>
+            <input class="form-control" id="latitude" name="latitude" value="{{ values.latitude }}" placeholder="18.536200">
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label" for="longitude">Longitude</label>
+            <input class="form-control" id="longitude" name="longitude" value="{{ values.longitude }}" placeholder="73.894000">
+          </div>
+        </div>
+        <div class="form-hint mt-2">Coordinates are required for distance-based delivery fees, ETAs and route maps.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2><i class="bi bi-clock me-2 text-brand"></i>Opening hours</h2></div>
+      <div class="panel-body">
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <label class="form-label" for="opening_time">Opens at</label>
+            <input class="form-control" id="opening_time" name="opening_time" type="time" value="{{ values.opening_time }}">
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label" for="closing_time">Closes at</label>
+            <input class="form-control" id="closing_time" name="closing_time" type="time" value="{{ values.closing_time }}">
+          </div>
+        </div>
+        <div class="form-hint mt-2">Leave both blank for 24-hour availability. Closing after midnight is supported (e.g. 11:00 → 02:00).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-toggle-on me-2 text-brand"></i>Status</h2></div>
+      <div class="panel-body">
+        <div class="form-check form-switch mb-3">
+          <input class="form-check-input" type="checkbox" role="switch" id="is_active" name="is_active" value="1" {{ 'checked' if values.is_active|string in ['1','true','yes','on'] }}>
+          <label class="form-check-label fw-semibold" for="is_active">Restaurant active</label>
+        </div>
+        <p class="small-note">Inactive restaurants are hidden from customers but keep their order history.</p>
+        {% if editing %}
+          <div class="kv"><span>Menu items</span><span>{{ editing.available_menu_count }} available</span></div>
+          <div class="kv"><span>Rating</span><span>{{ editing.rating_display }}{% if editing.rating_count %} ({{ editing.rating_count }}){% endif %}</span></div>
+          <div class="kv"><span>Created</span><span>{{ editing.created_at|dt('%d %b %Y') }}</span></div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-body">
+        <button class="btn btn-brand w-100" type="submit"><i class="bi bi-check2-circle me-1"></i> {{ 'Save changes' if editing else 'Create restaurant' }}</button>
+        <a class="btn btn-ghost w-100 mt-2" href="{{ url_for('admin.restaurants') }}">Cancel</a>
+        {% if editing %}
+          <a class="btn btn-soft w-100 mt-2" href="{{ url_for('admin.menu', restaurant_id=editing.id) }}"><i class="bi bi-list-ul me-1"></i> Manage menu</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,23 @@
+{
+  "orders: negative distance_km": 40,
+  "orders: missing distance_km": 60,
+  "orders: missing prep_time_min": 60,
+  "orders: inconsistent status text": 80,
+  "orders: order_time in dd/mm/YYYY HH:MM format": 50,
+  "orders: impossible actual_delivery_min (0 or 480)": 30,
+  "orders: null status": 35,
+  "orders: delivery_fee missing from total": 50,
+  "orders: negative subtotal": 25,
+  "orders: invalid weather values": 40,
+  "orders: duplicate rows (same order_id)": 150,
+  "customers: missing phone": 40,
+  "customers: invalid phone": 30,
+  "customers: lat/lon out of range": 25,
+  "customers: missing address": 20,
+  "customers: names uppercase with extra spaces": 60,
+  "customers: duplicate rows (same customer_id)": 30,
+  "location_logs_raw: GPS (0,0)": 600,
+  "location_logs_raw: null latitude": 300,
+  "location_logs_raw: lat/lon out of range": 300,
+  "location_logs_raw: duplicate documents": 300
+}

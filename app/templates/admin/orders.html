@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import status_badge, empty_state %}
+{% block title %}Orders{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-receipt"></i> Operations</div>
+    <h1>Orders</h1>
+    <p>{{ pagination.total }} order{{ '' if pagination.total == 1 else 's' }} matching the current filters.</p>
+  </div>
+  <div class="d-flex gap-2">
+    <a class="btn btn-ghost" href="{{ url_for('admin.report_orders', days=30) }}"><i class="bi bi-download me-1"></i> CSV</a>
+    <a class="btn btn-ghost" href="{{ url_for('admin.partners') }}"><i class="bi bi-bicycle me-1"></i> Partners</a>
+  </div>
+</div>
+
+<div class="panel mb-4">
+  <div class="panel-body">
+    <form class="row g-2 align-items-end" method="get">
+      <div class="col-lg-5">
+        <label class="form-label" for="q">Search</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input class="form-control" id="q" name="q" value="{{ filters.q }}" placeholder="Order number, customer or restaurant">
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-2">
+        <label class="form-label" for="status">Status</label>
+        <select class="form-select" id="status" name="status">
+          <option value="">All statuses</option>
+          {% for value in statuses %}
+            <option value="{{ value }}" {{ 'selected' if filters.status == value }}>{{ value|replace('_',' ')|title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-sm-6 col-lg-2">
+        <label class="form-label" for="assignment">Assignment</label>
+        <select class="form-select" id="assignment" name="assignment">
+          <option value="">Any</option>
+          <option value="unassigned" {{ 'selected' if filters.assignment == 'unassigned' }}>Unassigned</option>
+          <option value="assigned" {{ 'selected' if filters.assignment == 'assigned' }}>Assigned</option>
+        </select>
+      </div>
+      <div class="col-12 col-lg-auto d-flex gap-2">
+        <button class="btn btn-brand" type="submit"><i class="bi bi-funnel me-1"></i> Filter</button>
+        <a class="btn btn-ghost" href="{{ url_for('admin.orders') }}">Reset</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if orders %}
+  <div class="table-wrap">
+    <div class="table-responsive">
+      <table class="table table-modern align-middle">
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Customer</th>
+            <th>Restaurant</th>
+            <th>Partner</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Placed</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+            <tr>
+              <td><span class="cell-title">{{ order.order_number }}</span><div class="cell-sub">{{ order.item_count }} items · {{ order.distance_km or 0 }} km</div></td>
+              <td>{{ order.customer.name }}<div class="cell-sub">{{ order.customer.phone or order.customer.email }}</div></td>
+              <td>{{ order.restaurant.name }}<div class="cell-sub">{{ order.restaurant.city or '' }}</div></td>
+              <td>{% if order.delivery_partner %}{{ order.delivery_partner.name }}{% else %}<span class="badge badge-warm">Unassigned</span>{% endif %}</td>
+              <td>{{ order.total|money }}<div class="cell-sub">{{ order.payment_method }} · {{ order.payment_status }}</div></td>
+              <td>{{ status_badge(order) }}</td>
+              <td>{{ order.placed_at|dt('%d %b, %I:%M %p') }}</td>
+              <td class="text-end"><a class="btn btn-soft btn-sm" href="{{ url_for('admin.order_detail', order_id=order.id) }}">Manage</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% include "partials/pagination.html" %}
+{% else %}
+  <div class="panel">{{ empty_state('receipt', 'No orders found', 'Try clearing the filters or wait for new orders.', url_for('admin.orders'), 'Show all orders') }}</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,106 @@
+﻿{% extends "base.html" %}
+{% block title %}{{ 'Edit user' if editing else 'New user' }}{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-person-gear"></i> {{ 'Edit account' if editing else 'Create account' }}</div>
+    <h1>{{ 'Edit ' ~ editing.name if editing else 'Add a new user' }}</h1>
+    <p>{{ 'Update role, contact details and account status.' if editing else 'Create a customer, delivery partner or administrator account.' }}</p>
+  </div>
+  <a class="btn btn-ghost" href="{{ url_for('admin.users') }}"><i class="bi bi-arrow-left me-1"></i> Users</a>
+</div>
+
+<form method="post" action="{{ url_for('admin.user_edit', user_id=editing.id) if editing else url_for('admin.user_new') }}" class="row g-4">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="col-lg-8">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-person me-2 text-brand"></i>Account details</h2></div>
+      <div class="panel-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label" for="name">Full name</label>
+            <input class="form-control" id="name" name="name" value="{{ values.name }}" required minlength="3">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="username">Username</label>
+            <input class="form-control" id="username" name="username" value="{{ values.username }}" required minlength="3" pattern="\S+">
+            <div class="form-hint">No spaces. Used to sign in.</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="email">Email</label>
+            <input class="form-control" id="email" name="email" type="email" value="{{ values.email }}" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="phone">Phone</label>
+            <input class="form-control" id="phone" name="phone" value="{{ values.phone or '' }}" placeholder="+92 30000 00000">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="role">Role</label>
+            <select class="form-select" id="role" name="role" {{ 'disabled' if editing and editing.id == current_user.id }}>
+              {% for value, label in [('customer','Customer'),('delivery','Delivery Partner'),('admin','Administrator')] %}
+                <option value="{{ value }}" {{ 'selected' if values.role == value }}>{{ label }}</option>
+              {% endfor %}
+            </select>
+            {% if editing and editing.id == current_user.id %}
+              <input type="hidden" name="role" value="admin">
+              <div class="form-hint">You cannot remove your own administrator role.</div>
+            {% endif %}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="password">{{ 'New password (optional)' if editing else 'Password' }}</label>
+            <div class="input-group">
+              <input class="form-control" id="password" name="password" type="password" minlength="8" {{ '' if editing else 'required' }} placeholder="At least 8 characters">
+              <button class="btn btn-ghost" type="button" data-password-toggle="password" aria-label="Show password"><i class="bi bi-eye"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="partnerFields">
+      <div class="panel-head"><h2><i class="bi bi-bicycle me-2 text-brand"></i>Delivery partner details</h2></div>
+      <div class="panel-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label" for="vehicle_type">Vehicle type</label>
+            <select class="form-select" id="vehicle_type" name="vehicle_type">
+              {% for vehicle in ['Bike', 'Scooter', 'Electric Scooter', 'Bicycle', 'Car'] %}
+                <option value="{{ vehicle }}" {{ 'selected' if values.vehicle_type == vehicle }}>{{ vehicle }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="vehicle_number">Vehicle number</label>
+            <input class="form-control" id="vehicle_number" name="vehicle_number" value="{{ values.vehicle_number or '' }}" maxlength="30" placeholder="MH12 AB 1234">
+          </div>
+        </div>
+        <div class="form-hint mt-2">Only used when the role is Delivery Partner.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-toggle-on me-2 text-brand"></i>Status</h2></div>
+      <div class="panel-body">
+        <div class="form-check form-switch mb-3">
+          <input class="form-check-input" type="checkbox" role="switch" id="is_active" name="is_active" value="1" {{ 'checked' if values.is_active|string in ['1','true','yes','on'] }}>
+          <label class="form-check-label fw-semibold" for="is_active">Account active</label>
+        </div>
+        <p class="small-note">Inactive accounts cannot sign in and partners are excluded from assignment.</p>
+        {% if editing %}
+          <div class="kv"><span>Created</span><span>{{ editing.created_at|dt('%d %b %Y') }}</span></div>
+          <div class="kv"><span>Last login</span><span>{{ editing.last_login_at|ago if editing.last_login_at else 'Never' }}</span></div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-body">
+        <button class="btn btn-brand w-100" type="submit"><i class="bi bi-check2-circle me-1"></i> {{ 'Save changes' if editing else 'Create user' }}</button>
+        <a class="btn btn-ghost w-100 mt-2" href="{{ url_for('admin.users') }}">Cancel</a>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

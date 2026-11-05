@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import order_row, empty_state %}
+{% block title %}My orders{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-bag"></i> Order history</div>
+    <h1>My orders</h1>
+    <p>Track active deliveries and revisit past orders.</p>
+  </div>
+  <a class="btn btn-brand" href="{{ url_for('main.restaurants') }}"><i class="bi bi-plus-lg me-1"></i> New order</a>
+</div>
+
+<div class="panel mb-4">
+  <div class="panel-body py-2">
+    <div class="d-flex flex-wrap gap-2">
+      {% set tabs = [('', 'All'), ('placed', 'Placed'), ('confirmed', 'Confirmed'), ('prepared', 'Prepared'), ('dispatched', 'Out for delivery'), ('delivered', 'Delivered'), ('cancelled', 'Cancelled')] %}
+      {% for value, label in tabs %}
+        <a class="btn btn-sm {{ 'btn-forest' if active_status == value else 'btn-ghost' }}" href="{{ url_for('customer.orders', status=value) if value else url_for('customer.orders') }}">{{ label }}</a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% if orders %}
+  <div class="order-list">
+    {% for order in orders %}
+      <div>
+        {{ order_row(order) }}
+        {% if order.is_active %}
+          <div class="progress mt-2" style="height:6px"><div class="progress-bar" style="width:{{ order.progress_percent }}%"></div></div>
+        {% endif %}
+        <div class="d-flex justify-content-end gap-2 mt-2">
+          {% if order.is_active %}<a class="btn btn-soft btn-sm" href="{{ url_for('customer.order_detail', order_id=order.id) }}"><i class="bi bi-broadcast-pin me-1"></i> Track order</a>{% endif %}
+          {% if order.can_be_rated %}<a class="btn btn-brand btn-sm" href="{{ url_for('customer.feedback', order_id=order.id) }}"><i class="bi bi-star me-1"></i> Rate order</a>{% endif %}
+          <a class="btn btn-ghost btn-sm" href="{{ url_for('customer.order_detail', order_id=order.id) }}">Details</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  {% include "partials/pagination.html" %}
+{% else %}
+  <div class="panel">
+    {{ empty_state('receipt', 'No orders here', 'There are no orders matching this filter yet.', url_for('customer.orders'), 'Show all orders') }}
+  </div>
+{% endif %}
+{% endblock %}

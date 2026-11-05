@@ -1,0 +1,189 @@
+﻿{% extends "base.html" %}
+{% block title %}Optimization settings{% endblock %}
+{% block content %}
+{% set auto_assign = (values.get('auto_assign_orders', 'false')|lower) in ['1', 'true', 'yes', 'on'] %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-sliders"></i> System configuration</div>
+    <h1>Optimization settings</h1>
+    <p>Tune pricing, ETA, assignment rules and integrations. Changes apply to new orders and route calculations immediately.</p>
+  </div>
+  <form method="post" action="{{ url_for('admin.settings') }}" onsubmit="return confirm('Restore every setting to its factory default?');">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="action" value="reset">
+    <button class="btn btn-ghost" type="submit"><i class="bi bi-arrow-counterclockwise me-1"></i> Reset defaults</button>
+  </form>
+</div>
+
+<form method="post" action="{{ url_for('admin.settings') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="panel mb-4">
+        <div class="panel-head">
+          <h2><i class="bi bi-cash-coin me-2 text-brand"></i>Pricing</h2>
+          <span class="tiny muted">Charged at checkout</span>
+        </div>
+        <div class="panel-body p-0">
+          <div class="setting-row">
+            <div>
+              <h3>Base delivery fee</h3>
+              <p>Flat fee added to every delivery before the distance charge.</p>
+            </div>
+            <div class="input-group">
+              <span class="input-group-text">Rs</span>
+              <input class="form-control" type="number" name="base_delivery_fee" value="{{ values.base_delivery_fee }}" min="0" max="500" step="0.01" required>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div>
+              <h3>Per-kilometre fee</h3>
+              <p>Distance component of the delivery fee, based on road distance.</p>
+            </div>
+            <div class="input-group">
+              <span class="input-group-text">Rs/km</span>
+              <input class="form-control" type="number" name="per_km_fee" value="{{ values.per_km_fee }}" min="0" max="200" step="0.01" required>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div>
+              <h3>Partner commission</h3>
+              <p>Percentage of each delivery fee credited to the delivery partner.</p>
+            </div>
+            <div class="input-group">
+              <input class="form-control" type="number" name="partner_commission_percent" value="{{ values.partner_commission_percent }}" min="0" max="100" step="1" required>
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel mb-4">
+        <div class="panel-head">
+          <h2><i class="bi bi-signpost-split me-2 text-brand"></i>Routing &amp; ETA</h2>
+          <span class="tiny muted">Used by tracking and route previews</span>
+        </div>
+        <div class="panel-body p-0">
+          <div class="setting-row">
+            <div>
+              <h3>Average city speed</h3>
+              <p>Baseline speed for travel-time estimates when live traffic is unavailable.</p>
+            </div>
+            <div class="input-group">
+              <input class="form-control" type="number" name="avg_speed_kmph" value="{{ values.avg_speed_kmph }}" min="5" max="100" step="0.1" required>
+              <span class="input-group-text">km/h</span>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div>
+              <h3>Traffic multiplier</h3>
+              <p>Multiplies travel time to account for congestion. 1.0 means no delay.</p>
+            </div>
+            <div class="input-group">
+              <input class="form-control" type="number" name="traffic_factor" value="{{ values.traffic_factor }}" min="1" max="3" step="0.05" required>
+              <span class="input-group-text">×</span>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div>
+              <h3>Preparation buffer</h3>
+              <p>Extra minutes added after the restaurant's preparation time before dispatch.</p>
+            </div>
+            <div class="input-group">
+              <input class="form-control" type="number" name="prep_buffer_min" value="{{ values.prep_buffer_min }}" min="0" max="60" step="1" required>
+              <span class="input-group-text">min</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2><i class="bi bi-person-check me-2 text-brand"></i>Assignment rules</h2>
+          <span class="tiny muted">Controls automatic dispatch</span>
+        </div>
+        <div class="panel-body p-0">
+          <div class="setting-row">
+            <div>
+              <h3>Maximum delivery radius</h3>
+              <p>Partners beyond this road distance are excluded from automatic assignment.</p>
+            </div>
+            <div class="input-group">
+              <input class="form-control" type="number" name="max_delivery_radius_km" value="{{ values.max_delivery_radius_km }}" min="1" max="100" step="0.5" required>
+              <span class="input-group-text">km</span>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div>
+              <h3>Concurrent orders per partner</h3>
+              <p>Batch capacity used when ranking partners and checking availability.</p>
+            </div>
+            <div class="input-group">
+              <input class="form-control" type="number" name="max_orders_per_partner" value="{{ values.max_orders_per_partner }}" min="1" max="10" step="1" required>
+              <span class="input-group-text">orders</span>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div>
+              <h3>Auto-assign new orders</h3>
+              <p>Automatically offer a confirmed order to the best-ranked available partner.</p>
+            </div>
+            <div class="form-check form-switch m-0">
+              <input class="form-check-input" type="checkbox" role="switch" id="auto_assign_orders" name="auto_assign_orders" value="1" {{ 'checked' if auto_assign }}>
+              <label class="form-check-label small" for="auto_assign_orders">{{ 'Enabled' if auto_assign else 'Disabled' }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="panel mb-4">
+        <div class="panel-head"><h2><i class="bi bi-plug me-2 text-brand"></i>Integrations</h2></div>
+        <div class="panel-body pt-2">
+          <div class="d-grid gap-2">
+            <div class="integration-chip">
+              <i class="bi bi-cpu {{ 'ok' if ml_ready else 'off' }}"></i>
+              <div class="flex-grow-1">
+                <strong class="d-block">ML ETA predictor</strong>
+                <span class="tiny muted">{{ 'Connected via the configured ML module.' if ml_ready else 'Not detected — deterministic ETA heuristic in use.' }}</span>
+              </div>
+              <span class="badge {{ 'bg-success' if ml_ready else 'bg-secondary' }}">{{ 'Ready' if ml_ready else 'Fallback' }}</span>
+            </div>
+            <div class="integration-chip">
+              <i class="bi bi-database {{ 'ok' if mongo_ready else 'off' }}"></i>
+              <div class="flex-grow-1">
+                <strong class="d-block">MongoDB location log</strong>
+                <span class="tiny muted">{{ 'Mirroring tracking updates to MongoDB.' if mongo_ready else 'Not configured — live positions stay in the primary database.' }}</span>
+              </div>
+              <span class="badge {{ 'bg-success' if mongo_ready else 'bg-secondary' }}">{{ 'Ready' if mongo_ready else 'Optional' }}</span>
+            </div>
+          </div>
+          <div class="callout mt-3">
+            <i class="bi bi-info-circle me-1"></i>
+            Integration endpoints are configured with environment variables: <code class="code-chip">ML_MODULE</code>, <code class="code-chip">ML_ENABLED</code>, <code class="code-chip">MONGO_URI</code>, <code class="code-chip">MONGO_DB</code> and <code class="code-chip">MONGO_COLLECTION</code>. The application works without either service.
+          </div>
+        </div>
+      </div>
+
+      <div class="panel mb-4">
+        <div class="panel-head"><h2><i class="bi bi-activity me-2 text-brand"></i>How settings are used</h2></div>
+        <div class="panel-body pt-2">
+          <div class="kv"><span>Delivery fee</span><span>Base + distance × per-km</span></div>
+          <div class="kv"><span>Estimated time</span><span>Prep + travel × traffic</span></div>
+          <div class="kv"><span>Partner ranking</span><span>Distance, workload, rating</span></div>
+          <div class="kv"><span>Assignment cap</span><span>Concurrent active orders</span></div>
+          <p class="small-note mb-0 mt-3">Values are stored in the <code class="code-chip">system_settings</code> table and override the defaults in code.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-body">
+          <button class="btn btn-brand w-100" type="submit"><i class="bi bi-check2-circle me-1"></i> Save settings</button>
+          <a class="btn btn-ghost w-100 mt-2" href="{{ url_for('admin.dashboard') }}">Back to dashboard</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

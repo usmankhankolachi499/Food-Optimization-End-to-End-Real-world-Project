@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import stars, empty_state %}
+{% block title %}Restaurants{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-shop"></i> Catalogue</div>
+    <h1>Restaurants</h1>
+    <p>{{ pagination.total }} restaurants on the platform.</p>
+  </div>
+  <a class="btn btn-brand" href="{{ url_for('admin.restaurant_new') }}"><i class="bi bi-plus-lg me-1"></i> Add restaurant</a>
+</div>
+
+<div class="panel mb-4">
+  <div class="panel-body">
+    <form class="row g-2 align-items-end" method="get">
+      <div class="col-lg-8">
+        <label class="form-label" for="q">Search</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input class="form-control" id="q" name="q" value="{{ q }}" placeholder="Name, cuisine or city">
+        </div>
+      </div>
+      <div class="col-auto"><button class="btn btn-brand" type="submit">Search</button></div>
+      <div class="col-auto"><a class="btn btn-ghost" href="{{ url_for('admin.restaurants') }}">Reset</a></div>
+    </form>
+  </div>
+</div>
+
+{% if restaurants %}
+  <div class="table-wrap">
+    <div class="table-responsive">
+      <table class="table table-modern align-middle">
+        <thead>
+          <tr>
+            <th>Restaurant</th>
+            <th>Cuisine</th>
+            <th>Location</th>
+            <th>Rating</th>
+            <th>Orders (30d)</th>
+            <th>Revenue (30d)</th>
+            <th>Status</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for restaurant in restaurants %}
+            {% set row = stats[restaurant.id] %}
+            <tr>
+              <td>
+                <span class="cell-title">{{ restaurant.name }}</span>
+                <div class="cell-sub">{{ restaurant.available_menu_count }} dishes · {{ restaurant.hours_label }}</div>
+              </td>
+              <td>{{ restaurant.cuisine or '—' }}</td>
+              <td>{{ restaurant.city or '—' }}<div class="cell-sub">{{ restaurant.address or '' }}</div></td>
+              <td>{{ stars(restaurant.rating_avg, restaurant.rating_count) }}</td>
+              <td>{{ row.orders }}<div class="cell-sub">{{ row.delivered }} delivered</div></td>
+              <td>{{ row.revenue|money }}</td>
+              <td>{% if restaurant.is_active %}<span class="badge bg-success">Active</span>{% else %}<span class="badge bg-secondary">Inactive</span>{% endif %}</td>
+              <td class="text-end">
+                <div class="d-flex justify-content-end gap-1 flex-wrap">
+                  <a class="btn btn-soft btn-sm" href="{{ url_for('admin.menu', restaurant_id=restaurant.id) }}"><i class="bi bi-list-ul me-1"></i> Menu</a>
+                  <a class="btn btn-ghost btn-sm" href="{{ url_for('admin.restaurant_edit', restaurant_id=restaurant.id) }}"><i class="bi bi-pencil"></i></a>
+                  <form method="post" action="{{ url_for('admin.restaurant_toggle', restaurant_id=restaurant.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-ghost btn-sm" type="submit" title="{{ 'Deactivate' if restaurant.is_active else 'Activate' }}"><i class="bi bi-{{ 'pause-circle' if restaurant.is_active else 'play-circle' }}"></i></button>
+                  </form>
+                  <form method="post" action="{{ url_for('admin.restaurant_delete', restaurant_id=restaurant.id) }}" onsubmit="return confirm('Delete or deactivate {{ restaurant.name|e }}? Restaurants with order history are deactivated, not deleted.');">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-ghost btn-sm text-danger" type="submit" title="Delete"><i class="bi bi-trash"></i></button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% include "partials/pagination.html" %}
+{% else %}
+  <div class="panel">{{ empty_state('shop', 'No restaurants found', 'Add your first restaurant or adjust the search.', url_for('admin.restaurant_new'), 'Add restaurant') }}</div>
+{% endif %}
+{% endblock %}

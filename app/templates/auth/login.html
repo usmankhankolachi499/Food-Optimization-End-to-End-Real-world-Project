@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block main_class %}auth-main container{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <aside class="auth-aside">
+    <div>
+      <span class="brand-moon" style="font-size:2.4rem;">🌙</span>
+      <h1>Great food.<br>Delivered <em>under the moonlight</em>.</h1>
+      <p>MOON Light uses smart partner assignment, traffic-aware ETAs and live GPS tracking to get every order there while it is still hot.</p>
+      <div class="auth-points">
+        <div class="auth-point"><i class="bi bi-signpost-split"></i><span>Route optimization for every delivery run</span></div>
+        <div class="auth-point"><i class="bi bi-broadcast-pin"></i><span>Real-time tracking from kitchen to doorstep</span></div>
+        <div class="auth-point"><i class="bi bi-star"></i><span>Ratings that keep service quality high</span></div>
+      </div>
+    </div>
+    <div class="live-pill"><span class="live-dot"></span> Live delivery network</div>
+  </aside>
+
+  <section class="auth-form">
+    <div class="eyebrow mb-2"><i class="bi bi-box-arrow-in-right"></i> Welcome back</div>
+    <h2>Sign in to your account</h2>
+    <p>Use your username or email address to continue.</p>
+
+    <form method="post" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="next" value="{{ next_url }}">
+      <div class="mb-3">
+        <label class="form-label" for="identifier">Username or email</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-person"></i></span>
+          <input class="form-control" id="identifier" name="identifier" type="text" autocomplete="username" placeholder="customer" required autofocus>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <label class="form-label" for="password">Password</label>
+          <span class="tiny muted">Auto sign-out after inactivity</span>
+        </div>
+        <div class="password-wrap">
+          <input class="form-control" id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required>
+          <button class="password-toggle" type="button" data-password-toggle="password" aria-label="Show password"><i class="bi bi-eye"></i></button>
+        </div>
+      </div>
+      <button class="btn btn-brand w-100 btn-lg" type="submit"><i class="bi bi-box-arrow-in-right me-1"></i> Sign in</button>
+    </form>
+
+    <div class="auth-switch">New to MOON Light? <a href="{{ url_for('auth.register') }}">Create a customer account</a></div>
+
+    <div class="demo-logins">
+      <strong>Demo accounts</strong> (password <code>Password@123</code>)<br>
+      Admin <code>admin</code> · Customer <code>customer</code> · Partner <code>partner1</code>
+    </div>
+  </section>
+</div>
+{% endblock %}

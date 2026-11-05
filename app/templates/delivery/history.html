@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import status_badge, empty_state %}
+{% block title %}Delivery history{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-clock-history"></i> Performance</div>
+    <h1>Delivery history</h1>
+    <p>Completed and cancelled deliveries assigned to you.</p>
+  </div>
+  <a class="btn btn-ghost" href="{{ url_for('delivery.dashboard') }}"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
+</div>
+
+<div class="stat-grid mb-4">
+  <div class="stat-card green"><div class="stat-icon"><i class="bi bi-house-check"></i></div><div class="stat-value">{{ stats.delivered }}</div><div class="stat-label">Delivered (30 days)</div></div>
+  <div class="stat-card"><div class="stat-icon"><i class="bi bi-bicycle"></i></div><div class="stat-value">{{ stats.total_deliveries }}</div><div class="stat-label">Lifetime deliveries</div></div>
+  <div class="stat-card blue"><div class="stat-icon"><i class="bi bi-wallet2"></i></div><div class="stat-value">{{ stats.earnings|money }}</div><div class="stat-label">Earnings (30 days)</div></div>
+  <div class="stat-card amber"><div class="stat-icon"><i class="bi bi-stopwatch"></i></div><div class="stat-value">{{ stats.avg_delivery_min }}m</div><div class="stat-label">Avg delivery time</div></div>
+  <div class="stat-card"><div class="stat-icon"><i class="bi bi-star"></i></div><div class="stat-value">{{ '%.1f'|format(stats.rating) if stats.rating_count else 'New' }}</div><div class="stat-label">Rating</div></div>
+</div>
+
+{% if orders %}
+  <div class="table-wrap">
+    <div class="table-responsive">
+      <table class="table table-modern align-middle">
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Restaurant</th>
+            <th>Customer</th>
+            <th>Delivered</th>
+            <th>Distance</th>
+            <th>Fee</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+            <tr>
+              <td><span class="cell-title">{{ order.order_number }}</span><div class="cell-sub">{{ order.placed_at|dt('%d %b %Y') }}</div></td>
+              <td>{{ order.restaurant.name }}</td>
+              <td>{{ order.customer.name }}</td>
+              <td>{{ order.delivered_at|dt('%d %b, %I:%M %p') if order.delivered_at else '—' }}</td>
+              <td>{{ '%.1f'|format(order.distance_km or 0) }} km</td>
+              <td>{{ order.delivery_fee|money }}</td>
+              <td>{{ status_badge(order) }}</td>
+              <td class="text-end"><a class="btn btn-ghost btn-sm" href="{{ url_for('delivery.order_detail', order_id=order.id) }}">View</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% include "partials/pagination.html" %}
+{% else %}
+  <div class="panel">
+    {{ empty_state('clock-history', 'No completed deliveries yet', 'Delivered and cancelled orders will appear here.', url_for('delivery.assignments'), 'Find assignments') }}
+  </div>
+{% endif %}
+{% endblock %}

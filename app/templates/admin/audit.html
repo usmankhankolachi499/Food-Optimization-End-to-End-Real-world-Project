@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Audit trail{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-shield-check"></i> Governance</div>
+    <h1>Admin audit trail</h1>
+    <p>Every administrator mutation is recorded here (SRS 3.13). Entries are append-only and cannot be edited or deleted from the app.</p>
+  </div>
+</div>
+
+<div class="panel mb-4">
+  <div class="panel-body">
+    <form class="row g-2 align-items-end" method="get">
+      <div class="col-sm-8 col-lg-4">
+        <label class="form-label" for="action">Action</label>
+        <select class="form-select" id="action" name="action">
+          <option value="">All actions</option>
+          {% for a in actions %}
+            <option value="{{ a }}" {{ 'selected' if action == a }}>{{ a.replace('_',' ')|title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-auto d-flex gap-2">
+        <button class="btn btn-brand" type="submit"><i class="bi bi-funnel me-1"></i> Filter</button>
+        <a class="btn btn-ghost" href="{{ url_for('admin.audit_page') }}">Reset</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if logs %}
+  <div class="table-wrap">
+    <div class="table-responsive">
+      <table class="table table-modern align-middle">
+        <thead>
+          <tr>
+            <th>When</th>
+            <th>Admin</th>
+            <th>Action</th>
+            <th>Target</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for l in logs %}
+            <tr>
+              <td><span class="cell-title" data-bs-toggle="tooltip" title="{{ l.created_at|dt('%d %b %Y, %I:%M %p') }}">{{ l.created_at|dt('%d %b, %I:%M %p') }}</span><div class="cell-sub">{{ l.created_at|ago }}</div></td>
+              <td>{{ l.admin_name }}</td>
+              <td><span class="badge badge-soft">{{ l.action.replace('_',' ')|title }}</span></td>
+              <td>{{ l.target or '—' }}</td>
+              <td class="cell-sub">{{ l.notes or '' }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% include "partials/pagination.html" %}
+{% else %}
+  <div class="panel"><div class="empty-state"><div class="empty-icon"><i class="bi bi-shield"></i></div><h3>No audit entries yet</h3><p>Admin actions will appear here as soon as they happen.</p></div></div>
+{% endif %}
+{% endblock %}

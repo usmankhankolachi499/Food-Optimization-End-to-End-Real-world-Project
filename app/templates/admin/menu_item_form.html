@@ -1,0 +1,95 @@
+﻿{% extends "base.html" %}
+{% block title %}{{ 'Edit item' if editing else 'New menu item' }}{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-egg-fried"></i> {{ restaurant.name }}</div>
+    <h1>{{ 'Edit ' ~ editing.name if editing else 'Add a menu item' }}</h1>
+    <p>{{ 'Update pricing, preparation time and availability.' if editing else 'New dishes appear on the public menu immediately when available.' }}</p>
+  </div>
+  <a class="btn btn-ghost" href="{{ url_for('admin.menu', restaurant_id=restaurant.id) }}"><i class="bi bi-arrow-left me-1"></i> Menu</a>
+</div>
+
+<form method="post" action="{{ url_for('admin.menu_item_edit', item_id=editing.id) if editing else url_for('admin.menu_item_new', restaurant_id=restaurant.id) }}" class="row g-4">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="col-lg-8">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-card-text me-2 text-brand"></i>Item details</h2></div>
+      <div class="panel-body">
+        <div class="row g-3">
+          <div class="col-md-8">
+            <label class="form-label" for="name">Item name</label>
+            <input class="form-control" id="name" name="name" value="{{ values.name }}" required minlength="2">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="category">Category</label>
+            <input class="form-control" id="category" name="category" value="{{ values.category }}" list="categoryOptions" placeholder="Main Course">
+            <datalist id="categoryOptions">
+              {% for category in ['Starters','Main Course','Breads','Rice','Biryani','Pizza','Pasta','Bowls','Salads','Sides','Breakfast','Desserts','Beverages'] %}
+                <option value="{{ category }}"></option>
+              {% endfor %}
+            </datalist>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3" maxlength="500">{{ values.description }}</textarea>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="price">Price (Rs)</label>
+            <input class="form-control" id="price" name="price" type="number" min="0" step="0.01" value="{{ values.price }}" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="prep_time_min">Prep time (minutes)</label>
+            <input class="form-control" id="prep_time_min" name="prep_time_min" type="number" min="1" max="180" value="{{ values.prep_time_min }}" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="image_url">Image URL (optional)</label>
+            <input class="form-control" id="image_url" name="image_url" value="{{ values.image_url }}" placeholder="https://…">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2><i class="bi bi-sliders me-2 text-brand"></i>Options</h2></div>
+      <div class="panel-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="is_veg" name="is_veg" value="1" {{ 'checked' if values.is_veg|string in ['1','true','yes','on'] }}>
+              <label class="form-check-label fw-semibold" for="is_veg">Vegetarian</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="is_available" name="is_available" value="1" {{ 'checked' if values.is_available|string in ['1','true','yes','on'] }}>
+              <label class="form-check-label fw-semibold" for="is_available">Available to order</label>
+            </div>
+          </div>
+        </div>
+        <p class="small-note mt-3 mb-0">Preparation time feeds directly into the ETA prediction used at checkout.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-shop me-2 text-brand"></i>Restaurant</h2></div>
+      <div class="panel-body pt-2">
+        <div class="kv"><span>Name</span><span>{{ restaurant.name }}</span></div>
+        <div class="kv"><span>Cuisine</span><span>{{ restaurant.cuisine or '—' }}</span></div>
+        <div class="kv"><span>City</span><span>{{ restaurant.city or '—' }}</span></div>
+        {% if editing %}
+          <div class="kv"><span>Added</span><span>{{ editing.created_at|dt('%d %b %Y') }}</span></div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-body">
+        <button class="btn btn-brand w-100" type="submit"><i class="bi bi-check2-circle me-1"></i> {{ 'Save changes' if editing else 'Add item' }}</button>
+        <a class="btn btn-ghost w-100 mt-2" href="{{ url_for('admin.menu', restaurant_id=restaurant.id) }}">Cancel</a>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

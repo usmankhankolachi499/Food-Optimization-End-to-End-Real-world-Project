@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="session-timeout" content="{{ session_timeout_minutes }}">
+  <meta name="theme-color" content="#151e2d">
+  <title>{% block title %}{{ app_name }}{% endblock %} · {{ app_name }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body data-authenticated="{{ '1' if current_user else '0' }}" data-role="{{ current_user.role if current_user else 'guest' }}">
+
+<header class="app-navbar sticky-top">
+  <div class="container">
+    <div class="navbar-top">
+      <a class="brand" href="{{ url_for('main.index') }}">
+        <span class="brand-moon">🌙</span> <span>{{ app_name }}</span>
+      </a>
+      <div class="top-actions">
+        {% if current_user and current_user.is_admin %}
+          <span class="top-user">{{ current_user.username }}</span>
+          <form method="post" action="{{ url_for('auth.logout') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn-logout" type="submit">Log out</button>
+          </form>
+        {% elif current_user and current_user.is_delivery %}
+          <span class="top-user">{{ current_user.name.split(' ')[0] }}</span>
+          <form method="post" action="{{ url_for('auth.logout') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn-logout" type="submit">Log out</button>
+          </form>
+        {% elif current_user %}
+          <form method="post" action="{{ url_for('auth.logout') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn-logout" type="submit">Log out</button>
+          </form>
+        {% else %}
+          <a class="btn btn-outline-brand btn-sm" href="{{ url_for('auth.login') }}">Sign in</a>
+          <a class="btn btn-brand btn-sm" href="{{ url_for('auth.register') }}">Create account</a>
+        {% endif %}
+      </div>
+      <button class="nav-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation"><i class="bi bi-list"></i></button>
+    </div>
+
+    <div class="collapse d-lg-block" id="mainNav">
+      <nav class="navbar-links">
+        {% if current_user and current_user.is_customer %}
+          <a class="nav-link {{ 'active' if request.endpoint == 'customer.dashboard' }}" href="{{ url_for('customer.dashboard') }}">Dashboard</a>
+          <a class="nav-link {{ 'active' if request.endpoint in ['main.restaurants','main.restaurant_detail'] }}" href="{{ url_for('main.restaurants') }}">Restaurants</a>
+          <a class="nav-link {{ 'active' if request.endpoint in ['customer.orders','customer.order_detail'] }}" href="{{ url_for('customer.orders') }}">My orders</a>
+          <a class="nav-link {{ 'active' if request.endpoint in ['customer.cart','customer.checkout'] }}" href="{{ url_for('customer.cart') }}">Cart{% if cart_count %} ({{ cart_count }}){% endif %}</a>
+        {% elif current_user and current_user.is_delivery %}
+          <a class="nav-link {{ 'active' if request.endpoint == 'delivery.dashboard' }}" href="{{ url_for('delivery.dashboard') }}">Dashboard</a>
+          <a class="nav-link {{ 'active' if request.endpoint in ['delivery.assignments','delivery.order_detail'] }}" href="{{ url_for('delivery.assignments') }}">Assignments</a>
+          <a class="nav-link {{ 'active' if request.endpoint == 'delivery.route' }}" href="{{ url_for('delivery.route') }}">Optimize route</a>
+          <a class="nav-link {{ 'active' if request.endpoint == 'delivery.history' }}" href="{{ url_for('delivery.history') }}">History</a>
+        {% elif current_user and current_user.is_admin %}
+          <a class="nav-link {{ 'active' if request.endpoint == 'admin.dashboard' }}" href="{{ url_for('admin.dashboard') }}">Dashboard</a>
+          <a class="nav-link {{ 'active' if request.endpoint == 'admin.optimizer_page' }}" href="{{ url_for('admin.optimizer_page') }}">Assignment</a>
+          <a class="nav-link {{ 'active' if request.endpoint in ['admin.orders','admin.order_detail'] }}" href="{{ url_for('admin.orders') }}">Orders</a>
+          <a class="nav-link {{ 'active' if request.endpoint in ['admin.restaurants','admin.restaurant_new','admin.restaurant_edit','admin.menu','admin.menu_item_new','admin.menu_item_edit'] }}" href="{{ url_for('admin.restaurants') }}">Restaurants</a>
+          <a class="nav-link {{ 'active' if request.endpoint == 'admin.partners' }}" href="{{ url_for('admin.partners') }}">Partners</a>
+          <a class="nav-link {{ 'active' if request.endpoint in ['admin.users','admin.user_new','admin.user_edit'] }}" href="{{ url_for('admin.users') }}">Users</a>
+          <a class="nav-link {{ 'active' if request.endpoint in ['admin.analytics_page','admin.feedback'] }}" href="{{ url_for('admin.analytics_page') }}">Analytics</a>
+          <a class="nav-link {{ 'active' if request.endpoint in ['admin.data_page','admin.audit_page'] }}" href="{{ url_for('admin.data_page') }}">Data</a>
+          <a class="nav-link {{ 'active' if request.endpoint == 'admin.settings' }}" href="{{ url_for('admin.settings') }}">Settings</a>
+        {% else %}
+          <a class="nav-link {{ 'active' if request.endpoint == 'main.restaurants' }}" href="{{ url_for('main.restaurants') }}">Restaurants</a>
+          <a class="nav-link {{ 'active' if request.endpoint == 'main.about' }}" href="{{ url_for('main.about') }}">How it works</a>
+        {% endif %}
+
+        <div class="nav-end">
+          {% if current_user and current_user.is_customer %}
+            <a class="nav-link {{ 'active' if request.endpoint == 'customer.profile' }}" href="{{ url_for('customer.profile') }}">{{ current_user.username }}</a>
+          {% elif current_user and current_user.is_delivery %}
+            <a class="nav-link {{ 'active' if request.endpoint == 'delivery.profile' }}" href="{{ url_for('delivery.profile') }}">{{ current_user.username }}</a>
+          {% elif current_user and current_user.is_admin %}
+            <a class="nav-link {{ 'active' if request.endpoint in ['admin.user_new','admin.user_edit'] }}" href="{{ url_for('admin.users') }}?role=delivery">New partner</a>
+          {% endif %}
+
+          {% if current_user %}
+            <div class="dropdown">
+              <a class="nav-bell" href="#" id="notifToggle" data-bs-toggle="dropdown" aria-label="Notifications">
+                <i class="bi bi-bell{{ '-fill' if unread_notifications else '' }}"></i>
+                <span class="notif-badge {% if not unread_notifications %}d-none{% endif %}" id="notifBadge">{{ unread_notifications }}</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end notif-menu p-0" id="notifMenu">
+                <div class="notif-head">
+                  <strong>Notifications</strong>
+                  <button class="btn btn-link btn-sm p-0" type="button" id="markAllRead">Mark all read</button>
+                </div>
+                <div id="notifList" class="notif-list">
+                  <div class="notif-empty">Loading…</div>
+                </div>
+                <div class="notif-foot"><a href="{{ url_for('api.notifications') }}" class="small" target="_blank" rel="noopener">Open notification feed</a></div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="{% block main_class %}container app-main{% endblock %}">
+  {% block flash %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-stack">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show app-alert" role="alert">
+              <i class="bi {{ 'bi-exclamation-octagon' if category == 'danger' else ('bi-check-circle' if category == 'success' else ('bi-info-circle' if category == 'info' else 'bi-exclamation-triangle')) }}"></i>
+              <span>{{ message }}</span>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  {% endblock %}
+
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="app-footer">
+  <div class="container footer-inner">
+    <div>
+      <span class="footer-brand">🌙 {{ app_name }}</span>
+      <span class="footer-tag">Food Delivery Optimization System</span>
+    </div>
+    <div class="footer-links">
+      <a href="{{ url_for('main.restaurants') }}">Restaurants</a>
+      <a href="{{ url_for('main.about') }}">How it works</a>
+      {% if not current_user %}<a href="{{ url_for('auth.login') }}">Sign in</a>{% endif %}
+    </div>
+    <div class="footer-copy">© {{ now().year }} {{ app_name }}. Built with Flask.</div>
+  </div>
+</footer>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>
+<div class="offline-banner" id="offlineBanner">You are offline — live updates will resume when connected.</div>
+
+<script src="{{ url_for('static', filename='vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+<script src="{{ url_for('static', filename='js/tracking.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

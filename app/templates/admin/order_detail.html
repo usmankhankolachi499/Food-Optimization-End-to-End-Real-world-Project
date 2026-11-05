@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import status_badge, stars %}
+{% block title %}Order {{ order.order_number }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+  <a class="btn btn-ghost btn-sm" href="{{ url_for('admin.orders') }}"><i class="bi bi-arrow-left me-1"></i> Orders</a>
+  <div class="d-flex align-items-center gap-2">
+    {{ status_badge(order) }}
+    <span class="chip"><i class="bi bi-hash"></i>{{ order.order_number }}</span>
+  </div>
+</div>
+
+<div class="row g-4 mb-4">
+  <div class="col-lg-8">
+    <div class="track-card">
+      <div class="track-head">
+        <div>
+          <h2>{{ order.restaurant.name }} → {{ order.customer.name }}</h2>
+          <span class="order-no">Placed {{ order.placed_at|dt }} · {{ order.item_count }} item{{ '' if order.item_count == 1 else 's' }} · {{ order.total|money }}</span>
+        </div>
+        <span class="distance-chip">{{ order.distance_km or 0 }} km · ETA {{ order.estimated_delivery_min }} min</span>
+      </div>
+      <div class="px-3 pt-3">
+        <div class="d-flex justify-content-between tiny muted mb-1">
+          <span>Progress</span>
+          <span id="trackLastUpdated">Updated {{ order.placed_at|ago }}</span>
+        </div>
+        <div class="progress"><div class="progress-bar" id="trackProgressBar" style="width:{{ order.progress_percent }}%"></div></div>
+      </div>
+      <div class="track-steps" style="grid-template-columns:repeat({{ order.timeline|length }},1fr)">
+        {% for step in order.timeline %}
+          <div class="step {{ 'done' if step.done }} {{ 'current' if step.current }}"><i class="bi bi-{{ step.icon }}"></i>{{ step.label }}</div>
+        {% endfor %}
+      </div>
+      <div class="p-3">
+        <div class="map-box" id="trackingMap" data-order-id="{{ order.id }}" data-track="{{ tracking|tojson|forceescape }}" data-tracking-url="{{ url_for('api.order_tracking', order_id=order.id) }}"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-arrow-repeat me-2 text-brand"></i>Order status</h2></div>
+      <div class="panel-body pt-2">
+        {% if order.next_statuses %}
+          <div class="d-grid gap-2">
+            {% for next_status in order.next_statuses %}
+              <form method="post" action="{{ url_for('admin.order_status', order_id=order.id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="status" value="{{ next_status }}">
+                {% if next_status == 'cancelled' %}
+                  <input class="form-control form-control-sm mb-2" name="reason" maxlength="255" placeholder="Cancellation reason">
+                  <button class="btn btn-ghost text-danger w-100" type="submit"><i class="bi bi-x-circle me-1"></i> Cancel order</button>
+                {% else %}
+                  <button class="btn btn-forest w-100" type="submit"><i class="bi bi-arrow-right-circle me-1"></i> Mark {{ next_status|replace('_',' ') }}</button>
+                {% endif %}
+              </form>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="small-note mb-0">This order is in a final state.</p>
+        {% endif %}
+        <div class="form-hint mt-2">Every status change creates a customer notification.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2><i class="bi bi-bicycle me-2 text-brand"></i>Assignment</h2></div>
+      <div class="panel-body pt-2">
+        {% if order.delivery_partner %}
+          <div class="partner-strip mb-3">
+            <div class="partner-avatar">{{ order.delivery_partner.initials }}</div>
+            <div>
+              <strong>{{ order.delivery_partner.name }}</strong>
+              <small>{{ order.delivery_partner.partner_profile.vehicle_type if order.delivery_partner.partner_profile else 'Partner' }}{% if order.delivery_partner.phone %} · {{ order.delivery_partner.phone }}{% endif %}</small>
+            </div>
+          </div>
+          <form method="post" action="{{ url_for('admin.order_unassign', order_id=order.id) }}" class="mb-3">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn-ghost btn-sm w-100" type="submit"><i class="bi bi-person-dash me-1"></i> Remove assignment</button>
+          </form>
+        {% else %}
+          <p class="small-note"><i class="bi bi-exclamation-circle me-1"></i> No partner assigned yet.</p>
+        {% endif %}
+
+        <form method="post" action="{{ url_for('admin.order_auto_assign', order_id=order.id) }}" class="mb-2">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn btn-soft btn-sm w-100" type="submit" {{ 'disabled' if not order.is_active }}><i class="bi bi-magic me-1"></i> Auto-assign best partner</button>
+        </form>
+
+        <form method="post" action="{{ url_for('admin.order_assign', order_id=order.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <label class="form-label" for="partner_id">Manual assignment</label>
+          <select class="form-select form-select-sm mb-2" id="partner_id" name="partner_id" required>
+            <option value="">Choose a partner…</option>
+            {% for row in ranked %}
+              <option value="{{ row.partner.id }}" {{ 'selected' if order.delivery_partner_id == row.partner.id }}>
+                {{ row.partner.name }}{% if row.distance_km is not none %} · {{ '%.1f'|format(row.distance_km) }} km{% endif %} · {{ row.workload }} active{% if not row.eligible %} ({{ row.reasons|join(', ') }}){% endif %}
+              </option>
+            {% endfor %}
+          </select>
+          <button class="btn btn-brand btn-sm w-100" type="submit" {{ 'disabled' if not order.is_active }}><i class="bi bi-person-check me-1"></i> Assign partner</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-people me-2 text-brand"></i>Partner ranking</h2><span class="tiny muted">Lower score is better</span></div>
+      <div class="panel-body pt-0">
+        <div class="table-responsive">
+          <table class="table table-modern align-middle mb-0">
+            <thead><tr><th>Partner</th><th>Distance</th><th>Workload</th><th>Rating</th><th>Score</th><th>Eligibility</th></tr></thead>
+            <tbody>
+              {% for row in ranked %}
+                <tr>
+                  <td><div class="d-flex align-items-center gap-2"><span class="table-avatar">{{ row.partner.initials }}</span><div><span class="cell-title">{{ row.partner.name }}</span><div class="cell-sub">{{ row.profile.status_label }}</div></div></div></td>
+                  <td>{{ ('%.1f'|format(row.distance_km) ~ ' km') if row.distance_km is not none else 'Unknown' }}</td>
+                  <td>{{ row.workload }}</td>
+                  <td>{{ '%.1f'|format(row.rating) if row.rating_count else 'New' }}</td>
+                  <td>{{ row.score }}</td>
+                  <td>{% if row.eligible %}<span class="badge bg-success">Eligible</span>{% else %}<span class="badge bg-secondary" title="{{ row.reasons|join(', ') }}">Not eligible</span><div class="cell-sub">{{ row.reasons|join(', ') }}</div>{% endif %}</td>
+                </tr>
+              {% else %}
+                <tr><td colspan="6" class="text-center muted small">No delivery partners are registered yet.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-bag me-2 text-brand"></i>Items &amp; payment</h2></div>
+      <div class="panel-body pt-2">
+        {% for item in order.items %}
+          <div class="d-flex justify-content-between gap-2 py-2 border-bottom" style="border-color:#f0f3ef!important">
+            <div><strong style="font-size:.86rem">{{ item.quantity }} × {{ item.item_name }}</strong><div class="tiny muted">{{ item.category or 'Menu' }} · {{ item.unit_price|money }} each</div></div>
+            <span class="fw-bold">{{ item.line_total|money }}</span>
+          </div>
+        {% endfor %}
+        <div class="summary-line mt-3"><span>Subtotal</span><span class="value">{{ order.subtotal|money }}</span></div>
+        <div class="summary-line"><span>Delivery fee</span><span class="value">{{ order.delivery_fee|money }}</span></div>
+        <div class="summary-line total"><span>Total</span><span class="value">{{ order.total|money }}</span></div>
+        <div class="kv mt-2"><span>Payment</span><span>{{ order.payment_method }} · {{ order.payment_status }}</span></div>
+        {% if order.notes %}<div class="kv"><span>Notes</span><span>{{ order.notes }}</span></div>{% endif %}
+      </div>
+    </div>
+
+    {% if order.feedback %}
+      <div class="panel">
+        <div class="panel-head"><h2><i class="bi bi-chat-square-heart me-2 text-brand"></i>Customer feedback</h2><span class="tiny muted">{{ order.feedback.created_at|dt }}</span></div>
+        <div class="panel-body pt-2">
+          <div class="kv"><span>Restaurant rating</span><span>{{ stars(order.feedback.restaurant_rating) }}</span></div>
+          {% if order.feedback.partner_rating %}<div class="kv"><span>Partner rating</span><span>{{ stars(order.feedback.partner_rating) }}</span></div>{% endif %}
+          <p class="small-note mt-2 mb-0">{{ order.feedback.comment or 'No comment provided.' }}</p>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-person me-2 text-brand"></i>Customer</h2></div>
+      <div class="panel-body pt-2">
+        <div class="partner-strip mb-3">
+          <div class="partner-avatar">{{ order.customer.initials }}</div>
+          <div><strong>{{ order.customer.name }}</strong><small>@{{ order.customer.username }}</small></div>
+        </div>
+        <div class="kv"><span>Phone</span><span>{{ order.customer.phone or '—' }}</span></div>
+        <div class="kv"><span>Email</span><span>{{ order.customer.email }}</span></div>
+        <div class="kv"><span>Address</span><span>{{ order.delivery_address or '—' }}</span></div>
+      </div>
+    </div>
+
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-shop me-2 text-brand"></i>Restaurant</h2></div>
+      <div class="panel-body pt-2">
+        <div class="partner-strip mb-3">
+          <div class="partner-avatar">🍽️</div>
+          <div><strong>{{ order.restaurant.name }}</strong><small>{{ order.restaurant.cuisine or 'Multi-cuisine' }}</small></div>
+        </div>
+        <div class="kv"><span>Address</span><span>{{ order.restaurant.address or '—' }}</span></div>
+        <div class="kv"><span>Phone</span><span>{{ order.restaurant.phone or '—' }}</span></div>
+        <a class="btn btn-soft w-100 mt-3" href="{{ url_for('admin.menu', restaurant_id=order.restaurant_id) }}"><i class="bi bi-list-ul me-1"></i> Manage menu</a>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2><i class="bi bi-geo me-2 text-brand"></i>Route</h2></div>
+      <div class="panel-body pt-2">
+        {% for point in route.points %}
+          <div class="route-stop">
+            <span class="stop-num {{ 'pickup' if point.kind == 'restaurant' else '' }}">{{ loop.index }}</span>
+            <div><strong>{{ point.label }}</strong><div class="tiny muted">{{ point.kind|title }}</div></div>
+          </div>
+        {% else %}
+          <p class="small-note mb-0">No coordinate data for a route.</p>
+        {% endfor %}
+        <div class="kv mt-2"><span>Distance</span><span>{{ route.distance_km }} km</span></div>
+        <div class="kv"><span>Travel ETA</span><span>{{ route.eta_minutes }} min</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MOON Light</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0f1b2d;--navy:#16263f;--gold:#d9b25f;--gold2:#f0d68a;--paper:#f5f6fa;--line:#e1e5ee;--mute:#64708a;--red:#c0392b}
+*{box-sizing:border-box}body{margin:0;font:16.5px/1.65 Inter,system-ui,sans-serif;background:var(--paper);color:var(--ink)}
+h1,h2,h3,.logo{font-family:'Playfair Display',Georgia,serif}a{color:#2c4a7a}
+h1{font-size:clamp(2rem,4vw,2.9rem);line-height:1.15;margin:0 0 12px}h2{margin:34px 0 14px;font-size:1.6rem}h3{margin:0 0 4px;font-size:1.2rem}
+.nav{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:14px 5vw;background:rgba(15,27,45,.96);backdrop-filter:blur(8px);box-shadow:0 2px 16px rgba(0,0,0,.2)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.45rem;color:var(--gold2);text-decoration:none;letter-spacing:.02em}.logo svg{width:26px;height:26px}
+.nav nav{display:flex;gap:20px;align-items:center;flex-wrap:wrap}.nav nav a:not(.btn){color:#d5dbe8;text-decoration:none;font-weight:500;font-size:.96rem}.nav nav a:not(.btn):hover{color:var(--gold2)}
+main{max-width:1080px;margin:0 auto;padding:30px 5vw 56px}
+.hero{background:radial-gradient(circle at 85% 20%,rgba(240,214,138,.28),transparent 30%),linear-gradient(135deg,#0f1b2d,#1d3557);color:#fff;border-radius:22px;padding:58px 44px;margin-bottom:32px}
+.hero p{max-width:52ch;color:#c5cee0;margin:0}.hero h1 span{color:var(--gold2);font-style:italic}
+.tags{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}.tags span{border:1px solid rgba(240,214,138,.4);padding:4px 14px;border-radius:99px;font-size:.9rem;color:var(--gold2)}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 1px 3px rgba(15,27,45,.05)}
+.rest{padding:0;overflow:hidden;display:block;color:inherit;text-decoration:none;transition:.2s}.rest:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(15,27,45,.14)}
+.cover{height:100px;display:grid;place-items:center;font:700 2.6rem 'Playfair Display',serif;color:var(--gold2)}.body{padding:18px 22px 22px}.mute{color:var(--mute);margin:0}
+.btn,button{background:linear-gradient(135deg,var(--gold2),var(--gold));color:var(--ink);border:0;border-radius:10px;padding:10px 20px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;transition:.15s}
+button:hover,.btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.nav .btn.ghost{background:none;border:1px solid #4a5a78;color:#fff;padding:6px 16px}
+.btn.dark{background:var(--navy);color:#fff}.btn.red{background:var(--red);color:#fff}.btn.sm{padding:6px 13px;font-size:.9rem}
+input,select,textarea{width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;font:inherit;background:#fff;color:var(--ink)}
+input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible{outline:3px solid rgba(217,178,95,.55);outline-offset:1px}
+label{display:block;font-weight:600;margin:14px 0 6px;font-size:.95rem}
+.form{max-width:440px;margin:24px auto}.form button{width:100%;margin-top:20px}
+.auth{display:grid;grid-template-columns:1fr 1fr;max-width:900px;margin:20px auto;border-radius:22px;overflow:hidden;box-shadow:0 24px 60px rgba(15,27,45,.18);background:#fff}
+.auth .side{background:radial-gradient(circle at 80% 15%,rgba(240,214,138,.3),transparent 32%),linear-gradient(160deg,#0f1b2d,#1d3557);color:#fff;padding:48px 38px;display:flex;flex-direction:column;justify-content:center}
+.auth .side h2{margin:0 0 10px;color:var(--gold2);font-size:1.9rem}.auth .side p{color:#c5cee0;margin:0}
+.auth form{padding:42px 38px}.auth form h1{font-size:1.9rem}.auth form button{width:100%;margin-top:22px}.auth input:disabled{background:#eef0f6;color:var(--mute)}
+.flash{padding:12px 16px;border-radius:10px;margin-bottom:16px;background:#e6f2ec}.flash.error{background:#fbe4e0;color:var(--red)}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 22px;border-radius:12px;z-index:9;font-weight:500;max-width:90vw;box-shadow:0 8px 24px rgba(0,0,0,.25);animation:tin .25s}.toast.err{background:var(--red)}
+@keyframes tin{from{opacity:0;transform:translate(-50%,-10px)}}
+.wrap{overflow-x:auto;border-radius:14px;border:1px solid var(--line)}table{width:100%;border-collapse:collapse;background:#fff}
+th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line)}tr:last-child td{border-bottom:0}
+th{background:#eef0f6;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mute)}
+.badge{padding:3px 12px;border-radius:99px;font-size:.85rem;font-weight:600;background:#e6e9f0;white-space:nowrap}
+.s-Placed{background:#fcefc7}.s-Ontheway{background:#d7e6f8}.s-Delivered{background:#d4eee0}.s-Cancelled{background:#fbe4e0}
+.stats{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}.stat{border-top:3px solid var(--gold)}.stat b{display:block;font:700 2rem 'Playfair Display',serif}
+.item{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}.item input{width:84px}
+.bar{position:sticky;bottom:12px;background:var(--navy);color:#fff;border-radius:16px;padding:18px 22px;margin-top:20px;box-shadow:0 10px 30px rgba(15,27,45,.3)}.bar input{margin:8px 0 12px}.bar b{color:var(--gold2)}
+.steps{display:flex;gap:8px;margin:18px 0}.steps div{flex:1;padding:12px;border-radius:10px;background:#e6e9f0;text-align:center;font-weight:600;color:var(--mute)}.steps .on{background:var(--navy);color:var(--gold2)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+details{margin-top:12px}summary{cursor:pointer;font-weight:600}
+footer{text-align:center;color:var(--mute);padding:8px 5vw 34px;font-size:.92rem}
+@media(max-width:720px){.auth{grid-template-columns:1fr}.auth .side{padding:30px 24px}.auth form{padding:28px 24px}.hero{padding:36px 24px}.item{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<header class="nav" id="nav"></header>
+<main id="app"></main>
+<footer>MOON Light &middot; Fine dining, delivered to your door.</footer>
+<script>
+const KEY='saffron_table_db_v2',LAST='saffron_last',ROLES={customer:'Customer',partner:'Delivery Partner',admin:'Admin'},COV=['linear-gradient(135deg,#16263f,#2c4a7a)','linear-gradient(135deg,#1d3557,#457b9d)','linear-gradient(135deg,#2b2d5c,#5c4b8a)','linear-gradient(135deg,#0f2a3d,#2a6f7a)','linear-gradient(135deg,#2a2a3c,#6b5b7b)'];
+const usr=(id,name,pw,role)=>({id,name,pw,role,phone:'',address:'',active:1,status:'available'});
+const seed=()=>({uid:null,seq:100,set:{fee:150,free:2000,max:2},orders:[],
+ users:[usr(1,'admin','admin123','admin'),usr(2,'partner','partner123','partner'),usr(3,'customer','customer123','customer')],
+ rests:[
+  {id:1,name:'Royal Karahi House',cuisine:'Pakistani',desc:'Slow-cooked karahi and fresh naan.',active:1,items:[{id:11,name:'Chicken Karahi',desc:'Half kg, tomato and ginger',price:1450},{id:12,name:'Mutton Handi',desc:'Rich and creamy',price:1900},{id:13,name:'Garlic Naan',desc:'Fresh from the tandoor',price:80}]},
+  {id:2,name:'Bun & Co',cuisine:'Burgers',desc:'Smash burgers with house sauce.',active:1,items:[{id:21,name:'Classic Smash',desc:'Beef patty, cheddar',price:750},{id:22,name:'Zinger Burger',desc:'Crispy chicken',price:650},{id:23,name:'Loaded Fries',desc:'Cheese and jalapeno',price:450}]},
+  {id:3,name:'Green Bowl',cuisine:'Healthy',desc:'Salads, wraps and cold-pressed juice.',active:1,items:[{id:31,name:'Grilled Chicken Salad',desc:'Greens, olives, lemon dressing',price:850},{id:32,name:'Falafel Wrap',desc:'Hummus and pickles',price:550},{id:33,name:'Orange Juice',desc:'Fresh pressed',price:300}]}]});
+let D;try{D=JSON.parse(localStorage.getItem(KEY))}catch(e){}if(!D)D=seed();
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}};
+const nid=()=>++D.seq, me=()=>D.users.find(u=>u.id===D.uid&&u.active);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rs=n=>'Rs '+Math.round(n), U=id=>D.users.find(u=>u.id==id)||{name:'-',phone:''}, R=id=>D.rests.find(r=>r.id==id);
+const now=()=>new Date().toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'});
+const fd=e=>{e.preventDefault();return Object.fromEntries(new FormData(e.target))};
+const badge=o=>`<span class="badge s-${o.status.replace(/ /g,'')}">${o.status}</span>`;
+const table=(h,rows,empty)=>`<div class="wrap"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')||`<tr><td colspan="${h.length}" class="mute">${empty}</td></tr>`}</table></div>`;
+function toast(m,e){const t=document.createElement('div');t.className='toast'+(e?' err':'');t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),3200)}
+function go(p){const h='#'+p;location.hash===h?render():location.hash=h}
+
+const V={
+home:()=>`<section class="hero"><h1>Dine under the <span>moonlight</span>.</h1><p>Fine food from the best restaurants in town, delivered to your door and tracked until it arrives.</p><div class="tags"><span>Live order tracking</span><span>Free delivery above Rs ${D.set.free}</span><span>${D.rests.filter(r=>r.active).length} restaurants</span></div></section><div class="grid">${D.rests.filter(r=>r.active).map(r=>{const t=D.orders.filter(o=>o.rid==r.id&&o.rating).map(o=>o.rating);return `<a class="card rest" href="#/restaurant/${r.id}"><div class="cover" style="background:${COV[r.id%5]}">${esc(r.name[0])}</div><div class="body"><h3>${esc(r.name)}</h3><p class="mute">${esc(r.cuisine)} &middot; ${t.length?'★ '+(t.reduce((a,b)=>a+b)/t.length).toFixed(1):'New'}</p><p>${esc(r.desc)}</p></div></a>`}).join('')||'<p class="mute">No restaurants are open right now.</p>'}</div>`,
+
+restaurant:(b,u)=>{const r=R(b);if(!r||!r.active)return '<p>Restaurant not found.</p>';const c=u&&u.role=='customer';
+ return `<h1>${esc(r.name)}</h1><p class="mute">${esc(r.cuisine)} &middot; ${esc(r.desc)}</p><div class="card" style="margin-top:20px">${r.items.map(i=>`<div class="item"><div><b>${esc(i.name)}</b><p class="mute">${esc(i.desc)}</p></div><div class="row"><b>${rs(i.price)}</b>${c?`<input type="number" min="0" max="20" value="0" data-n="${esc(i.name)}" data-p="${i.price}" aria-label="Quantity of ${esc(i.name)}" oninput="calc()">`:''}</div></div>`).join('')||'<p class="mute">This menu is empty.</p>'}</div>${c?`<div class="bar"><div>Total: <b id="total">Rs 0</b></div><label for="ad">Delivery address</label><input id="ad" value="${esc(u.address)}"><button onclick="place(${r.id})">Place order</button></div>`:`<p class="card" style="margin-top:16px"><a href="#/login">Log in</a> as a customer to place an order.</p>`}`},
+
+login:()=>{const m=JSON.parse(localStorage.getItem(LAST)||'{}');return `<div class="auth"><div class="side"><h2>MOON Light</h2><p>Order from the best restaurants, follow your delivery live, and manage everything in one place.</p></div><form onsubmit="login(event)"><h1>Welcome back</h1><label for="u">Username</label><input id="u" name="username" value="${esc(m.u)}" autocomplete="username" required><label for="p">Password</label><input id="p" name="pw" type="password" autocomplete="current-password" required><label for="role">Role</label><select id="role" name="role">${Object.entries(ROLES).map(([k,v])=>`<option value="${k}"${k==(m.r||'customer')?' selected':''}>${v}</option>`).join('')}</select><button>Log in</button><p class="mute" style="margin-top:16px">New here? <a href="#/register" onclick="pickRole()">Create an account</a></p></form></div><p class="mute" style="text-align:center">Demo: customer / customer123 &middot; partner / partner123 &middot; admin / admin123</p>`},
+
+register:()=>{const r=ROLES[window.signRole]?window.signRole:'customer';return `<div class="auth"><div class="side"><h2>Join MOON Light</h2><p>Create your ${ROLES[r]} account in a few seconds.</p></div><form onsubmit="register(event)"><h1>Create account</h1><label for="u">Username</label><input id="u" name="username" autocomplete="username" required><label for="p">Password</label><input id="p" name="pw" type="password" minlength="6" autocomplete="new-password" required><label>Role</label><input value="${ROLES[r]}" disabled><input type="hidden" name="role" value="${r}"><button>Sign up</button><p class="mute" style="margin-top:16px">Already have an account? <a href="#/login">Log in</a></p></form></div>`},
+
+profile:(b,u)=>`<form class="form card" onsubmit="saveProfile(event)"><h1>Your profile</h1><p class="mute">Username: <b>${esc(u.name)}</b> &middot; ${ROLES[u.role]}</p><label>Phone</label><input name="phone" value="${esc(u.phone)}"><label>Address</label><input name="address" value="${esc(u.address)}"><label>New password (optional)</label><input name="pw" type="password"><button>Save changes</button></form>`,
+
+orders:(b,u)=>`<h1>My orders</h1>`+table(['Order','Restaurant','Total','Status','Placed',''],D.orders.filter(o=>o.uid==u.id).reverse().map(o=>['#'+o.id,esc(R(o.rid).name),rs(o.total),badge(o),o.created,`<a href="#/order/${o.id}">Track</a>`]),'No orders yet. <a href="#/">Browse restaurants</a>'),
+
+order:(b,u)=>{const o=D.orders.find(x=>x.id==b);if(!o||(u.role=='customer'&&o.uid!=u.id))return '<p>Order not found.</p>';
+ const st=['Placed','On the way','Delivered'],i=st.indexOf(o.status);
+ return `<div class="row"><h1>Order #${o.id}</h1>${badge(o)}</div><p class="mute">${esc(R(o.rid).name)} &middot; ${o.created} &middot; for ${esc(U(o.uid).name)}</p>
+ ${o.status=='Cancelled'?'<div class="flash error" style="margin-top:16px">This order was cancelled.</div>':`<div class="steps">${st.map((s,k)=>`<div class="${k<=i?'on':''}">${s}</div>`).join('')}</div>`}
+ <div class="card">${table(['Item','Amount'],[...o.lines.map(l=>[l.q+' x '+esc(l.n),rs(l.p*l.q)]),['Delivery fee',rs(o.fee)],['<b>Total</b>','<b>'+rs(o.total)+'</b>']])}<p>Deliver to: <b>${esc(o.addr)}</b></p>${o.pid?`<p>Delivery partner: <b>${esc(U(o.pid).name)}</b> (${esc(U(o.pid).phone)})</p>`:''}${u.role=='customer'&&o.status=='Placed'?`<button class="btn red" onclick="cancel(${o.id})">Cancel order</button>`:''}</div>
+ ${u.role=='customer'&&o.status=='Delivered'?'<h2>Rate this order</h2>'+(o.rating?`<p>You rated this order ★ ${o.rating} / 5.</p>`:`<form class="card" onsubmit="rate(event,${o.id})"><label>Rating</label><select name="r">${[5,4,3,2,1].map(n=>`<option value="${n}">${n} - ${['','Bad','Poor','Okay','Good','Excellent'][n]}</option>`).join('')}</select><label>Comment (optional)</label><textarea name="v" rows="3"></textarea><br><br><button>Submit rating</button></form>`):''}`},
+
+partner:(b,u)=>{const mine=D.orders.filter(o=>o.pid==u.id&&o.status=='On the way'),av=D.orders.filter(o=>o.status=='Placed'&&!o.pid),hi=D.orders.filter(o=>o.pid==u.id&&o.status=='Delivered').reverse().slice(0,30),nx=u.status=='busy'?'available':'busy';
+ const card=(o,btn)=>`<div class="card row" style="margin-bottom:12px"><div><b>#${o.id} ${esc(R(o.rid).name)}</b><p class="mute">${esc(o.addr)} &middot; ${esc(U(o.uid).name)} ${esc(U(o.uid).phone)} &middot; ${rs(o.total)}</p></div>${btn}</div>`;
+ return `<div class="row"><h1>Deliveries</h1><div class="row"><span class="mute">Your status: <b>${u.status}</b></span><button class="btn dark sm" onclick="setStatus('${nx}')">Mark as ${nx}</button></div></div>
+ <h2>My active deliveries</h2>${mine.map(o=>card(o,`<button onclick="complete(${o.id})">Mark delivered</button>`)).join('')||'<p class="mute">No active deliveries.</p>'}
+ <h2>Available orders</h2>${av.map(o=>card(o,`<button onclick="accept(${o.id})">Accept</button>`)).join('')||'<p class="mute">No orders are waiting right now.</p>'}
+ <h2>Delivery history</h2>`+table(['Order','Restaurant','Customer','Total','Rating'],hi.map(o=>['#'+o.id,esc(R(o.rid).name),esc(U(o.uid).name),rs(o.total),o.rating?'★ '+o.rating:'-']),'No completed deliveries yet.')},
+
+admin:()=>{const c=r=>D.users.filter(u=>u.role==r).length,n=s=>D.orders.filter(o=>o.status==s).length;
+ const s={Customers:c('customer'),Partners:c('partner'),Restaurants:D.rests.filter(r=>r.active).length,'Waiting for partner':n('Placed'),'On the way':n('On the way'),'Revenue (Rs)':Math.round(D.orders.filter(o=>o.status=='Delivered').reduce((t,o)=>t+o.total,0))};
+ return `<h1>Dashboard</h1><div class="stats">${Object.entries(s).map(([k,v])=>`<div class="card stat"><b>${v}</b>${k}</div>`).join('')}</div><h2>Recent orders</h2>`+table(['Order','Customer','Restaurant','Total','Status',''],D.orders.slice(-10).reverse().map(o=>['#'+o.id,esc(U(o.uid).name),esc(R(o.rid).name),rs(o.total),badge(o),`<a href="#/order/${o.id}">View</a>`]),'No orders yet.')},
+
+users:(b,u)=>`<h1>Users</h1>`+table(['Username','Role','Account',''],D.users.map(x=>[esc(x.name),ROLES[x.role],x.active?'Active':'Disabled',x.id==u.id?'':`<button class="btn sm dark" onclick="toggleUser(${x.id})">${x.active?'Disable':'Enable'}</button>`]),'')+`<h2>Add a user or delivery partner</h2><form class="card" onsubmit="addUser(event)"><div class="grid"><div><label>Username</label><input name="username" required></div><div><label>Password</label><input name="pw" type="password" minlength="6" required></div><div><label>Role</label><select name="role"><option value="partner">Delivery partner</option><option value="customer">Customer</option><option value="admin">Admin</option></select></div></div><br><button>Add user</button></form>`,
+
+rests:()=>`<h1>Restaurants</h1>${D.rests.map(r=>`<div class="card" style="margin-bottom:14px"><div class="row"><div><h3>${esc(r.name)}</h3><p class="mute">${esc(r.cuisine)} &middot; ${r.active?'Open':'Hidden'}</p></div><button class="btn sm dark" onclick="togRest(${r.id})">${r.active?'Hide':'Show'}</button></div><details${window.open_==r.id?' open':''}><summary>Menu (${r.items.length} items)</summary>${r.items.map(i=>`<div class="item"><span>${esc(i.name)} &middot; ${rs(i.price)}</span><button class="btn sm red" onclick="delItem(${r.id},${i.id})">Remove</button></div>`).join('')}<form onsubmit="addItem(event,${r.id})"><div class="grid"><div><label>Item name</label><input name="n" required></div><div><label>Description</label><input name="d"></div><div><label>Price (Rs)</label><input name="p" type="number" min="0" required></div></div><br><button class="btn sm">Add item</button></form></details></div>`).join('')}<h2>Add a restaurant</h2><form class="card" onsubmit="addRest(event)"><div class="grid"><div><label>Name</label><input name="n" required></div><div><label>Cuisine</label><input name="c" required></div><div><label>Short description</label><input name="d"></div></div><br><button>Add restaurant</button></form>`,
+
+reports:()=>{const dl=D.orders.filter(o=>o.status=='Delivered');
+ return `<h1>Reports</h1><h2>Revenue by restaurant (delivered orders)</h2>`+table(['Restaurant','Orders','Revenue'],D.rests.map(r=>{const x=dl.filter(o=>o.rid==r.id);return [esc(r.name),x.length,rs(x.reduce((t,o)=>t+o.total,0))]}),'')+`<h2>Orders by status</h2>`+table(['Status','Orders'],['Placed','On the way','Delivered','Cancelled'].map(s=>[s,D.orders.filter(o=>o.status==s).length]),'')+`<h2>Delivery partner performance</h2>`+table(['Partner','Status','Deliveries'],D.users.filter(u=>u.role=='partner').map(p=>[esc(p.name),p.status,dl.filter(o=>o.pid==p.id).length]),'No partners yet.')},
+
+settings:()=>`<form class="form card" onsubmit="saveSet(event)"><h1>Delivery settings</h1><label>Delivery fee (Rs)</label><input name="fee" type="number" min="0" value="${D.set.fee}"><label>Free delivery above (Rs)</label><input name="free" type="number" min="0" value="${D.set.free}"><label>Max active deliveries per partner</label><input name="max" type="number" min="1" value="${D.set.max}"><button>Save settings</button></form>`
+};
+
+function render(){
+ const u=me(),p=(location.hash.slice(1)||'/').split('/'),a=p[1]||'',b=p[2],home=u?({admin:'admin',partner:'partner'})[u.role]||'':'';
+ const ok=u?{customer:['','restaurant','orders','order','profile'],partner:['partner','profile'],admin:['admin','users','rests','reports','settings','order','profile']}[u.role]:['','restaurant','login','register'];
+ if(!ok.includes(a)){location.hash='#/'+home;return}
+ const L=(x,t)=>`<a href="#/${x}">${t}</a>`;
+ document.getElementById('nav').innerHTML=`<a class="logo" href="#/"><svg viewBox="0 0 24 24" fill="#f0d68a" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>MOON Light</a><nav>${!u?L('login','Log in')+'<a class="btn" href="#/register">Sign up</a>':(u.role=='customer'?L('','Restaurants')+L('orders','My orders'):u.role=='partner'?L('partner','Deliveries'):L('admin','Dashboard')+L('users','Users')+L('rests','Restaurants')+L('reports','Reports')+L('settings','Settings'))+L('profile','Profile')+'<a class="btn ghost" href="#/" onclick="logout()">Log out</a>'}</nav>`;
+ document.getElementById('app').innerHTML=V[a||'home'](b,u);
+}
+
+// ---------- actions ----------
+function pickRole(){window.signRole=document.getElementById('role').value}
+function login(e){const f=fd(e),n=f.username.trim().toLowerCase(),x=D.users.find(u=>u.name.toLowerCase()==n);
+ if(!x||x.pw!=f.pw)return toast('Wrong username or password.',1);
+ if(x.role!=f.role)return toast(`This account is not registered as ${ROLES[f.role]}. Select the correct role.`,1);
+ if(!x.active)return toast('This account is disabled. Please contact the admin.',1);
+ localStorage.setItem(LAST,JSON.stringify({u:x.name,r:x.role}));D.uid=x.id;save();go('/'+(({admin:'admin',partner:'partner'})[x.role]||''))}
+function register(e){const f=fd(e),n=f.username.trim();
+ if(!/^[A-Za-z0-9_.-]{3,20}$/.test(n))return toast('Username must be 3-20 letters, numbers or _ . -',1);
+ if(f.pw.length<6)return toast('Password must be at least 6 characters.',1);
+ if(D.users.some(x=>x.name.toLowerCase()==n.toLowerCase()))return toast('This username is already taken.',1);
+ if(!ROLES[f.role])return;
+ D.users.push({id:nid(),name:n,pw:f.pw,role:f.role,phone:'',address:'',active:1,status:'available'});save();
+ localStorage.setItem(LAST,JSON.stringify({u:n,r:f.role}));toast('Account created. Please log in.');go('/login')}
+function logout(){D.uid=null;save()}
+function saveProfile(e){const f=fd(e),u=me();if(f.pw&&f.pw.length<6)return toast('Password must be at least 6 characters.',1);
+ Object.assign(u,{phone:f.phone,address:f.address});if(f.pw)u.pw=f.pw;save();render();toast('Profile saved.')}
+
+function lines(){return [...document.querySelectorAll('[data-p]')].map(i=>({n:i.dataset.n,p:+i.dataset.p,q:+i.value||0})).filter(l=>l.q>0)}
+const feeFor=s=>!s||s>=D.set.free?0:D.set.fee;
+function calc(){const s=lines().reduce((t,l)=>t+l.p*l.q,0),d=feeFor(s);document.getElementById('total').textContent=rs(s+d)+(d?` (includes ${rs(d)} delivery)`:'')}
+function place(rid){const l=lines(),addr=document.getElementById('ad').value.trim();
+ if(!l.length||!addr)return toast('Choose at least one item and enter a delivery address.',1);
+ const s=l.reduce((t,x)=>t+x.p*x.q,0),fee=feeFor(s),id=nid();
+ D.orders.push({id,uid:me().id,rid,pid:null,status:'Placed',lines:l,fee,total:s+fee,addr,created:now(),rating:0,review:''});
+ save();toast('Order placed. A delivery partner will pick it up shortly.');go('/order/'+id)}
+function cancel(id){const o=D.orders.find(x=>x.id==id);
+ if(o.status!='Placed')return toast('This order can no longer be cancelled.',1);
+ o.status='Cancelled';save();render();toast('Order cancelled.')}
+function rate(e,id){const f=fd(e),o=D.orders.find(x=>x.id==id);o.rating=+f.r;o.review=f.v;save();render();toast('Thanks for your rating.')}
+
+function setStatus(s){me().status=s;save();render()}
+function accept(id){const u=me(),o=D.orders.find(x=>x.id==id);
+ if(u.status=='busy')return toast('You are marked busy. Switch to available to accept deliveries.',1);
+ if(D.orders.filter(x=>x.pid==u.id&&x.status=='On the way').length>=D.set.max)return toast('You have reached the active delivery limit. Complete one first.',1);
+ if(!o||o.status!='Placed'||o.pid)return toast('This order is no longer available.',1);
+ o.pid=u.id;o.status='On the way';save();render();toast('Delivery accepted.')}
+function complete(id){const o=D.orders.find(x=>x.id==id);if(o&&o.pid==me().id&&o.status=='On the way'){o.status='Delivered';save();render();toast('Delivery completed.')}}
+
+function toggleUser(id){const x=D.users.find(u=>u.id==id);if(x.id!=me().id){x.active=x.active?0:1;save();render()}}
+function addUser(e){const f=fd(e),n=f.username.trim();
+ if(!n||D.users.some(x=>x.name.toLowerCase()==n.toLowerCase()))return toast('This username is already taken.',1);
+ D.users.push({id:nid(),name:n,pw:f.pw,role:f.role,phone:'',address:'',active:1,status:'available'});save();render();toast('User added.')}
+function togRest(id){const r=R(id);r.active=r.active?0:1;save();render()}
+function addRest(e){const f=fd(e);D.rests.push({id:nid(),name:f.n,cuisine:f.c,desc:f.d,active:1,items:[]});save();render();toast('Restaurant added.')}
+function addItem(e,rid){const f=fd(e);R(rid).items.push({id:nid(),name:f.n,desc:f.d,price:+f.p});window.open_=rid;save();render();toast('Item added.')}
+function delItem(rid,id){const r=R(rid);r.items=r.items.filter(i=>i.id!=id);window.open_=rid;save();render()}
+function saveSet(e){const f=fd(e);D.set={fee:+f.fee,free:+f.free,max:Math.max(1,+f.max)};save();toast('Settings saved.')}
+
+window.onhashchange=render;
+window.onstorage=e=>{if(e.key==KEY&&e.newValue){D=JSON.parse(e.newValue);render()}};
+render();
+</script>
+</body>
+</html>s

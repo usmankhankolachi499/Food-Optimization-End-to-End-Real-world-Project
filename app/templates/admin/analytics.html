@@ -1,0 +1,235 @@
+﻿{% extends "base.html" %}
+{% from "partials/macros.html" import stars, empty_state %}
+{% block title %}Analytics &amp; reports{% endblock %}
+{% block content %}
+{% set summary = bundle.summary %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-bar-chart-line"></i> Insights</div>
+    <h1>Analytics &amp; reports</h1>
+    <p>Operational performance for the last {{ days }} days · {{ summary.total_orders }} orders, {{ summary.delivered_orders }} delivered.</p>
+  </div>
+  <div class="d-flex gap-2 flex-wrap align-items-center">
+    <div class="period-tabs d-flex gap-1">
+      {% for option in [7, 30, 90] %}
+        <a class="btn btn-sm {{ 'btn-brand' if days == option else 'btn-ghost' }}" href="{{ url_for('admin.analytics_page', days=option) }}">{{ option }}d</a>
+      {% endfor %}
+    </div>
+    <div class="dropdown">
+      <button class="btn btn-ghost btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-download me-1"></i> CSV reports
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="{{ url_for('admin.report_orders', days=days) }}"><i class="bi bi-receipt me-2"></i> Orders report ({{ days }}d)</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('admin.report_partners', days=days) }}"><i class="bi bi-bicycle me-2"></i> Partner report ({{ days }}d)</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="stat-grid mb-4">
+  <div class="stat-card">
+    <div class="stat-icon"><i class="bi bi-receipt"></i></div>
+    <div class="stat-value">{{ summary.total_orders }}</div>
+    <div class="stat-label">Orders</div>
+    <div class="stat-sub">{{ summary.active_orders }} active · {{ summary.cancelled_orders }} cancelled</div>
+  </div>
+  <div class="stat-card green">
+    <div class="stat-icon"><i class="bi bi-cash-stack"></i></div>
+    <div class="stat-value">{{ summary.revenue|money }}</div>
+    <div class="stat-label">Revenue</div>
+    <div class="stat-sub">Avg order {{ summary.avg_order_value|money }}</div>
+  </div>
+  <div class="stat-card blue">
+    <div class="stat-icon"><i class="bi bi-truck"></i></div>
+    <div class="stat-value">{{ summary.delivered_orders }}</div>
+    <div class="stat-label">Delivered</div>
+    <div class="stat-sub">{{ summary.completion_rate }}% completion rate</div>
+  </div>
+  <div class="stat-card amber">
+    <div class="stat-icon"><i class="bi bi-stopwatch"></i></div>
+    <div class="stat-value">{{ summary.avg_delivery_min }}m</div>
+    <div class="stat-label">Avg delivery</div>
+    <div class="stat-sub">{{ summary.avg_prep_min }}m average prep</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon"><i class="bi bi-star"></i></div>
+    <div class="stat-value">{{ '%.2f'|format(summary.avg_rating) if summary.feedback_count else '—' }}</div>
+    <div class="stat-label">Avg rating</div>
+    <div class="stat-sub">{{ summary.feedback_count }} reviews</div>
+  </div>
+  <div class="stat-card red">
+    <div class="stat-icon"><i class="bi bi-x-circle"></i></div>
+    <div class="stat-value">{{ summary.cancelled_orders }}</div>
+    <div class="stat-label">Cancelled</div>
+    <div class="stat-sub">Lost orders in this period</div>
+  </div>
+</div>
+
+<div class="row g-4 mb-4">
+  <div class="col-lg-8">
+    <div class="panel h-100">
+      <div class="panel-head">
+        <h2><i class="bi bi-graph-up me-2 text-brand"></i>Orders &amp; deliveries</h2>
+        <span class="tiny muted">Daily · last {{ bundle.trend.labels|length }} days</span>
+      </div>
+      <div class="panel-body pt-2">
+        <div class="chart-box">
+          <canvas id="ordersTrendChart"></canvas>
+          <div class="chart-fallback">Charts need Chart.js from the CDN. Daily totals are also available in the CSV report.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="panel h-100">
+      <div class="panel-head">
+        <h2><i class="bi bi-pie-chart me-2 text-brand"></i>Status mix</h2>
+        <span class="tiny muted">{{ summary.total_orders }} orders</span>
+      </div>
+      <div class="panel-body pt-2">
+          <div class="chart-box sm">
+          <canvas id="statusChart"></canvas>
+          <div class="chart-fallback">Status counts: {% for label in bundle.statuses.labels %}{{ label }} {{ bundle.statuses.values[loop.index0] }}{{ ', ' if not loop.last }}{% endfor %}.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4 mb-4">
+  <div class="col-lg-6">
+    <div class="panel h-100">
+      <div class="panel-head">
+        <h2><i class="bi bi-cash-coin me-2 text-brand"></i>Revenue by day</h2>
+        <span class="tiny muted">{{ summary.revenue|money }} total</span>
+      </div>
+      <div class="panel-body pt-2">
+        <div class="chart-box">
+          <canvas id="revenueChart"></canvas>
+          <div class="chart-fallback">Revenue totals are included in the downloadable orders report.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="panel h-100">
+      <div class="panel-head">
+        <h2><i class="bi bi-clock me-2 text-brand"></i>Peak ordering hours</h2>
+        <span class="tiny muted">{% if bundle.peak.busiest_hour is not none %}Busiest {{ '%02d:00'|format(bundle.peak.busiest_hour) }}{% else %}No orders yet{% endif %}</span>
+      </div>
+      <div class="panel-body pt-2">
+        <div class="chart-box">
+          <canvas id="peakHoursChart"></canvas>
+          <div class="chart-fallback">Peak-hour counts are included in the order timestamps of the CSV report.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4 mb-4">
+  <div class="col-lg-5">
+    <div class="panel h-100">
+      <div class="panel-head">
+        <h2><i class="bi bi-shop me-2 text-brand"></i>Top restaurants</h2>
+        <span class="tiny muted">By orders</span>
+      </div>
+      <div class="panel-body pt-2">
+        <div class="chart-box">
+          <canvas id="restaurantsChart"></canvas>
+          <div class="chart-fallback">Top restaurants are listed in the table beside this chart.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <div class="panel h-100">
+      <div class="panel-head">
+        <h2><i class="bi bi-trophy me-2 text-brand"></i>Restaurant performance</h2>
+        <a class="link" href="{{ url_for('admin.restaurants') }}">Manage restaurants</a>
+      </div>
+      <div class="panel-body pt-2">
+        {% if bundle.top_restaurants %}
+          <div class="table-responsive">
+            <table class="table table-modern align-middle mb-0">
+              <thead><tr><th>Restaurant</th><th>Orders</th><th>Revenue</th><th>Rating</th></tr></thead>
+              <tbody>
+                {% for row in bundle.top_restaurants %}
+                  <tr>
+                    <td>
+                      <a class="cell-title text-reset" href="{{ url_for('admin.menu', restaurant_id=row.restaurant.id) }}">{{ row.restaurant.name }}</a>
+                      <div class="cell-sub">{{ row.restaurant.cuisine or 'Multi-cuisine' }}</div>
+                    </td>
+                    <td>{{ row.orders }}</td>
+                    <td>{{ row.revenue|money }}</td>
+                    <td>{{ stars(row.rating, row.restaurant.rating_count) }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <p class="small-note mb-0">No restaurant orders in this period.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <h2><i class="bi bi-bicycle me-2 text-brand"></i>Partner performance</h2>
+    <a class="link" href="{{ url_for('admin.partners') }}">Fleet overview</a>
+  </div>
+  <div class="panel-body pt-2">
+    {% if bundle.partners %}
+      <div class="table-responsive">
+        <table class="table table-modern align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Partner</th>
+              <th>Vehicle</th>
+              <th>Deliveries</th>
+              <th>Avg delivery</th>
+              <th>Rating</th>
+              <th>Earnings</th>
+              <th class="text-end">Account</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in bundle.partners %}
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="table-avatar">{{ row.partner.initials }}</span>
+                    <div>
+                      <span class="cell-title">{{ row.partner.name }}</span>
+                      <div class="cell-sub">{{ row.partner.email }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>{{ row.profile.vehicle_type or 'Bike' }}<div class="cell-sub">{{ row.profile.vehicle_number or '' }}</div></td>
+                <td>{{ row.deliveries }}<div class="cell-sub">{{ row.total_deliveries }} lifetime</div></td>
+                <td>{{ row.avg_delivery_min }} min</td>
+                <td>{{ stars(row.rating, row.rating_count) }}</td>
+                <td>{{ row.earnings|money }}</td>
+                <td class="text-end"><a class="btn btn-ghost btn-sm" href="{{ url_for('admin.user_edit', user_id=row.partner.id) }}">Edit</a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      {{ empty_state('bicycle', 'No partner activity yet', 'Delivered orders will build partner performance here.', url_for('admin.partners'), 'View fleet') }}
+    {% endif %}
+  </div>
+</div>
+
+<script type="application/json" id="analyticsData">{{ bundle.chart|tojson }}</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+{% endblock %}

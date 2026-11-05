@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import empty_state %}
+{% block title %}Optimize route{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-signpost-split"></i> Route planner</div>
+    <h1>Optimized delivery route</h1>
+    <p>All your active stops are sequenced with pickup-before-drop precedence and nearest-neighbour travel.</p>
+  </div>
+  <a class="btn btn-ghost" href="{{ url_for('delivery.dashboard') }}"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
+</div>
+
+{% if route.stops %}
+  <div class="stat-grid mb-4">
+    <div class="stat-card"><div class="stat-icon"><i class="bi bi-geo-alt"></i></div><div class="stat-value">{{ route.stops|length - 1 }}</div><div class="stat-label">Total stops</div></div>
+    <div class="stat-card blue"><div class="stat-icon"><i class="bi bi-signpost-2"></i></div><div class="stat-value">{{ route.distance_km }} km</div><div class="stat-label">Route distance</div></div>
+    <div class="stat-card amber"><div class="stat-icon"><i class="bi bi-stopwatch"></i></div><div class="stat-value">{{ route.eta_minutes }} min</div><div class="stat-label">Estimated travel</div></div>
+    <div class="stat-card green"><div class="stat-icon"><i class="bi bi-bicycle"></i></div><div class="stat-value">{{ orders|length }}</div><div class="stat-label">Active orders</div></div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="panel">
+        <div class="panel-head"><h2><i class="bi bi-map me-2 text-brand"></i>Route map</h2><span class="tiny muted">Click a pin for details</span></div>
+        <div class="panel-body">
+          <div class="map-box lg route-map" data-route="{{ route|tojson|forceescape }}"></div>
+          <div class="map-legend">
+            <span><span class="legend-dot" style="background:#155844"></span> Start</span>
+            <span><span class="legend-dot" style="background:#1f9d68"></span> Pickup</span>
+            <span><span class="legend-dot" style="background:#f26b21"></span> Drop</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="panel mb-4">
+        <div class="panel-head"><h2><i class="bi bi-list-ol me-2 text-brand"></i>Stop sequence</h2></div>
+        <div class="panel-body pt-2">
+          {% for stop in route.stops %}
+            <div class="route-stop">
+              <span class="stop-num {{ 'pickup' if stop.kind == 'pickup' else '' }}">{{ stop.sequence if stop.sequence else '★' }}</span>
+              <div class="flex-grow-1">
+                <strong>{{ stop.label }}</strong>
+                <div class="tiny muted">{{ stop.address or '—' }}</div>
+                {% if stop.leg_km %}<div class="tiny muted">Leg: {{ stop.leg_km }} km</div>{% endif %}
+              </div>
+              {% if stop.order_id %}<a class="btn btn-ghost btn-sm" href="{{ url_for('delivery.order_detail', order_id=stop.order_id) }}">Open</a>{% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if route.skipped_orders %}
+        <div class="callout mb-4"><i class="bi bi-exclamation-triangle me-1"></i> {{ route.skipped_orders|length }} order{{ '' if route.skipped_orders|length == 1 else 's' }} skipped because coordinates are missing ({{ route.skipped_orders|join(', ') }}). Ask the customer or restaurant to add a map location.</div>
+      {% endif %}
+
+      <div class="panel">
+        <div class="panel-head"><h2><i class="bi bi-bicycle me-2 text-brand"></i>Orders on this route</h2></div>
+        <div class="panel-body pt-2">
+          {% for order in orders %}
+            <div class="kv"><span><a href="{{ url_for('delivery.order_detail', order_id=order.id) }}">{{ order.order_number }}</a></span><span>{{ order.status_label }}</span></div>
+          {% else %}
+            <p class="small-note mb-0">No active orders.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% else %}
+  <div class="panel">
+    {{ empty_state('signpost-split', 'No route to optimize yet', 'Accept an assignment with a delivery location and the planner will build your route.', url_for('delivery.assignments'), 'Find assignments') }}
+  </div>
+{% endif %}
+{% endblock %}

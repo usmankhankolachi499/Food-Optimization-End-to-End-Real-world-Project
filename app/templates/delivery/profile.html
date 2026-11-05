@@ -1,0 +1,97 @@
+﻿{% extends "base.html" %}
+{% block title %}Partner profile{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-person-badge"></i> Delivery partner</div>
+    <h1>Partner profile</h1>
+    <p>Update your contact details, vehicle and current location.</p>
+  </div>
+  <a class="btn btn-ghost" href="{{ url_for('delivery.dashboard') }}"><i class="bi bi-arrow-left me-1"></i> Dashboard</a>
+</div>
+
+<form method="post" class="row g-4">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="col-lg-8">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-person me-2 text-brand"></i>Personal details</h2></div>
+      <div class="panel-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label" for="name">Full name</label>
+            <input class="form-control" id="name" name="name" value="{{ current_user.name }}" required minlength="3">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="phone">Phone number</label>
+            <input class="form-control" id="phone" name="phone" value="{{ current_user.phone or '' }}" placeholder="+92 30000 00000">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="vehicle_type">Vehicle type</label>
+            <select class="form-select" id="vehicle_type" name="vehicle_type">
+              {% for vehicle in ['Bike', 'Scooter', 'Electric Scooter', 'Bicycle', 'Car'] %}
+                <option value="{{ vehicle }}" {{ 'selected' if partner.vehicle_type == vehicle }}>{{ vehicle }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="vehicle_number">Vehicle number</label>
+            <input class="form-control" id="vehicle_number" name="vehicle_number" value="{{ partner.vehicle_number or '' }}" maxlength="30" placeholder="MH12 AB 1234">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2><i class="bi bi-geo-alt me-2 text-brand"></i>Current location</h2></div>
+      <div class="panel-body">
+        <div class="location-picker" data-lat-input="latitude" data-lng-input="longitude">
+          <div class="map-box mb-3" id="partnerMap"></div>
+          <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+            <button class="btn btn-soft btn-sm" type="button" data-use-location><i class="bi bi-crosshair me-1"></i> Use my current location</button>
+            <span class="tiny muted" data-location-status>Click the map to set your base position.</span>
+          </div>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="form-label" for="latitude">Latitude</label>
+              <input class="form-control" id="latitude" name="latitude" value="{{ partner.current_lat if partner.current_lat is not none else '' }}" placeholder="18.520430">
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label" for="longitude">Longitude</label>
+              <input class="form-control" id="longitude" name="longitude" value="{{ partner.current_lng if partner.current_lng is not none else '' }}" placeholder="73.856744">
+            </div>
+          </div>
+          <div class="form-hint">Your location is used to rank nearby assignments and calculate pickup distance.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-speedometer2 me-2 text-brand"></i>Partner stats</h2></div>
+      <div class="panel-body pt-2">
+        <div class="kv"><span>Status</span><span>{{ partner.status_label }}</span></div>
+        <div class="kv"><span>Total deliveries</span><span>{{ partner.total_deliveries }}</span></div>
+        <div class="kv"><span>Rating</span><span>{{ partner.rating_display }}{% if partner.rating_count %} ({{ partner.rating_count }}){% endif %}</span></div>
+        <div class="kv"><span>Active orders</span><span>{{ partner.active_order_count }}</span></div>
+        <div class="kv"><span>Last location</span><span>{{ partner.last_location_at|ago if partner.last_location_at else 'Never' }}</span></div>
+      </div>
+    </div>
+
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-shield-lock me-2 text-brand"></i>Security</h2></div>
+      <div class="panel-body">
+        <p class="small-note">Sessions expire after {{ session_timeout_minutes }} minutes of inactivity. Change your password regularly.</p>
+        <a class="btn btn-soft w-100" href="{{ url_for('auth.change_password') }}"><i class="bi bi-key me-1"></i> Change password</a>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-body">
+        <button class="btn btn-brand w-100" type="submit"><i class="bi bi-check2-circle me-1"></i> Save profile</button>
+        <a class="btn btn-ghost w-100 mt-2" href="{{ url_for('delivery.dashboard') }}">Cancel</a>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

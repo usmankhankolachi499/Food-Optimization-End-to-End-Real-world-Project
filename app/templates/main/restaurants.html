@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import restaurant_card, empty_state %}
+{% block title %}Restaurants{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-shop"></i> Discover</div>
+    <h1>Restaurants & menus</h1>
+    <p>{{ pagination.total }} partner restaurants available{{ ' in ' ~ filters.city if filters.city }}.</p>
+  </div>
+  {% if current_user and current_user.is_customer %}
+    <a class="btn btn-soft" href="{{ url_for('customer.cart') }}"><i class="bi bi-bag-heart me-1"></i> View cart {% if cart_count %}<span class="badge bg-dark ms-1">{{ cart_count }}</span>{% endif %}</a>
+  {% endif %}
+</div>
+
+<div class="panel mb-4">
+  <div class="panel-body">
+    <form class="row g-2 align-items-end" method="get">
+      <div class="col-lg-4">
+        <label class="form-label" for="q">Search</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input class="form-control" id="q" name="q" value="{{ filters.q }}" placeholder="Restaurant, cuisine or keyword">
+        </div>
+      </div>
+      <div class="col-sm-4 col-lg-2">
+        <label class="form-label" for="cuisine">Cuisine</label>
+        <select class="form-select" id="cuisine" name="cuisine">
+          <option value="">All cuisines</option>
+          {% for cuisine in cuisines %}<option value="{{ cuisine }}" {{ 'selected' if filters.cuisine == cuisine }}>{{ cuisine }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="col-sm-4 col-lg-2">
+        <label class="form-label" for="city">City</label>
+        <select class="form-select" id="city" name="city">
+          <option value="">All cities</option>
+          {% for city in cities %}<option value="{{ city }}" {{ 'selected' if filters.city == city }}>{{ city }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="col-sm-4 col-lg-2">
+        <label class="form-label" for="sort">Sort by</label>
+        <select class="form-select" id="sort" name="sort">
+          <option value="rating" {{ 'selected' if filters.sort == 'rating' }}>Top rated</option>
+          <option value="name" {{ 'selected' if filters.sort == 'name' }}>Name A–Z</option>
+          <option value="new" {{ 'selected' if filters.sort == 'new' }}>Newest</option>
+        </select>
+      </div>
+      <div class="col-auto d-flex gap-2">
+        <div class="form-check form-switch mb-0 pt-4">
+          <input class="form-check-input" type="checkbox" role="switch" id="open" name="open" value="1" {{ 'checked' if filters.open }}>
+          <label class="form-check-label tiny fw-semibold" for="open">Open now</label>
+        </div>
+      </div>
+      <div class="col-12 col-lg-auto d-flex gap-2">
+        <button class="btn btn-brand" type="submit"><i class="bi bi-funnel me-1"></i> Filter</button>
+        <a class="btn btn-ghost" href="{{ url_for('main.restaurants') }}">Reset</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if restaurants %}
+  <div class="restaurant-grid">
+    {% for restaurant in restaurants %}
+      {{ restaurant_card(restaurant, loop.index + (pagination.page - 1) * pagination.per_page) }}
+    {% endfor %}
+  </div>
+  {% if pagination.pages > 1 %}{% include "partials/pagination.html" %}{% endif %}
+{% else %}
+  <div class="panel">
+    {{ empty_state('search', 'No restaurants match your filters', 'Try a different cuisine, city or search keyword.', url_for('main.restaurants'), 'Clear filters') }}
+  </div>
+{% endif %}
+{% endblock %}

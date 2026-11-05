@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Secrets / local env
+.env
+
+# Local dev runtime (dev DB, uploads) - recreated automatically
+instance/
+
+# SQL Server backups - regenerate with scripts/backup_database.py
+backups/
+
+# Pre-retrain safety copies of ML artifacts (old model versions)
+*.pkl.bak
+*.bak
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# UI restyle working backup (kept locally, not part of the app)
+docs/backup_new_ui/

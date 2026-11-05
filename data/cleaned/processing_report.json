@@ -1,0 +1,75 @@
+{
+  "run_at": "2026-10-30T22:37:36",
+  "steps": {
+    "orders": {
+      "input_rows": 15150,
+      "output_rows": 15000,
+      "duplicates_removed": 150,
+      "rows_removed": 150
+    },
+    "location_logs": {
+      "input_rows": 30300,
+      "output_rows": 29697,
+      "rows_removed": 603,
+      "invalid_coordinates_removed": 304
+    }
+  },
+  "issues_found": {
+    "orders: negative distance_km": 40,
+    "orders: missing distance_km": 60,
+    "orders: missing prep_time_min": 60,
+    "orders: inconsistent status text": 80,
+    "orders: order_time in dd/mm/YYYY HH:MM format": 50,
+    "orders: impossible actual_delivery_min (0 or 480)": 30,
+    "orders: null status": 35,
+    "orders: delivery_fee missing from total": 50,
+    "orders: negative subtotal": 25,
+    "orders: invalid weather values": 40,
+    "orders: duplicate rows (same order_id)": 150,
+    "customers: missing phone": 40,
+    "customers: invalid phone": 30,
+    "customers: lat/lon out of range": 25,
+    "customers: missing address": 20,
+    "customers: names uppercase with extra spaces": 60,
+    "customers: duplicate rows (same customer_id)": 30,
+    "location_logs_raw: GPS (0,0)": 600,
+    "location_logs_raw: null latitude": 300,
+    "location_logs_raw: lat/lon out of range": 300
+  },
+  "actions": [
+    "Normalised traffic_level spellings (15150 values, was {'high': 8348, 'medium': 5185, 'low': 1617})",
+    "Integrated unstructured JSONL logs: validated 29,697 GPS points, removed 304 bad coords"
+  ],
+  "validation": [
+    "520 rows had an unknown status value",
+    "25 rows failed subtotal >= 0 check"
+  ],
+  "documented_issues": {
+    "orders: negative distance_km": 40,
+    "orders: missing distance_km": 60,
+    "orders: missing prep_time_min": 60,
+    "orders: inconsistent status text": 80,
+    "orders: order_time in dd/mm/YYYY HH:MM format": 50,
+    "orders: impossible actual_delivery_min (0 or 480)": 30,
+    "orders: null status": 35,
+    "orders: delivery_fee missing from total": 50,
+    "orders: negative subtotal": 25,
+    "orders: invalid weather values": 40,
+    "orders: duplicate rows (same order_id)": 150,
+    "customers: missing phone": 40,
+    "customers: invalid phone": 30,
+    "customers: lat/lon out of range": 25,
+    "customers: missing address": 20,
+    "customers: names uppercase with extra spaces": 60,
+    "customers: duplicate rows (same customer_id)": 30,
+    "location_logs_raw: GPS (0,0)": 600,
+    "location_logs_raw: null latitude": 300,
+    "location_logs_raw: lat/lon out of range": 300,
+    "location_logs_raw: duplicate documents": 300
+  },
+  "cleaned_files": [
+    "location_logs_clean.jsonl",
+    "orders_clean.csv",
+    "processing_report.json"
+  ]
+}

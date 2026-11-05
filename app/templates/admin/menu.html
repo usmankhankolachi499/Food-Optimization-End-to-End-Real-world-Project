@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import empty_state %}
+{% block title %}{{ restaurant.name }} menu{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-list-ul"></i> Menu manager</div>
+    <h1>{{ restaurant.name }}</h1>
+    <p>{{ items|length }} menu item{{ '' if items|length == 1 else 's' }} · {{ restaurant.available_menu_count }} currently available.</p>
+  </div>
+  <div class="d-flex gap-2">
+    <a class="btn btn-ghost" href="{{ url_for('admin.restaurants') }}"><i class="bi bi-arrow-left me-1"></i> Restaurants</a>
+    <a class="btn btn-brand" href="{{ url_for('admin.menu_item_new', restaurant_id=restaurant.id) }}"><i class="bi bi-plus-lg me-1"></i> Add item</a>
+  </div>
+</div>
+
+<div class="row g-4 mb-4">
+  <div class="col-md-4">
+    <div class="panel h-100"><div class="panel-body">
+      <div class="eyebrow mb-1"><i class="bi bi-shop"></i> Restaurant</div>
+      <h2 style="font-size:1.05rem">{{ restaurant.name }}</h2>
+      <p class="small-note mb-2">{{ restaurant.cuisine or 'Multi-cuisine' }} · {{ restaurant.city or 'No city' }}</p>
+      <div class="kv"><span>Status</span><span>{{ 'Active' if restaurant.is_active else 'Inactive' }}</span></div>
+      <div class="kv"><span>Hours</span><span>{{ restaurant.hours_label }}</span></div>
+      <div class="kv"><span>Rating</span><span>{{ restaurant.rating_display }}</span></div>
+    </div></div>
+  </div>
+  <div class="col-md-8">
+    <div class="panel h-100"><div class="panel-body d-flex flex-column justify-content-center">
+      <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-soft" href="{{ url_for('main.restaurant_detail', restaurant_id=restaurant.id) }}" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i> View public menu</a>
+        <a class="btn btn-ghost" href="{{ url_for('admin.restaurant_edit', restaurant_id=restaurant.id) }}"><i class="bi bi-pencil me-1"></i> Edit restaurant</a>
+      </div>
+      <p class="small-note mt-3 mb-0">Unavailable items stay on the menu but cannot be added to a cart. Toggle availability instead of deleting items you may bring back.</p>
+    </div></div>
+  </div>
+</div>
+
+{% if items %}
+  <div class="table-wrap">
+    <div class="table-responsive">
+      <table class="table table-modern align-middle">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Prep time</th>
+            <th>Type</th>
+            <th>Availability</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+            <tr>
+              <td>
+                <span class="cell-title">{{ item.name }}</span>
+                <div class="cell-sub">{{ item.description|truncate(58) if item.description else 'No description' }}</div>
+              </td>
+              <td>{{ item.category or 'Menu' }}</td>
+              <td>{{ item.price|money }}</td>
+              <td>{{ item.prep_time_min }} min</td>
+              <td><span class="veg-dot {{ '' if item.is_veg else 'nonveg-dot' }}"></span> {{ 'Veg' if item.is_veg else 'Non-veg' }}</td>
+              <td>{% if item.is_available %}<span class="badge bg-success">Available</span>{% else %}<span class="badge bg-secondary">Unavailable</span>{% endif %}</td>
+              <td class="text-end">
+                <div class="d-flex justify-content-end gap-1">
+                  <a class="btn btn-ghost btn-sm" href="{{ url_for('admin.menu_item_edit', item_id=item.id) }}"><i class="bi bi-pencil"></i></a>
+                  <form method="post" action="{{ url_for('admin.menu_item_toggle', item_id=item.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-ghost btn-sm" type="submit" title="{{ 'Mark unavailable' if item.is_available else 'Mark available' }}"><i class="bi bi-{{ 'toggle-on' if item.is_available else 'toggle-off' }}"></i></button>
+                  </form>
+                  <form method="post" action="{{ url_for('admin.menu_item_delete', item_id=item.id) }}" onsubmit="return confirm('Remove {{ item.name|e }} from the menu?');">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-ghost btn-sm text-danger" type="submit" title="Delete"><i class="bi bi-trash"></i></button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% else %}
+  <div class="panel">{{ empty_state('egg-fried', 'No menu items yet', 'Add the first dish so customers can order from this restaurant.', url_for('admin.menu_item_new', restaurant_id=restaurant.id), 'Add menu item') }}</div>
+{% endif %}
+{% endblock %}

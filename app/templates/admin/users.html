@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import role_badge, empty_state %}
+{% block title %}Users{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-people"></i> Access control</div>
+    <h1>Users</h1>
+    <p>{{ pagination.total }} accounts across customers, delivery partners and administrators.</p>
+  </div>
+  <a class="btn btn-brand" href="{{ url_for('admin.user_new') }}"><i class="bi bi-person-plus me-1"></i> Add user</a>
+</div>
+
+<div class="panel mb-4">
+  <div class="panel-body">
+    <form class="row g-2 align-items-end" method="get">
+      <div class="col-lg-6">
+        <label class="form-label" for="q">Search</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input class="form-control" id="q" name="q" value="{{ filters.q }}" placeholder="Name, username, email or phone">
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <label class="form-label" for="role">Role</label>
+        <select class="form-select" id="role" name="role">
+          <option value="">All roles</option>
+          {% for value, label in [('customer','Customers'),('delivery','Delivery partners'),('admin','Administrators')] %}
+            <option value="{{ value }}" {{ 'selected' if filters.role == value }}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-12 col-lg-auto d-flex gap-2">
+        <button class="btn btn-brand" type="submit"><i class="bi bi-funnel me-1"></i> Filter</button>
+        <a class="btn btn-ghost" href="{{ url_for('admin.users') }}">Reset</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if users %}
+  <div class="table-wrap">
+    <div class="table-responsive">
+      <table class="table table-modern align-middle">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Contact</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Joined</th>
+            <th>Last login</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+            <tr>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <span class="table-avatar">{{ user.initials }}</span>
+                  <div>
+                    <span class="cell-title">{{ user.name }}</span>
+                    <div class="cell-sub">@{{ user.username }}</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="cell-title" style="font-weight:600">{{ user.email }}</div>
+                <div class="cell-sub">{{ user.phone or 'No phone' }}</div>
+              </td>
+              <td>{{ role_badge(user) }}</td>
+              <td>
+                {% if user.is_active %}<span class="badge bg-success">Active</span>{% else %}<span class="badge bg-secondary">Inactive</span>{% endif %}
+              </td>
+              <td>{{ user.created_at|dt('%d %b %Y') }}</td>
+              <td>{{ user.last_login_at|ago if user.last_login_at else 'Never' }}</td>
+              <td class="text-end">
+                <div class="d-flex justify-content-end gap-1">
+                  <a class="btn btn-ghost btn-sm" href="{{ url_for('admin.user_edit', user_id=user.id) }}"><i class="bi bi-pencil"></i></a>
+                  <form method="post" action="{{ url_for('admin.user_toggle', user_id=user.id) }}" onsubmit="return confirm('Change the active status for {{ user.name|e }}?');">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-ghost btn-sm" type="submit" title="{{ 'Deactivate' if user.is_active else 'Activate' }}" {{ 'disabled' if user.id == current_user.id }}>
+                      <i class="bi bi-{{ 'pause-circle' if user.is_active else 'play-circle' }}"></i>
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% include "partials/pagination.html" %}
+{% else %}
+  <div class="panel">{{ empty_state('people', 'No users found', 'Try a different search or role filter.', url_for('admin.users'), 'Clear filters') }}</div>
+{% endif %}
+{% endblock %}

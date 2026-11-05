@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block title %}How it works{% endblock %}
+{% block content %}
+<section class="hero mb-4">
+  <div class="row align-items-center gy-4">
+    <div class="col-lg-8">
+      <div class="eyebrow"><i class="bi bi-info-circle"></i> How MOON Light works</div>
+      <h1>One platform from menu to <span>doorstep</span></h1>
+      <p class="lead">MOON Light is a Food Delivery Optimization System built with Flask. It combines ordering, live GPS tracking, smart partner assignment, route optimisation and operational analytics in a single role-based web application.</p>
+      <div class="hero-badges">
+        <span class="hero-badge"><i class="bi bi-person-badge"></i> Three roles</span>
+        <span class="hero-badge"><i class="bi bi-broadcast-pin"></i> Live tracking</span>
+        <span class="hero-badge"><i class="bi bi-signpost-split"></i> Optimised routes</span>
+        <span class="hero-badge"><i class="bi bi-graph-up"></i> Reports</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad pt-0">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow"><i class="bi bi-diagram-3"></i> The workflow</div>
+      <h2>How an order moves through the system</h2>
+      <p>Every step is visible to the right people through role-based dashboards.</p>
+    </div>
+  </div>
+  <div class="row g-3">
+    <div class="col-md-6 col-lg-4">
+      <div class="feature-card step-card">
+        <span class="step-num">1</span>
+        <h3>Browse &amp; build a cart</h3>
+        <p>Customers discover restaurants by cuisine, city, rating or opening hours, then add dishes from a single restaurant menu.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="feature-card step-card">
+        <span class="step-num">2</span>
+        <h3>Checkout with a location</h3>
+        <p>The delivery address and map point are captured at checkout. The delivery fee is calculated from the real distance to the restaurant.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="feature-card step-card">
+        <span class="step-num">3</span>
+        <h3>Smart assignment</h3>
+        <p>The system ranks available partners by proximity, current workload, delivery radius and — when available — an ML scoring hook.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="feature-card step-card">
+        <span class="step-num">4</span>
+        <h3>Preparation &amp; pickup</h3>
+        <p>The partner accepts the job, marks the food as prepared, then starts the delivery. Status changes notify the customer automatically.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="feature-card step-card">
+        <span class="step-num">5</span>
+        <h3>Live tracking &amp; route optimisation</h3>
+        <p>Location points stream to the tracking API. The customer sees the partner on a map while batched orders are sequenced pickup-before-drop.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="feature-card step-card">
+        <span class="step-num">6</span>
+        <h3>Feedback &amp; analytics</h3>
+        <p>Delivered orders can be rated. Administrators review delivery times, peak hours, partner performance, revenue and CSV reports.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad pt-0">
+  <div class="row g-4">
+    <div class="col-lg-4">
+      <div class="panel h-100">
+        <div class="panel-head"><h2><i class="bi bi-person-heart me-2 text-brand"></i>Customers</h2></div>
+        <div class="panel-body pt-2">
+          <ul class="list-check">
+            <li><i class="bi bi-check-circle-fill"></i><span>Restaurant discovery &amp; menu browsing</span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span>Cart, checkout and multiple payment methods</span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span>Live order tracking and delivery partner contact</span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span>Order history, cancellation and star ratings</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="panel h-100">
+        <div class="panel-head"><h2><i class="bi bi-bicycle me-2 text-brand"></i>Delivery partners</h2></div>
+        <div class="panel-body pt-2">
+          <ul class="list-check">
+            <li><i class="bi bi-check-circle-fill"></i><span>Availability toggle and open assignment board</span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span>Accept jobs within their delivery radius</span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span>Share live GPS location and update order status</span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span>Optimised multi-stop route and earnings history</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="panel h-100">
+        <div class="panel-head"><h2><i class="bi bi-shield-check me-2 text-brand"></i>Administrators</h2></div>
+        <div class="panel-body pt-2">
+          <ul class="list-check">
+            <li><i class="bi bi-check-circle-fill"></i><span>User, role and account activation management</span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span>Restaurant, menu and order operations</span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span>Manual, automatic and forced partner assignment</span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span>Optimisation settings, analytics and CSV exports</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad pt-0">
+  <div class="panel">
+    <div class="panel-body p-lg-4">
+      <div class="row align-items-center gy-4">
+        <div class="col-lg-7">
+          <div class="eyebrow"><i class="bi bi-database-gear"></i> Under the hood</div>
+          <h2 class="mb-2">Transparent, configurable optimisation</h2>
+          <p class="muted mb-3">Travel time uses the configured average speed and traffic factor. Partner ranking weighs distance, workload and ratings. Preparation buffers and delivery radius are tuned from the admin settings screen. If a separate ML predictor module is installed, it is used automatically for ETAs and partner scoring — otherwise deterministic fallbacks keep the app fully functional.</p>
+          <div class="row g-2">
+            <div class="col-sm-6"><div class="integration-chip"><i class="bi bi-signpost-split ok"></i><span>Nearest-neighbour route planning</span></div></div>
+            <div class="col-sm-6"><div class="integration-chip"><i class="bi bi-broadcast-pin ok"></i><span>Relational location history</span></div></div>
+            <div class="col-sm-6"><div class="integration-chip"><i class="bi bi-database ok"></i><span>Optional MongoDB mirror</span></div></div>
+            <div class="col-sm-6"><div class="integration-chip"><i class="bi bi-filetype-csv ok"></i><span>CSV operational reports</span></div></div>
+          </div>
+        </div>
+        <div class="col-lg-5 text-lg-end">
+          {% if not current_user %}
+            <a class="btn btn-brand btn-lg" href="{{ url_for('auth.register') }}"><i class="bi bi-person-plus me-1"></i> Create an account</a>
+            <a class="btn btn-ghost btn-lg" href="{{ url_for('auth.login') }}"><i class="bi bi-box-arrow-in-right me-1"></i> Sign in</a>
+          {% else %}
+            <a class="btn btn-brand btn-lg" href="{{ url_for(current_user.dashboard_endpoint) }}"><i class="bi bi-grid-1x2 me-1"></i> Go to my dashboard</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

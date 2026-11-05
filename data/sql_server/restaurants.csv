@@ -1,0 +1,41 @@
+restaurant_id,name,cuisine,area,latitude,longitude,open_time,close_time,avg_rating
+1,Taste of Handi House,Karahi,Bahadurabad,24.885643,67.058294,00:00,00:00,4.14
+2,Nawab Dragon House,Chinese,Tariq Road,24.871927,67.050117,00:00,00:00,3.67
+3,Sultan Biryani House,Biryani,Bahadurabad,24.88581,67.059903,00:00,00:00,4.08
+4,Desi Burgers,Fast Food,Korangi,24.832884,67.132679,12:00,01:00,3.85
+5,Desi Handi House,Karahi,North Nazimabad,24.941396,67.040131,11:00,01:00,3.4
+6,Zaiqa Coffee Co.,Cafe,Gulshan-e-Iqbal,24.923106,67.087122,07:00,23:00,3.37
+7,Royal Pizza Kitchen,Pizza,PECHS,24.866071,67.062676,12:00,00:00,4.27
+8,Golden Coffee Co.,Cafe,Gulshan-e-Iqbal,24.920519,67.094025,07:00,22:00,4.35
+9,Lahori Burgers,Fast Food,Malir,24.901261,67.184881,12:00,02:00,4.27
+10,Baba Biryani House,Biryani,Bahadurabad,24.882049,67.080372,12:00,00:00,4.35
+11,Taste of Pizza Kitchen,Pizza,Tariq Road,24.870422,67.048326,11:00,02:00,4.21
+12,Baba Burgers,Fast Food,North Nazimabad,24.937993,67.0478,12:00,02:00,3.71
+13,Cloud 9 Dera,Karahi,Malir,24.890197,67.182701,12:00,00:00,3.58
+14,Royal Tikka Corner,BBQ,Tariq Road,24.874115,67.054085,12:00,00:00,3.74
+15,Cloud 9 Fast Food,Fast Food,PECHS,24.872638,67.063145,11:00,02:00,4.37
+16,Sultan Sweets and Desserts,Desserts,North Nazimabad,24.938291,67.041187,14:00,02:00,3.12
+17,Seaview Burger Lab,Fast Food,PECHS,24.871972,67.062172,12:00,00:00,4.06
+18,Karachi Grill House,BBQ,Tariq Road,24.872558,67.053294,12:00,01:00,4.28
+19,Hot & Fresh Burgers,Fast Food,North Nazimabad,24.937986,67.028055,12:00,02:00,3.75
+20,Seaview Biryani Point,Biryani,Korangi,24.83873,67.130789,11:00,00:00,3.31
+21,Shahi Dera,Karahi,Korangi,24.829477,67.128158,11:00,01:00,3.73
+22,Gourmet Handi House,Karahi,Korangi,24.834286,67.141984,12:00,01:00,4.01
+23,Spice Handi House,Karahi,Federal B Area,24.92516,67.062304,11:00,02:00,3.77
+24,Spice Dera,Karahi,Gulshan-e-Iqbal,24.922532,67.089976,12:00,01:00,4.31
+25,Al-Noor Grill House,BBQ,PECHS,24.872892,67.056864,12:00,02:00,4.03
+26,Metro Dragon House,Chinese,Federal B Area,24.928525,67.075712,12:00,02:00,3.21
+27,Dastarkhwan Dera,Karahi,Gulshan-e-Iqbal,24.928268,67.078316,11:00,02:00,3.71
+28,Zaiqa Biryani Centre,Biryani,Federal B Area,24.924641,67.070069,11:00,02:00,3.98
+29,Metro Tikka Corner,BBQ,Gulshan-e-Iqbal,24.913684,67.091693,12:00,00:00,3.93
+30,Seaview Dragon House,Chinese,Federal B Area,24.929207,67.062535,12:00,00:00,3.7
+31,Zaiqa Dera,Karahi,Gulshan-e-Iqbal,24.914733,67.089721,12:00,02:00,3.48
+32,Al-Noor Burger Lab,Fast Food,North Nazimabad,24.931346,67.03965,11:00,01:00,3.73
+33,Shahi Biryani Centre,Biryani,North Nazimabad,24.936654,67.03755,12:00,00:00,4.25
+34,Royal Dessert Studio,Desserts,Korangi,24.824222,67.133176,14:00,00:00,3.47
+35,Al-Noor Cafe,Cafe,Korangi,24.837202,67.131736,08:00,23:00,4.34
+36,Hot & Fresh Biryani Point,Biryani,DHA,24.804363,67.066339,11:00,02:00,4.08
+37,Gourmet Pizza Hub,Pizza,North Nazimabad,24.944943,67.039644,12:00,01:00,3.97
+38,Sultan Coffee Co.,Cafe,Gulistan-e-Johar,24.910216,67.129972,07:00,22:00,3.87
+39,Urban Pizza Hub,Pizza,North Nazimabad,24.940899,67.042467,11:00,00:00,3.86
+40,Hot & Fresh Biryani Centre,Biryani,DHA,24.807596,67.065371,11:00,02:00,3.54

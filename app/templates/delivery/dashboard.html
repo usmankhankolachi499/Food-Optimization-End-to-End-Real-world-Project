@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import status_badge, empty_state %}
+{% block title %}Partner dashboard{% endblock %}
+{% block content %}
+<div class="welcome-banner mb-4">
+  <div>
+    <span class="live-pill mb-2"><span class="live-dot"></span> {{ profile.status_label }}</span>
+    <h1>Ready to ride, {{ current_user.name.split(' ')[0] }}?</h1>
+    <p>{% if profile.has_location %}Your live position is saved. Open jobs nearest to you are listed first.{% else %}Set your location in your profile so jobs can be ranked by distance.{% endif %}</p>
+  </div>
+  <div class="cta-row">
+    <form method="post" action="{{ url_for('delivery.availability') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="available" value="{{ '0' if profile.is_available else '1' }}">
+      <button class="availability-toggle" type="submit" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff">
+        <span class="dot {{ 'on' if profile.is_available else 'off' }}"></span>
+        {{ 'Available for deliveries' if profile.is_available else 'Currently unavailable' }}
+      </button>
+    </form>
+    <button class="btn btn-brand" type="button" data-share-location data-reload="1"><i class="bi bi-broadcast-pin me-1"></i> Share live location</button>
+  </div>
+</div>
+
+<div class="stat-grid mb-4">
+  <div class="stat-card">
+    <div class="stat-icon"><i class="bi bi-bicycle"></i></div>
+    <div class="stat-value">{{ stats.active }}</div>
+    <div class="stat-label">Active deliveries</div>
+  </div>
+  <div class="stat-card green">
+    <div class="stat-icon"><i class="bi bi-house-check"></i></div>
+    <div class="stat-value">{{ stats.today_delivered }}</div>
+    <div class="stat-label">Delivered today</div>
+  </div>
+  <div class="stat-card blue">
+    <div class="stat-icon"><i class="bi bi-wallet2"></i></div>
+    <div class="stat-value">{{ stats.earnings|money }}</div>
+    <div class="stat-label">Earnings (30 days)</div>
+  </div>
+  <div class="stat-card amber">
+    <div class="stat-icon"><i class="bi bi-stopwatch"></i></div>
+    <div class="stat-value">{{ stats.avg_delivery_min }}m</div>
+    <div class="stat-label">Avg delivery time</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon"><i class="bi bi-star"></i></div>
+    <div class="stat-value">{{ '%.1f'|format(stats.rating) if stats.rating_count else 'New' }}</div>
+    <div class="stat-label">Partner rating</div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="panel mb-4">
+      <div class="panel-head">
+        <h2><i class="bi bi-list-check me-2 text-brand"></i>Your active deliveries</h2>
+        <a class="link" href="{{ url_for('delivery.assignments') }}">Assignments</a>
+      </div>
+      <div class="panel-body pt-2">
+        {% if active_orders %}
+          <div class="order-list">
+            {% for order in active_orders %}
+              <div class="order-row">
+                <div class="order-thumb">🍲</div>
+                <div class="order-main">
+                  <h3><a class="text-reset" href="{{ url_for('delivery.order_detail', order_id=order.id) }}">{{ order.restaurant.name }}</a></h3>
+                  <div class="order-sub">
+                    <span><i class="bi bi-hash"></i>{{ order.order_number }}</span>
+                    <span><i class="bi bi-geo-alt"></i>{{ order.delivery_address|truncate(38) }}</span>
+                    <span><i class="bi bi-clock"></i>{{ order.estimated_delivery_min }} min ETA</span>
+                  </div>
+                </div>
+                <div class="order-side">
+                  {{ status_badge(order) }}
+                  <a class="btn btn-soft btn-sm" href="{{ url_for('delivery.order_detail', order_id=order.id) }}">Open</a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="empty-state small">
+            <div class="empty-icon"><i class="bi bi-bicycle"></i></div>
+            <h3>No active deliveries</h3>
+            <p>Accept an open job below to start delivering.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2><i class="bi bi-broadcast me-2 text-brand"></i>Open jobs near you</h2>
+        <a class="link" href="{{ url_for('delivery.assignments') }}">View all</a>
+      </div>
+      <div class="panel-body pt-2">
+        {% if open_jobs %}
+          <div class="d-grid gap-2">
+            {% for order in open_jobs %}
+              <div class="job-card">
+                <div class="d-flex justify-content-between align-items-start gap-2">
+                  <div>
+                    <h3>{{ order.restaurant.name }}</h3>
+                    <div class="job-meta">
+                      <span><i class="bi bi-hash"></i>{{ order.order_number }}</span>
+                      <span><i class="bi bi-geo-alt"></i>{{ order.delivery_address|truncate(42) }}</span>
+                    </div>
+                  </div>
+                  <span class="distance-chip">{{ order.distance_km or 0 }} km</span>
+                </div>
+                <div class="job-foot">
+                  <span class="tiny muted"><i class="bi bi-clock me-1"></i>{{ order.placed_at|ago }}</span>
+                  <form method="post" action="{{ url_for('delivery.accept_assignment', order_id=order.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-brand btn-sm" type="submit"><i class="bi bi-check2 me-1"></i> Accept</button>
+                  </form>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="empty-state small">
+            <div class="empty-icon"><i class="bi bi-inbox"></i></div>
+            <h3>No open jobs</h3>
+            <p>New unassigned orders will appear here automatically.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-signpost-split me-2 text-brand"></i>Optimised route</h2></div>
+      <div class="panel-body pt-2">
+        {% if route.stops %}
+          <div class="d-flex justify-content-between mb-2">
+            <span class="tiny muted">{{ route.stops|length - 1 }} stop{{ '' if route.stops|length - 1 == 1 else 's' }}</span>
+            <span class="distance-chip">{{ route.distance_km }} km · {{ route.eta_minutes }} min</span>
+          </div>
+          {% for stop in route.stops %}
+            {% if stop.kind != 'partner' %}
+              <div class="route-stop">
+                <span class="stop-num {{ 'pickup' if stop.kind == 'pickup' else '' }}">{{ stop.sequence }}</span>
+                <div>
+                  <strong>{{ stop.label }}</strong>
+                  <div class="tiny muted">{{ stop.address or '—' }}</div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+          <a class="btn btn-soft w-100 mt-3" href="{{ url_for('delivery.route') }}"><i class="bi bi-map me-1"></i> Open route planner</a>
+        {% else %}
+          <p class="small-note mb-0">No active delivery stops yet. Once you accept an order with map coordinates, an optimised sequence will appear here.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-person-badge me-2 text-brand"></i>Partner profile</h2></div>
+      <div class="panel-body pt-2">
+        <div class="partner-strip mb-3">
+          <div class="partner-avatar">{{ current_user.initials }}</div>
+          <div>
+            <strong>{{ current_user.name }}</strong>
+            <small>{{ profile.vehicle_type or 'Bike' }}{% if profile.vehicle_number %} · {{ profile.vehicle_number }}{% endif %}</small>
+          </div>
+        </div>
+        <div class="kv"><span>Availability</span><span>{{ profile.status_label }}</span></div>
+        <div class="kv"><span>Live location</span><span data-live-coords>{% if profile.has_location %}{{ '%.5f'|format(profile.current_lat) }}, {{ '%.5f'|format(profile.current_lng) }}{% else %}Not set{% endif %}</span></div>
+        <div class="kv"><span>Total deliveries</span><span>{{ stats.total_deliveries }}</span></div>
+        <a class="btn btn-ghost w-100 mt-3" href="{{ url_for('delivery.profile') }}"><i class="bi bi-pencil me-1"></i> Edit profile</a>
+      </div>
+    </div>
+
+    <div class="callout"><i class="bi bi-lightning-charge me-1"></i> Keep your availability on and share live location regularly so the dispatcher can route jobs to you efficiently.</div>
+  </div>
+</div>
+{% endblock %}

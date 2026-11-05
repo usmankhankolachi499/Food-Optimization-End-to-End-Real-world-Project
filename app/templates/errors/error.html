@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{{ code }} · {{ title }}{% endblock %}
+{% block content %}
+<div class="panel mx-auto" style="max-width: 620px;">
+  <div class="panel-body text-center py-5">
+    <div class="empty-icon mx-auto mb-3" style="width:74px;height:74px;font-size:2rem;background:#fff1e6;color:#d9530d;">
+      <i class="bi {{ 'bi-shield-lock' if code == 403 else ('bi-compass' if code == 404 else 'bi-exclamation-triangle') }}"></i>
+    </div>
+    <div class="eyebrow mb-2">Error {{ code }}</div>
+    <h1 class="h3 mb-2">{{ title }}</h1>
+    <p class="muted mb-4">{{ message }}</p>
+    <div class="d-flex justify-content-center gap-2">
+      <a class="btn btn-brand" href="{{ url_for('main.index') }}"><i class="bi bi-house me-1"></i> Go home</a>
+      <button class="btn btn-ghost" onclick="history.back()"><i class="bi bi-arrow-left me-1"></i> Go back</button>
+    </div>
+  </div>
+</div>
+{% endblock %}

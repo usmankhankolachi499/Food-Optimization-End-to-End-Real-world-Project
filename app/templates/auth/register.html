@@ -1,0 +1,73 @@
+﻿{% extends "base.html" %}
+{% block title %}Create account{% endblock %}
+{% block main_class %}auth-main container{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <aside class="auth-aside">
+    <div>
+      <span class="brand-moon" style="font-size:2.4rem;">🌙</span>
+      <h1>Dine <em>under the moonlight</em>.<br>Order in minutes.</h1>
+      <p>Create a customer account to browse local restaurants, place orders and follow your delivery partner live on the map.</p>
+      <div class="auth-points">
+        <div class="auth-point"><i class="bi bi-shop"></i><span>Curated restaurants and live menus</span></div>
+        <div class="auth-point"><i class="bi bi-geo-alt"></i><span>Accurate ETAs using distance and traffic</span></div>
+        <div class="auth-point"><i class="bi bi-clock-history"></i><span>Complete order history and easy reordering</span></div>
+      </div>
+    </div>
+    <div class="live-pill"><span class="live-dot"></span> 4.8 average partner rating</div>
+  </aside>
+
+  <section class="auth-form">
+    <div class="eyebrow mb-2"><i class="bi bi-person-plus"></i> Customer sign-up</div>
+    <h2>Create your account</h2>
+    <p>Delivery partner accounts are created by the administrator.</p>
+
+    <form method="post" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <label class="form-label" for="name">Full name</label>
+          <input class="form-control" id="name" name="name" value="{{ form.name }}" required>
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label" for="username">Username</label>
+          <input class="form-control" id="username" name="username" value="{{ form.username }}" autocomplete="username" required>
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label" for="email">Email</label>
+          <input class="form-control" id="email" name="email" type="email" value="{{ form.email }}" autocomplete="email" required>
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label" for="phone">Phone <span class="muted tiny">(optional)</span></label>
+          <input class="form-control" id="phone" name="phone" value="{{ form.phone }}" autocomplete="tel">
+        </div>
+        <div class="col-12">
+          <label class="form-label" for="address">Delivery address <span class="muted tiny">(optional)</span></label>
+          <input class="form-control" id="address" name="address" value="{{ form.address }}" placeholder="Flat / house, street">
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label" for="city">City</label>
+          <input class="form-control" id="city" name="city" value="{{ form.city or 'Karachi' }}">
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label" for="password">Password</label>
+          <div class="password-wrap">
+            <input class="form-control" id="password" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" required>
+            <button class="password-toggle" type="button" data-password-toggle="password" aria-label="Show password"><i class="bi bi-eye"></i></button>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label" for="confirm_password">Confirm password</label>
+          <div class="password-wrap">
+            <input class="form-control" id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" required>
+            <button class="password-toggle" type="button" data-password-toggle="confirm_password" aria-label="Show password"><i class="bi bi-eye"></i></button>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-brand w-100 btn-lg mt-4" type="submit"><i class="bi bi-person-check me-1"></i> Create account</button>
+    </form>
+
+    <div class="auth-switch">Already have an account? <a href="{{ url_for('auth.login') }}">Sign in</a></div>
+  </section>
+</div>
+{% endblock %}

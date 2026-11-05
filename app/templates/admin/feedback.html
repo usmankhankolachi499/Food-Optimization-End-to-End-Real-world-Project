@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import stars, empty_state %}
+{% block title %}Customer feedback{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div>
+    <div class="eyebrow"><i class="bi bi-star"></i> Voice of the customer</div>
+    <h1>Feedback &amp; ratings</h1>
+    <p>{{ stats.total }} review{{ '' if stats.total == 1 else 's' }} collected across restaurants and delivery partners.</p>
+  </div>
+  <div class="d-flex gap-2">
+    <a class="btn btn-ghost" href="{{ url_for('admin.analytics_page', days=30) }}"><i class="bi bi-bar-chart-line me-1"></i> Analytics</a>
+    <a class="btn btn-ghost" href="{{ url_for('admin.restaurants') }}"><i class="bi bi-shop me-1"></i> Restaurants</a>
+  </div>
+</div>
+
+<div class="stat-grid mb-4">
+  <div class="stat-card">
+    <div class="stat-icon"><i class="bi bi-chat-square-text"></i></div>
+    <div class="stat-value">{{ stats.total }}</div>
+    <div class="stat-label">Total reviews</div>
+    <div class="stat-sub">All time</div>
+  </div>
+  <div class="stat-card green">
+    <div class="stat-icon"><i class="bi bi-shop"></i></div>
+    <div class="stat-value">{{ '%.2f'|format(stats.avg_restaurant) if stats.avg_restaurant else '—' }}</div>
+    <div class="stat-label">Restaurant rating</div>
+    <div class="stat-sub">Average across all reviews</div>
+  </div>
+  <div class="stat-card blue">
+    <div class="stat-icon"><i class="bi bi-bicycle"></i></div>
+    <div class="stat-value">{{ '%.2f'|format(stats.avg_partner) if stats.avg_partner else '—' }}</div>
+    <div class="stat-label">Partner rating</div>
+    <div class="stat-sub">{{ stats.partner_reviews }} partner rating{{ '' if stats.partner_reviews == 1 else 's' }}</div>
+  </div>
+  <div class="stat-card amber">
+    <div class="stat-icon"><i class="bi bi-star-fill"></i></div>
+    <div class="stat-value">{{ stats.rating_counts.get(5, 0) }}</div>
+    <div class="stat-label">5-star reviews</div>
+    <div class="stat-sub">{{ stats.positive_percent }}% rated 4 or 5 stars</div>
+  </div>
+</div>
+
+<div class="panel mb-4">
+  <div class="panel-body">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+      <div>
+        <h2 class="h6 mb-1"><i class="bi bi-funnel me-1 text-brand"></i>Filter by restaurant rating</h2>
+        <p class="small-note mb-0">Showing {{ pagination.total }} review{{ '' if pagination.total == 1 else 's' }}{% if rating %} rated {{ rating }} star{{ '' if rating == 1 else 's' }}{% endif %}.</p>
+      </div>
+      <div class="d-flex flex-wrap gap-1">
+        <a class="btn btn-sm {{ 'btn-brand' if not rating else 'btn-ghost' }}" href="{{ url_for('admin.feedback') }}">All <span class="tiny">({{ stats.total }})</span></a>
+        {% for value in [5, 4, 3, 2, 1] %}
+          <a class="btn btn-sm {{ 'btn-brand' if rating == value else 'btn-ghost' }}" href="{{ url_for('admin.feedback', rating=value) }}">{{ value }}★ <span class="tiny">({{ stats.rating_counts.get(value, 0) }})</span></a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if feedback %}
+  <div class="table-wrap">
+    <div class="table-responsive">
+      <table class="table table-modern align-middle">
+        <thead>
+          <tr>
+            <th>Order &amp; customer</th>
+            <th>Restaurant</th>
+            <th>Partner</th>
+            <th>Restaurant rating</th>
+            <th>Partner rating</th>
+            <th>Comment</th>
+            <th>Received</th>
+            <th class="text-end">Order</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for review in feedback %}
+            <tr>
+              <td>
+                <span class="cell-title">{{ review.order.order_number if review.order else 'Order removed' }}</span>
+                <div class="cell-sub">{{ review.customer.name if review.customer else 'Unknown customer' }}</div>
+              </td>
+              <td>
+                <span class="cell-title" style="font-weight:600">{{ review.restaurant.name if review.restaurant else 'Restaurant removed' }}</span>
+                <div class="cell-sub">{{ review.restaurant.city if review.restaurant and review.restaurant.city else '' }}</div>
+              </td>
+              <td>
+                {% if review.partner %}
+                  {{ review.partner.name }}
+                  <div class="cell-sub">{{ review.partner.partner_profile.vehicle_type if review.partner.partner_profile else 'Delivery partner' }}</div>
+                {% else %}
+                  <span class="tiny muted">Not rated</span>
+                {% endif %}
+              </td>
+              <td>{{ stars(review.restaurant_rating) }}</td>
+              <td>{{ stars(review.partner_rating) if review.partner_rating else '<span class="tiny muted">—</span>'|safe }}</td>
+              <td style="max-width:280px">
+                {% if review.comment %}
+                  <span class="tiny" title="{{ review.comment|e }}">{{ review.comment|truncate(120) }}</span>
+                {% else %}
+                  <span class="tiny muted">No comment</span>
+                {% endif %}
+              </td>
+              <td>{{ review.created_at|dt('%d %b %Y') }}<div class="cell-sub">{{ review.created_at|ago }}</div></td>
+              <td class="text-end">
+                {% if review.order %}
+                  <a class="btn btn-ghost btn-sm" href="{{ url_for('admin.order_detail', order_id=review.order.id) }}">View</a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% include "partials/pagination.html" %}
+{% else %}
+  <div class="panel">
+    {{ empty_state('star', 'No feedback found', 'Try a different rating filter, or wait for customers to review delivered orders.', url_for('admin.feedback'), 'Show all feedback') }}
+  </div>
+{% endif %}
+{% endblock %}

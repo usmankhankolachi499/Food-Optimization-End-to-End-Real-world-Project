@@ -1,0 +1,363 @@
+item_id,restaurant_id,name,price,is_available
+1,1,Chicken Handi,1160,1
+2,1,Salad,100,1
+3,1,Tandoori Roti,40,1
+4,1,Daal Mash,550,0
+5,1,Chicken Karahi (Half),1340,1
+6,1,Mutton Karahi (Half),2320,1
+7,1,Garlic Naan,110,1
+8,1,Palak Paneer,670,1
+9,1,Butter Chicken Handi,1220,1
+10,1,Raita,70,1
+11,2,Chicken Chowmein,610,1
+12,2,Chilli Chicken,740,1
+13,2,Spring Rolls (4 pcs),340,1
+14,2,Chicken Shashlik,780,1
+15,2,Szechuan Rice,590,1
+16,2,Hot & Sour Soup,310,1
+17,2,Chicken Corn Soup,290,1
+18,2,Egg Fried Rice,440,1
+19,2,Chicken Manchurian,730,1
+20,2,Dragon Chicken,760,1
+21,3,Salad,80,1
+22,3,Chicken Pulao,370,1
+23,3,Mutton Biryani,740,1
+24,3,Shami Kebab,150,1
+25,3,Zarda,180,1
+26,3,Beef Biryani,490,1
+27,3,Chicken Biryani,440,1
+28,3,Seekh Kebab (2 pcs),220,1
+29,3,Soft Drink 500ml,90,1
+30,3,Raita,60,1
+31,4,Hot Wings (6 pcs),400,1
+32,4,Beef Burger,510,1
+33,4,Club Sandwich,470,1
+34,4,Soft Drink 500ml,90,1
+35,4,Chicken Wrap,420,1
+36,4,Chicken Burger,440,1
+37,4,Zinger Burger,550,1
+38,4,Fries,230,1
+39,4,Nuggets (6 pcs),370,1
+40,5,Mutton Karahi (Half),1910,1
+41,5,Salad,80,1
+42,5,Butter Chicken Handi,1010,0
+43,5,Palak Paneer,550,1
+44,5,Raita,60,1
+45,5,Chicken Karahi (Half),1110,1
+46,5,Chicken Handi,960,1
+47,5,Tandoori Roti,30,1
+48,6,Doodh Patti Chai,150,1
+49,6,Latte,570,1
+50,6,Brownie,350,1
+51,6,Paratha Roll,440,1
+52,6,Cold Coffee,610,1
+53,6,French Toast,530,1
+54,6,Omelette,400,1
+55,6,Cappuccino,530,0
+56,6,Club Sandwich,660,1
+57,7,Fajita Pizza (M),1340,1
+58,7,Garlic Bread,410,1
+59,7,Chicken Wings,570,1
+60,7,Lasagna,950,1
+61,7,Chicken Tikka Pizza (M),1340,1
+62,7,Dip Sauce,80,1
+63,7,Pepperoni Pizza (M),1460,1
+64,7,Cold Drink 1.5L,230,1
+65,7,Pasta Alfredo,830,1
+66,7,Cheese Lovers Pizza (M),1270,1
+67,8,Latte,440,1
+68,8,Pancake Stack,540,1
+69,8,Club Sandwich,510,0
+70,8,Omelette,320,1
+71,8,French Toast,410,1
+72,8,Cold Coffee,470,1
+73,8,Brownie,280,1
+74,8,Doodh Patti Chai,120,1
+75,8,Paratha Roll,340,1
+76,8,Cappuccino,410,1
+77,9,Beef Burger,490,1
+78,9,Soft Drink 500ml,90,1
+79,9,Chicken Burger,430,1
+80,9,Club Sandwich,460,1
+81,9,Loaded Fries,390,1
+82,9,Nuggets (6 pcs),360,1
+83,9,Fries,220,1
+84,9,Chicken Wrap,410,1
+85,10,Shami Kebab,150,1
+86,10,Mutton Biryani,770,1
+87,10,Salad,80,1
+88,10,Seekh Kebab (2 pcs),230,1
+89,10,Beef Biryani,510,1
+90,10,Chicken Pulao,390,1
+91,10,Zarda,180,1
+92,10,Chicken Biryani,460,1
+93,11,Cold Drink 1.5L,190,1
+94,11,Dip Sauce,60,1
+95,11,Cheese Lovers Pizza (M),1060,1
+96,11,Fajita Pizza (M),1110,1
+97,11,Pepperoni Pizza (M),1220,1
+98,11,Garlic Bread,340,1
+99,11,Chicken Tikka Pizza (M),1110,1
+100,11,Pasta Alfredo,690,1
+101,11,Chicken Wings,480,1
+102,11,Lasagna,790,1
+103,12,Nuggets (6 pcs),320,1
+104,12,Chicken Burger,380,1
+105,12,Hot Wings (6 pcs),350,1
+106,12,Loaded Fries,350,1
+107,12,Club Sandwich,410,1
+108,12,Soft Drink 500ml,80,1
+109,12,Beef Burger,440,0
+110,12,Chicken Wrap,360,1
+111,12,Zinger Burger,470,1
+112,13,Raita,50,1
+113,13,Garlic Naan,80,1
+114,13,Salad,70,1
+115,13,Mutton Karahi (Half),1720,1
+116,13,Butter Chicken Handi,900,1
+117,13,Palak Paneer,500,1
+118,13,Chicken Handi,860,1
+119,13,Tandoori Roti,30,1
+120,14,Mint Raita,60,1
+121,14,Beef Seekh Kebab,430,1
+122,14,Soft Drink 500ml,80,1
+123,14,Reshmi Kebab,410,1
+124,14,Chicken Tikka Chest,340,1
+125,14,Plain Naan,50,1
+126,14,Mutton Chops,990,1
+127,14,Malai Boti,470,1
+128,15,Beef Burger,440,1
+129,15,Chicken Burger,380,1
+130,15,Club Sandwich,410,1
+131,15,Nuggets (6 pcs),320,1
+132,15,Soft Drink 500ml,80,1
+133,15,Hot Wings (6 pcs),350,1
+134,15,Fries,200,1
+135,15,Zinger Burger,480,1
+136,15,Loaded Fries,350,1
+137,15,Chicken Wrap,370,1
+138,16,Brownie,360,1
+139,16,Chocolate Cake Slice,490,1
+140,16,Ice Cream Tub,840,1
+141,16,Milkshake,490,1
+142,16,Cheesecake Slice,580,1
+143,16,Cupcake,260,1
+144,16,Gulab Jamun (4 pcs),390,1
+145,16,Rabri Falooda,540,1
+146,16,Kunafa,650,1
+147,16,Kheer,320,0
+148,17,Club Sandwich,470,1
+149,17,Chicken Burger,440,1
+150,17,Loaded Fries,400,1
+151,17,Hot Wings (6 pcs),400,1
+152,17,Soft Drink 500ml,90,1
+153,17,Nuggets (6 pcs),360,1
+154,17,Chicken Wrap,420,1
+155,17,Zinger Burger,540,1
+156,17,Beef Burger,500,1
+157,17,Fries,230,1
+158,18,Reshmi Kebab,450,1
+159,18,Chicken Tikka Chest,380,1
+160,18,Soft Drink 500ml,90,1
+161,18,Mutton Chops,1090,1
+162,18,Beef Seekh Kebab,480,1
+163,18,Roghni Naan,80,1
+164,18,Plain Naan,50,1
+165,18,Malai Boti,520,1
+166,18,Mint Raita,70,1
+167,19,Zinger Burger,440,1
+168,19,Hot Wings (6 pcs),320,1
+169,19,Club Sandwich,380,1
+170,19,Soft Drink 500ml,80,1
+171,19,Fries,190,1
+172,19,Loaded Fries,320,0
+173,19,Beef Burger,410,1
+174,19,Chicken Wrap,340,1
+175,19,Nuggets (6 pcs),300,0
+176,20,Mutton Biryani,850,1
+177,20,Shami Kebab,170,1
+178,20,Salad,90,1
+179,20,Chicken Biryani,510,1
+180,20,Soft Drink 500ml,100,1
+181,20,Beef Biryani,570,1
+182,20,Raita,70,1
+183,20,Zarda,200,1
+184,20,Seekh Kebab (2 pcs),250,1
+185,21,Palak Paneer,470,1
+186,21,Chicken Handi,810,1
+187,21,Raita,50,1
+188,21,Mutton Karahi (Half),1620,0
+189,21,Salad,70,1
+190,21,Garlic Naan,80,1
+191,21,Tandoori Roti,30,1
+192,21,Butter Chicken Handi,850,1
+193,21,Chicken Karahi (Half),940,1
+194,21,Daal Mash,380,0
+195,22,Palak Paneer,660,1
+196,22,Chicken Karahi (Half),1330,1
+197,22,Raita,70,1
+198,22,Mutton Karahi (Half),2290,1
+199,22,Daal Mash,540,1
+200,22,Chicken Handi,1150,1
+201,22,Tandoori Roti,40,1
+202,22,Garlic Naan,110,1
+203,22,Butter Chicken Handi,1210,1
+204,22,Salad,100,1
+205,23,Mutton Karahi (Half),1910,1
+206,23,Palak Paneer,550,1
+207,23,Tandoori Roti,30,1
+208,23,Chicken Karahi (Half),1110,1
+209,23,Daal Mash,450,1
+210,23,Salad,80,1
+211,23,Butter Chicken Handi,1010,1
+212,23,Raita,60,1
+213,23,Garlic Naan,90,1
+214,24,Raita,60,1
+215,24,Chicken Handi,1000,1
+216,24,Tandoori Roti,30,1
+217,24,Mutton Karahi (Half),2000,0
+218,24,Palak Paneer,580,1
+219,24,Salad,80,1
+220,24,Daal Mash,470,1
+221,24,Chicken Karahi (Half),1160,1
+222,25,Plain Naan,50,0
+223,25,Chicken Tikka Leg,370,1
+224,25,Mint Raita,70,1
+225,25,Malai Boti,550,1
+226,25,Reshmi Kebab,480,1
+227,25,Soft Drink 500ml,100,1
+228,25,Beef Seekh Kebab,510,1
+229,25,Roghni Naan,90,1
+230,26,Dragon Chicken,770,1
+231,26,Spring Rolls (4 pcs),350,1
+232,26,Szechuan Rice,590,1
+233,26,Egg Fried Rice,440,1
+234,26,Hot & Sour Soup,320,1
+235,26,Chicken Manchurian,740,1
+236,26,Chilli Chicken,750,1
+237,26,Chicken Shashlik,790,1
+238,26,Chicken Corn Soup,300,1
+239,26,Chicken Chowmein,610,1
+240,27,Raita,50,1
+241,27,Daal Mash,390,1
+242,27,Butter Chicken Handi,860,1
+243,27,Tandoori Roti,30,1
+244,27,Chicken Handi,820,1
+245,27,Garlic Naan,80,1
+246,27,Salad,70,1
+247,27,Mutton Karahi (Half),1640,1
+248,27,Chicken Karahi (Half),950,1
+249,28,Seekh Kebab (2 pcs),190,1
+250,28,Beef Biryani,430,1
+251,28,Shami Kebab,130,1
+252,28,Soft Drink 500ml,80,1
+253,28,Chicken Biryani,390,1
+254,28,Raita,50,1
+255,28,Mutton Biryani,640,1
+256,28,Zarda,150,1
+257,28,Chicken Pulao,330,1
+258,28,Salad,70,1
+259,29,Roghni Naan,100,1
+260,29,Reshmi Kebab,550,1
+261,29,Plain Naan,60,1
+262,29,Chicken Tikka Chest,470,1
+263,29,Soft Drink 500ml,110,1
+264,29,Mint Raita,90,1
+265,29,Chicken Tikka Leg,430,1
+266,29,Malai Boti,640,1
+267,30,Spring Rolls (4 pcs),430,1
+268,30,Chilli Chicken,940,1
+269,30,Chicken Manchurian,930,1
+270,30,Szechuan Rice,740,1
+271,30,Chicken Corn Soup,370,1
+272,30,Chicken Shashlik,990,1
+273,30,Chicken Chowmein,770,1
+274,30,Hot & Sour Soup,400,1
+275,30,Dragon Chicken,960,1
+276,31,Chicken Karahi (Half),1140,1
+277,31,Raita,60,1
+278,31,Garlic Naan,90,1
+279,31,Palak Paneer,570,1
+280,31,Salad,80,1
+281,31,Daal Mash,470,1
+282,31,Chicken Handi,980,1
+283,31,Butter Chicken Handi,1030,1
+284,31,Tandoori Roti,30,1
+285,32,Beef Burger,470,1
+286,32,Nuggets (6 pcs),340,1
+287,32,Club Sandwich,440,1
+288,32,Zinger Burger,510,0
+289,32,Chicken Wrap,390,0
+290,32,Hot Wings (6 pcs),370,0
+291,32,Fries,220,1
+292,32,Loaded Fries,370,1
+293,32,Chicken Burger,410,1
+294,32,Soft Drink 500ml,90,1
+295,33,Seekh Kebab (2 pcs),280,1
+296,33,Chicken Biryani,560,1
+297,33,Salad,100,1
+298,33,Raita,80,1
+299,33,Beef Biryani,630,1
+300,33,Shami Kebab,190,1
+301,33,Chicken Pulao,480,1
+302,33,Mutton Biryani,940,1
+303,34,Milkshake,490,1
+304,34,Rabri Falooda,540,0
+305,34,Cupcake,260,1
+306,34,Brownie,360,1
+307,34,Kheer,320,1
+308,34,Ice Cream Tub,830,1
+309,34,Kunafa,640,1
+310,34,Chocolate Cake Slice,490,1
+311,35,Omelette,390,1
+312,35,Paratha Roll,420,1
+313,35,Latte,540,1
+314,35,French Toast,510,1
+315,35,Pancake Stack,660,1
+316,35,Brownie,340,0
+317,35,Club Sandwich,630,1
+318,35,Doodh Patti Chai,140,1
+319,35,Cappuccino,510,1
+320,36,Chicken Biryani,560,1
+321,36,Raita,80,0
+322,36,Salad,100,1
+323,36,Zarda,230,1
+324,36,Chicken Pulao,480,1
+325,36,Soft Drink 500ml,110,1
+326,36,Mutton Biryani,940,1
+327,36,Seekh Kebab (2 pcs),280,1
+328,36,Beef Biryani,630,1
+329,37,Lasagna,860,1
+330,37,Dip Sauce,70,1
+331,37,Cold Drink 1.5L,210,1
+332,37,Pasta Alfredo,750,1
+333,37,Garlic Bread,370,1
+334,37,Chicken Tikka Pizza (M),1210,1
+335,37,Pepperoni Pizza (M),1320,1
+336,37,Chicken Wings,520,1
+337,37,Cheese Lovers Pizza (M),1150,1
+338,38,Paratha Roll,400,1
+339,38,Cappuccino,480,1
+340,38,Pancake Stack,620,1
+341,38,Brownie,320,1
+342,38,Omelette,360,1
+343,38,Cold Coffee,540,0
+344,38,Club Sandwich,590,1
+345,38,French Toast,480,1
+346,38,Latte,510,1
+347,39,Pepperoni Pizza (M),1040,1
+348,39,Cheese Lovers Pizza (M),900,0
+349,39,Cold Drink 1.5L,160,1
+350,39,Dip Sauce,50,1
+351,39,Lasagna,680,1
+352,39,Chicken Tikka Pizza (M),950,1
+353,39,Chicken Wings,410,1
+354,39,Fajita Pizza (M),950,0
+355,40,Raita,50,1
+356,40,Mutton Biryani,670,0
+357,40,Chicken Pulao,340,1
+358,40,Salad,70,1
+359,40,Seekh Kebab (2 pcs),200,1
+360,40,Zarda,160,1
+361,40,Beef Biryani,450,1
+362,40,Shami Kebab,130,1

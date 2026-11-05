@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import status_badge, stars %}
+{% block title %}Order {{ order.order_number }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+  <a class="btn btn-ghost btn-sm" href="{{ url_for('customer.orders') }}"><i class="bi bi-arrow-left me-1"></i> My orders</a>
+  <div class="d-flex gap-2">
+    {% if order.can_be_rated %}<a class="btn btn-brand btn-sm" href="{{ url_for('customer.feedback', order_id=order.id) }}"><i class="bi bi-star me-1"></i> Rate this order</a>{% endif %}
+    {% if order.can_cancel %}
+      <button class="btn btn-ghost btn-sm text-danger" type="button" data-bs-toggle="collapse" data-bs-target="#cancelOrder"><i class="bi bi-x-circle me-1"></i> Cancel order</button>
+    {% endif %}
+  </div>
+</div>
+
+{% if order.can_cancel %}
+  <div class="collapse mb-3" id="cancelOrder">
+    <div class="panel">
+      <div class="panel-body">
+        <form method="post" action="{{ url_for('customer.cancel_order', order_id=order.id) }}" class="row g-2 align-items-end">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <div class="col-md-8">
+            <label class="form-label" for="reason">Reason for cancellation</label>
+            <input class="form-control" id="reason" name="reason" maxlength="255" placeholder="Tell us why you are cancelling">
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-ghost w-100 text-danger" type="submit" onclick="return confirm('Cancel this order?');">Confirm cancellation</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<div class="track-card mb-4">
+  <div class="track-head">
+    <div>
+      <h2>{{ order.restaurant.name }}</h2>
+      <span class="order-no">Order {{ order.order_number }} · placed {{ order.placed_at|dt }}</span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <span class="live-pill" style="color:#0e3b2e;background:#e8f5ef;border-color:#d5eadf;"><span class="live-dot" id="trackLiveDot"></span> <span id="trackStatusText">{{ order.status_label }}</span></span>
+      {{ status_badge(order) }}
+    </div>
+  </div>
+  <div class="px-3 pt-3">
+    <div class="d-flex justify-content-between tiny muted mb-1">
+      <span>Order progress</span>
+      <span id="trackLastUpdated">Updated {{ order.placed_at|ago }}</span>
+    </div>
+    <div class="progress"><div class="progress-bar" id="trackProgressBar" style="width:{{ order.progress_percent }}%"></div></div>
+  </div>
+  <div class="track-steps" style="grid-template-columns:repeat({{ order.timeline|length }},1fr)">
+    {% for step in order.timeline %}
+      <div class="step {{ 'done' if step.done }} {{ 'current' if step.current }}">
+        <i class="bi bi-{{ step.icon }}"></i>
+        {{ step.label }}
+      </div>
+    {% endfor %}
+  </div>
+  <div class="p-3">
+    <div class="map-box" id="trackingMap" data-order-id="{{ order.id }}" data-track="{{ tracking|tojson|forceescape }}" data-tracking-url="{{ url_for('api.order_tracking', order_id=order.id) }}"></div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-bag me-2 text-brand"></i>Items</h2><span class="tiny muted">{{ order.item_count }} item{{ '' if order.item_count == 1 else 's' }}</span></div>
+      <div class="panel-body pt-2">
+        {% for item in order.items %}
+          <div class="d-flex justify-content-between gap-2 py-2 border-bottom" style="border-color:#f0f3ef!important">
+            <div>
+              <strong class="d-block" style="font-size:.86rem">{{ item.quantity }} × {{ item.item_name }}</strong>
+              <span class="tiny muted">{{ item.category or 'Menu' }} · {{ item.unit_price|money }} each</span>
+            </div>
+            <span class="fw-bold">{{ item.line_total|money }}</span>
+          </div>
+        {% endfor %}
+        <div class="summary-line mt-3"><span>Subtotal</span><span class="value">{{ order.subtotal|money }}</span></div>
+        <div class="summary-line"><span>Delivery fee{% if order.distance_km %} ({{ '%.2f'|format(order.distance_km) }} km){% endif %}</span><span class="value">{{ order.delivery_fee|money }}</span></div>
+        <div class="summary-line total"><span>Total</span><span class="value">{{ order.total|money }}</span></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2><i class="bi bi-clock-history me-2 text-brand"></i>Order timeline</h2></div>
+      <div class="panel-body pt-2">
+        <div class="timeline">
+          {% for step in order.timeline %}
+            <div class="timeline-item {{ 'done' if step.done }} {{ 'current' if step.current }}">
+              <span class="timeline-dot"><i class="bi bi-{{ 'check-lg' if step.done else step.icon }}"></i></span>
+              <strong>{{ step.label }}</strong>
+              <time>{{ step.at|dt if step.at else 'Pending' }}</time>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-bicycle me-2 text-brand"></i>Delivery partner</h2></div>
+      <div class="panel-body pt-2">
+        {% if order.delivery_partner %}
+          <div class="partner-strip mb-3">
+            <div class="partner-avatar">{{ order.delivery_partner.initials }}</div>
+            <div>
+              <strong id="trackPartnerName">{{ order.delivery_partner.name }}</strong>
+              <small>{{ order.delivery_partner.partner_profile.vehicle_type if order.delivery_partner.partner_profile else 'Delivery partner' }}{% if order.delivery_partner.partner_profile and order.delivery_partner.partner_profile.vehicle_number %} · {{ order.delivery_partner.partner_profile.vehicle_number }}{% endif %}</small>
+            </div>
+          </div>
+          <div class="kv"><span>Phone</span><span>{% if order.delivery_partner.phone %}<a id="trackPartnerPhone" href="tel:{{ order.delivery_partner.phone }}">{{ order.delivery_partner.phone }}</a>{% else %}Not provided{% endif %}</span></div>
+          <div class="kv"><span>Rating</span><span>{{ order.delivery_partner.partner_profile.rating_display if order.delivery_partner.partner_profile else 'New' }}</span></div>
+        {% else %}
+          <div class="empty-state small px-0">
+            <div class="empty-icon"><i class="bi bi-hourglass-split"></i></div>
+            <h3>Finding a partner</h3>
+            <p>We are matching this order with the nearest available delivery partner.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="panel mb-4">
+      <div class="panel-head"><h2><i class="bi bi-geo me-2 text-brand"></i>Delivery details</h2></div>
+      <div class="panel-body pt-2">
+        <div class="kv"><span>Address</span><span>{{ order.delivery_address or '—' }}</span></div>
+        <div class="kv"><span>Distance</span><span>{{ '%.2f'|format(order.distance_km or 0) }} km</span></div>
+        <div class="kv"><span>Estimated time</span><span>{{ order.estimated_delivery_min or '—' }} min</span></div>
+        <div class="kv"><span>Payment</span><span>{{ order.payment_method }} · {{ order.payment_status }}</span></div>
+        {% if order.notes %}<div class="kv"><span>Notes</span><span>{{ order.notes }}</span></div>{% endif %}
+        {% if order.cancellation_reason %}<div class="kv"><span>Cancel reason</span><span>{{ order.cancellation_reason }}</span></div>{% endif %}
+      </div>
+    </div>
+
+    {% if order.feedback %}
+      <div class="panel">
+        <div class="panel-head"><h2><i class="bi bi-chat-square-heart me-2 text-brand"></i>Your feedback</h2></div>
+        <div class="panel-body pt-2">
+          <div class="kv"><span>Restaurant</span><span>{{ stars(order.feedback.restaurant_rating) }}</span></div>
+          {% if order.feedback.partner_rating %}<div class="kv"><span>Delivery partner</span><span>{{ stars(order.feedback.partner_rating) }}</span></div>{% endif %}
+          <p class="small-note mt-2 mb-0">{{ order.feedback.comment or 'No comment provided.' }}</p>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Rate order {{ order.order_number }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+  <a class="btn btn-ghost btn-sm" href="{{ url_for('customer.order_detail', order_id=order.id) }}"><i class="bi bi-arrow-left me-1"></i> Back to order</a>
+  <span class="chip"><i class="bi bi-bag-check"></i> {{ order.order_number }}</span>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="panel">
+      <div class="panel-head">
+        <h2><i class="bi bi-stars me-2 text-brand"></i>How was your order?</h2>
+        <span class="tiny muted">{{ order.delivered_at|dt if order.delivered_at else '' }}</span>
+      </div>
+      <div class="panel-body">
+        <div class="partner-strip mb-4">
+          <div class="partner-avatar">🍽️</div>
+          <div>
+            <strong>{{ order.restaurant.name }}</strong>
+            <small>{{ order.item_count }} item{{ '' if order.item_count == 1 else 's' }} · {{ order.total|money }}</small>
+          </div>
+        </div>
+
+        <form method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+          <div class="form-section">
+            <div class="form-section-title">Restaurant rating</div>
+            <div class="d-flex flex-wrap align-items-center gap-3">
+              <div class="rating-input">
+                {% for value in [5, 4, 3, 2, 1] %}
+                  <input type="radio" id="restaurant_rating_{{ value }}" name="restaurant_rating" value="{{ value }}" required>
+                  <label for="restaurant_rating_{{ value }}" title="{{ value }} star{{ '' if value == 1 else 's' }}"><i class="bi bi-star-fill"></i></label>
+                {% endfor %}
+              </div>
+              <span class="tiny muted">Tap a star — 5 is excellent.</span>
+            </div>
+          </div>
+
+          {% if order.delivery_partner %}
+            <div class="form-section">
+              <div class="form-section-title">Delivery partner rating</div>
+              <div class="partner-strip mb-3">
+                <div class="partner-avatar">{{ order.delivery_partner.initials }}</div>
+                <div>
+                  <strong>{{ order.delivery_partner.name }}</strong>
+                  <small>{{ order.delivery_partner.partner_profile.vehicle_type if order.delivery_partner.partner_profile else 'Delivery partner' }}</small>
+                </div>
+              </div>
+              <div class="rating-input">
+                {% for value in [5, 4, 3, 2, 1] %}
+                  <input type="radio" id="partner_rating_{{ value }}" name="partner_rating" value="{{ value }}" required>
+                  <label for="partner_rating_{{ value }}" title="{{ value }} star{{ '' if value == 1 else 's' }}"><i class="bi bi-star-fill"></i></label>
+                {% endfor %}
+              </div>
+            </div>
+          {% else %}
+            <div class="form-section">
+              <div class="form-section-title">Delivery partner</div>
+              <p class="small-note mb-0">No partner was assigned to this order.</p>
+            </div>
+          {% endif %}
+
+          <div class="form-section">
+            <label class="form-label" for="comment">Comments (optional)</label>
+            <textarea class="form-control" id="comment" name="comment" maxlength="1000" rows="4" placeholder="Tell us what went well or what could be better…"></textarea>
+          </div>
+
+          <div class="d-flex gap-2 mt-4">
+            <button class="btn btn-brand" type="submit"><i class="bi bi-send me-1"></i> Submit feedback</button>
+            <a class="btn btn-ghost" href="{{ url_for('customer.order_detail', order_id=order.id) }}">Skip</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

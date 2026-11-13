@@ -2,6 +2,8 @@
 {% block title %}Optimization settings{% endblock %}
 {% block content %}
 {% set auto_assign = (values.get('auto_assign_orders', 'false')|lower) in ['1', 'true', 'yes', 'on'] %}
+{% set live_sim = (values.get('live_order_simulation', 'true')|lower) in ['1', 'true', 'yes', 'on'] %}
+{% set auto_hire = (values.get('auto_hire_partners', 'true')|lower) in ['1', 'true', 'yes', 'on'] %}
 <div class="section-head">
   <div>
     <div class="eyebrow"><i class="bi bi-sliders"></i> System configuration</div>
@@ -131,6 +133,36 @@
             <div class="form-check form-switch m-0">
               <input class="form-check-input" type="checkbox" role="switch" id="auto_assign_orders" name="auto_assign_orders" value="1" {{ 'checked' if auto_assign }}>
               <label class="form-check-label small" for="auto_assign_orders">{{ 'Enabled' if auto_assign else 'Disabled' }}</label>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div>
+              <h3>Live order simulator</h3>
+              <p>Demo mode: every minute new simulated orders flow in and their delivery lifecycle advances automatically.</p>
+            </div>
+            <div class="form-check form-switch m-0">
+              <input class="form-check-input" type="checkbox" role="switch" id="live_order_simulation" name="live_order_simulation" value="1" {{ 'checked' if live_sim }}>
+              <label class="form-check-label small" for="live_order_simulation">{{ 'Enabled' if live_sim else 'Disabled' }}</label>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div>
+              <h3>Auto-hire partners</h3>
+              <p>Fleet order volume cover na kar sake to automatically naye delivery partners hire ho jate hain.</p>
+            </div>
+            <div class="form-check form-switch m-0">
+              <input class="form-check-input" type="checkbox" role="switch" id="auto_hire_partners" name="auto_hire_partners" value="1" {{ 'checked' if auto_hire }}>
+              <label class="form-check-label small" for="auto_hire_partners">{{ 'Enabled' if auto_hire else 'Disabled' }}</label>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div>
+              <h3>Simulated orders per minute</h3>
+              <p>How many demo orders the simulator places every minute (0 pauses the feed).</p>
+            </div>
+            <div class="input-group">
+              <input class="form-control" type="number" name="sim_orders_per_minute" value="{{ values.sim_orders_per_minute }}" min="0" max="30" step="1" required>
+              <span class="input-group-text">/min</span>
             </div>
           </div>
         </div>

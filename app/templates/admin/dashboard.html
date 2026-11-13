@@ -9,8 +9,22 @@
     <p>{{ summary.total_orders }} orders in the last 30 days · {{ today_orders }} placed today · {{ available_partners }} partners available.</p>
   </div>
   <div class="cta-row">
-    <a class="btn btn-brand" href="{{ url_for('admin.orders') }}"><i class="bi bi-receipt me-1"></i> Manage orders</a>
+    <form method="post" action="{{ url_for('admin.simulate_orders') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button class="btn btn-brand" type="submit" {% if not sim_enabled %}disabled{% endif %}><i class="bi bi-broadcast-pin me-1"></i> Simulate 2 orders now</button>
+    </form>
+    <a class="btn btn-ghost" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff" href="{{ url_for('admin.orders') }}"><i class="bi bi-receipt me-1"></i> Manage orders</a>
     <a class="btn btn-ghost" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff" href="{{ url_for('admin.analytics_page') }}"><i class="bi bi-bar-chart-line me-1"></i> Analytics</a>
+  </div>
+</div>
+
+<div class="panel mb-4 live-strip">
+  <div class="panel-body d-flex flex-wrap align-items-center gap-4 py-3">
+    <span class="live-pill"><span class="live-dot"></span> Live feed {{ 'ON' if sim_enabled else 'OFF' }} · {{ sim_rate }} orders/min</span>
+    <span><i class="bi bi-lightning-charge text-brand"></i> Last 10 min: <strong data-live="new10">{{ today_orders }}</strong> new orders</span>
+    <span><i class="bi bi-cash-coin text-brand"></i> Revenue today: <strong data-live="revenueToday">—</strong></span>
+    <span><i class="bi bi-inbox text-brand"></i> Unassigned: <strong data-live="unassigned">—</strong></span>
+    <span class="ms-auto tiny muted">Simulator on/off: Admin > Settings</span>
   </div>
 </div>
 
@@ -85,7 +99,11 @@
           <div class="order-list">
             {% for order in pending_orders %}
               <div class="order-row">
-                <div class="order-thumb">🍲</div>
+                <div class="order-thumb">
+                  {% if order.restaurant and order.restaurant.image_url %}
+                    <img src="{{ order.restaurant.image_url }}" alt="">
+                  {% else %}<i class="bi bi-egg-fried"></i>{% endif %}
+                </div>
                 <div class="order-main">
                   <h3><a class="text-reset" href="{{ url_for('admin.order_detail', order_id=order.id) }}">{{ order.order_number }}</a></h3>
                   <div class="order-sub">
@@ -114,7 +132,11 @@
           <div class="order-list">
             {% for order in recent_orders %}
               <div class="order-row">
-                <div class="order-thumb">🍲</div>
+                <div class="order-thumb">
+                  {% if order.restaurant and order.restaurant.image_url %}
+                    <img src="{{ order.restaurant.image_url }}" alt="">
+                  {% else %}<i class="bi bi-egg-fried"></i>{% endif %}
+                </div>
                 <div class="order-main">
                   <h3><a class="text-reset" href="{{ url_for('admin.order_detail', order_id=order.id) }}">{{ order.order_number }} · {{ order.customer.name }}</a></h3>
                   <div class="order-sub">

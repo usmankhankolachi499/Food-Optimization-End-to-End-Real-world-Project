@@ -1,10 +1,6 @@
-"""Optional demo fixtures (accounts, restaurant catalogue, sample orders).
+"""Demo fixtures - accounts, Karachi restaurants aur sample orders.
 
-The catalogue is Karachi-based: real city areas (Saddar, Bahadurabad,
-Clifton, Gulshan-e-Iqbal, PECHS, Burns Road), Karachi coordinates and
-Pakistani-Rupee menu prices. This is *not* the ML dataset - it only gives
-the web application something to show on a fresh installation. Real data
-ingestion / model training is handled by the scripts/ + ml/ module.
+Ye ML dataset nahi hai, sirf fresh install pe app ko data dene ke liye hai.
 """
 from __future__ import annotations
 
@@ -47,6 +43,7 @@ RESTAURANTS = [
         "longitude": 67.0330,
         "opening_time": "12:00",
         "closing_time": "23:30",
+        "image": "/static/img/restaurants/r1.jpg",
         "items": [
             ("Chicken Karahi (Half)", "Pakistani", 1650, False, 30),
             ("Seekh Kabab (6 pcs)", "BBQ", 680, False, 18),
@@ -54,6 +51,11 @@ RESTAURANTS = [
             ("Roghni Naan", "Breads", 60, True, 6),
             ("Fresh Salad & Raita", "Sides", 130, True, 5),
             ("Gulab Jamun (4 pcs)", "Desserts", 250, True, 5),
+            ("Chicken Tikka Boti", "BBQ", 780, False, 22),
+            ("Beef Chapli Kabab (2 pcs)", "BBQ", 750, False, 20),
+            ("Mutton Karahi (Half)", "Pakistani", 2850, False, 40),
+            ("Tandoori Roti", "Breads", 40, True, 6),
+            ("Doodh Patti Chai", "Beverages", 120, True, 6),
         ],
     },
     {
@@ -68,6 +70,7 @@ RESTAURANTS = [
         "longitude": 67.0595,
         "opening_time": "11:00",
         "closing_time": "01:00",
+        "image": "/static/img/restaurants/r2.jpg",
         "items": [
             ("Sindhi Chicken Biryani", "Biryani", 380, False, 25),
             ("Beef Biryani", "Biryani", 420, False, 28),
@@ -75,6 +78,11 @@ RESTAURANTS = [
             ("Aloo Zafrani Biryani (Veg)", "Biryani", 320, True, 24),
             ("Chicken Jhol with Naan", "Pakistani", 350, False, 15),
             ("Sewaiyan Kheer", "Desserts", 220, True, 6),
+            ("Mutton Biryani", "Biryani", 550, False, 32),
+            ("Chicken White Biryani", "Biryani", 460, False, 28),
+            ("Sindhi Beef Pulao", "Rice", 440, False, 30),
+            ("Boondi Raita", "Sides", 120, True, 5),
+            ("Shahi Firni", "Desserts", 180, True, 5),
         ],
     },
     {
@@ -89,12 +97,18 @@ RESTAURANTS = [
         "longitude": 67.0300,
         "opening_time": "12:30",
         "closing_time": "23:00",
+        "image": "/static/img/restaurants/r3.jpg",
         "items": [
             ("Grilled Whole Pomfret", "Seafood", 1850, False, 32),
             ("Fish Tikka Masala", "Seafood", 950, False, 22),
             ("Prawn Handi Masala", "Seafood", 1650, False, 26),
             ("Batata Fish Pakora", "Starters", 750, False, 14),
             ("Lemon Mint Soda", "Beverages", 180, True, 4),
+            ("Grilled Prawns (8 pcs)", "Seafood", 1750, False, 28),
+            ("Prawn Biryani", "Rice", 690, False, 30),
+            ("Lahori Fried Fish", "Seafood", 850, False, 20),
+            ("Crab Masala", "Seafood", 1950, False, 35),
+            ("Kachumber Salad", "Sides", 150, True, 5),
         ],
     },
     {
@@ -109,12 +123,18 @@ RESTAURANTS = [
         "longitude": 67.0925,
         "opening_time": "08:00",
         "closing_time": "22:00",
+        "image": "/static/img/restaurants/r4.jpg",
         "items": [
             ("Chicken Caesar Salad", "Salads", 640, False, 14),
             ("Grilled Chicken & Quinoa Bowl", "Bowls", 780, False, 18),
             ("Berry Protein Smoothie", "Beverages", 480, True, 7),
             ("Avocado Sourdough Toast", "Breakfast", 560, True, 10),
             ("Hummus & Pita Plate", "Starters", 520, True, 10),
+            ("Veggie Buddha Bowl (Vegan)", "Bowls", 720, True, 16),
+            ("Grilled Paneer Salad", "Salads", 680, True, 14),
+            ("Chicken & Oats Power Bowl", "Bowls", 820, False, 18),
+            ("Green Detox Smoothie", "Beverages", 460, True, 6),
+            ("Cold Brew Coffee", "Beverages", 420, True, 5),
         ],
     },
     {
@@ -129,6 +149,7 @@ RESTAURANTS = [
         "longitude": 67.0512,
         "opening_time": "11:00",
         "closing_time": "23:45",
+        "image": "/static/img/restaurants/r5.jpg",
         "items": [
             ("Classic Margherita 12in", "Pizza", 950, True, 18),
             ("Chicken Tikka Pizza", "Pizza", 1350, False, 20),
@@ -136,6 +157,12 @@ RESTAURANTS = [
             ("Cheesy Garlic Bread", "Sides", 450, True, 10),
             ("Choco Lava Cake", "Desserts", 420, True, 8),
             ("Iced Cappuccino", "Beverages", 350, True, 6),
+            ("BBQ Chicken Pizza", "Pizza", 1400, False, 20),
+            ("Veggie Supreme Pizza", "Pizza", 1100, True, 19),
+            ("Chicken Alfredo Pasta", "Pasta", 1150, False, 22),
+            ("Spaghetti Bolognese", "Pasta", 1050, False, 22),
+            ("Molten Brownie Sundae", "Desserts", 480, True, 9),
+            ("Fresh Lime Soda", "Beverages", 250, True, 4),
         ],
     },
     {
@@ -150,12 +177,175 @@ RESTAURANTS = [
         "longitude": 67.0365,
         "opening_time": "16:00",
         "closing_time": "01:30",
+        "image": "/static/img/restaurants/r6.jpg",
         "items": [
             ("Beef Haleem (Single)", "Desi", 480, False, 20),
             ("Chaat Platter", "Chaat", 380, True, 8),
             ("Dahi Bhalla", "Chaat", 300, True, 6),
             ("Royal Falooda", "Desserts", 350, True, 7),
             ("Chicken Bihari Roll", "Rolls", 320, False, 12),
+            ("Chicken Haleem (Single)", "Desi", 450, False, 20),
+            ("Samosa Chaat (2 pcs)", "Chaat", 260, True, 8),
+            ("Aloo Tikki Chaat", "Chaat", 280, True, 8),
+            ("Chana Chaat", "Chaat", 240, True, 6),
+            ("Bun Kabab Anda Wala", "Street", 220, False, 10),
+            ("Meethi Tikiya", "Desserts", 180, True, 6),
+        ],
+    },
+    {
+        "name": "Saddar Shawarma Junction",
+        "cuisine": "Fast Food",
+        "description": "Juicy chicken shawarmas, loaded fries and garlic sauce that Saddar students swear by.",
+        "address": "Regal Chowk, Saddar",
+        "city": CITY,
+        "phone": "+92 333 121 1007",
+        "email": "shawarma@moonlight.pk",
+        "latitude": 24.8535,
+        "longitude": 67.0280,
+        "opening_time": "14:00",
+        "closing_time": "02:00",
+        "image": "/static/img/restaurants/r7.jpg",
+        "items": [
+            ("Chicken Shawarma (Regular)", "Wraps", 380, False, 12),
+            ("Chicken Shawarma (Large)", "Wraps", 520, False, 14),
+            ("Zinger Shawarma", "Wraps", 580, False, 14),
+            ("Beef Shawarma Platter", "Platters", 780, False, 20),
+            ("Loaded Fries with Chicken", "Sides", 480, False, 12),
+            ("Arabic Fries", "Sides", 320, True, 10),
+            ("Falafel Wrap (Veg)", "Wraps", 340, True, 12),
+            ("Coleslaw & Garlic Dip", "Sides", 150, True, 5),
+            ("Peach Iced Tea", "Beverages", 220, True, 4),
+        ],
+    },
+    {
+        "name": "DHA Karak Chai & Cafe",
+        "cuisine": "Cafe & Breakfast",
+        "description": "Karak chai, ghee-fried parathas and halwa puri mornings in DHA Phase 6.",
+        "address": "Khayaban-e-Bukhari, DHA Phase 6",
+        "city": CITY,
+        "phone": "+92 333 121 1008",
+        "email": "karakchai@moonlight.pk",
+        "latitude": 24.8230,
+        "longitude": 67.0700,
+        "opening_time": "06:00",
+        "closing_time": "23:00",
+        "image": "/static/img/restaurants/r8.jpg",
+        "items": [
+            ("Doodh Patti Karak Chai", "Beverages", 180, True, 7),
+            ("Kashmiri Chai", "Beverages", 220, True, 7),
+            ("Chai Paratha Deal", "Breakfast", 420, True, 15),
+            ("Halwa Puri (3 pcs)", "Breakfast", 380, True, 18),
+            ("Ghee Fried Paratha", "Breakfast", 180, True, 10),
+            ("Omelette Paratha", "Breakfast", 350, True, 12),
+            ("Anday Wala Burger", "Street", 280, False, 10),
+            ("Chicken Bread Roll", "Snacks", 240, False, 10),
+            ("Malai Bun", "Snacks", 160, True, 5),
+            ("Fresh Orange Juice", "Beverages", 300, True, 6),
+        ],
+    },
+    {
+        "name": "North Nazimabad Burger Lab",
+        "cuisine": "Burgers",
+        "description": "Smashed beef patties, crispy chicken zingers and hand-cut fries from the Lab.",
+        "address": "Block M, North Nazimabad",
+        "city": CITY,
+        "phone": "+92 333 121 1009",
+        "email": "burgerlab@moonlight.pk",
+        "latitude": 24.9420,
+        "longitude": 67.0400,
+        "opening_time": "13:00",
+        "closing_time": "01:00",
+        "image": "/static/img/restaurants/r9.jpg",
+        "items": [
+            ("Classic Smashed Beef Burger", "Burgers", 680, False, 14),
+            ("Double Cheese Stack Burger", "Burgers", 980, False, 16),
+            ("Crispy Zinger Burger", "Burgers", 620, False, 14),
+            ("Mushroom Swiss Burger", "Burgers", 780, False, 15),
+            ("Veggie Bean Burger", "Burgers", 540, True, 13),
+            ("Chicken Loaded Fries", "Sides", 460, False, 12),
+            ("Peri Peri Fries", "Sides", 320, True, 10),
+            ("Onion Rings (8 pcs)", "Sides", 350, True, 10),
+            ("Chocolate Thick Shake", "Beverages", 420, True, 8),
+            ("Soft Drink", "Beverages", 120, True, 3),
+        ],
+    },
+    {
+        "name": "Malir Makhani Chicken House",
+        "cuisine": "Desi Makhani",
+        "description": "Creamy chicken makhani, tandoori roast and desi ghee mains, Malir style.",
+        "address": "Malir 15 Stop, Malir",
+        "city": CITY,
+        "phone": "+92 333 121 1010",
+        "email": "makhani@moonlight.pk",
+        "latitude": 24.8930,
+        "longitude": 67.2100,
+        "opening_time": "12:00",
+        "closing_time": "23:30",
+        "image": "/static/img/restaurants/r10.jpg",
+        "items": [
+            ("Chicken Makhani (Butter Chicken)", "Makhani", 980, False, 28),
+            ("Chicken Malai Handi", "Makhani", 1250, False, 30),
+            ("Tandoori Chicken (Full)", "Tandoor", 1250, False, 35),
+            ("Mutton Makhni Handi", "Makhani", 1850, False, 40),
+            ("Chicken Tikka Masala", "Pakistani", 920, False, 26),
+            ("Butter Naan", "Breads", 90, True, 6),
+            ("Lachha Paratha", "Breads", 110, True, 8),
+            ("Makhani Daal", "Veg", 480, True, 22),
+            ("Green Salad & Pickle", "Sides", 140, True, 5),
+            ("Sweet Lassi", "Beverages", 260, True, 6),
+        ],
+    },
+    {
+        "name": "Tariq Road Falooda & Desserts",
+        "cuisine": "Desserts & Sweets",
+        "description": "Royal falooda, kulfi, kheer and fruit trifles from Tariq Road's sweet corner.",
+        "address": "Tariq Road, PECHS Block 2",
+        "city": CITY,
+        "phone": "+92 333 121 1011",
+        "email": "falooda@moonlight.pk",
+        "latitude": 24.8680,
+        "longitude": 67.0640,
+        "opening_time": "15:00",
+        "closing_time": "01:00",
+        "image": "/static/img/restaurants/r11.jpg",
+        "items": [
+            ("Royal Falooda (Large)", "Falooda", 450, True, 10),
+            ("Kashmiri Falooda", "Falooda", 420, True, 10),
+            ("Pistachio Kulfi", "Kulfi", 260, True, 5),
+            ("Kulfi Falooda Combo", "Falooda", 380, True, 8),
+            ("Strawberry Trifle Cup", "Trifles", 380, True, 8),
+            ("Chocolate Trifle Cup", "Trifles", 380, True, 8),
+            ("Shahi Kheer", "Desserts", 280, True, 6),
+            ("Gajar Ka Halwa", "Desserts", 340, True, 10),
+            ("Ras Malai (2 pcs)", "Desserts", 320, True, 6),
+            ("Mango Shake (Seasonal)", "Beverages", 380, True, 8),
+        ],
+    },
+    {
+        "name": "Lyari Koyla Karahi Corner",
+        "cuisine": "Karahi & Desi",
+        "description": "Koyla-fumed karahis, gur walee daal and old-city spices from Lyari's food lane.",
+        "address": "Agha Khan Road, Lyari Town",
+        "city": CITY,
+        "phone": "+92 333 121 1012",
+        "email": "karahi@moonlight.pk",
+        "latitude": 24.8660,
+        "longitude": 66.9880,
+        "opening_time": "12:00",
+        "closing_time": "00:30",
+        "image": "/static/img/restaurants/r12.jpg",
+        "items": [
+            ("Chicken Karahi (Half)", "Karahi", 1450, False, 28),
+            ("Chicken Karahi (Full)", "Karahi", 2800, False, 42),
+            ("Mutton Karahi (Half)", "Karahi", 2650, False, 40),
+            ("Gur Walay Chawal", "Rice", 320, False, 22),
+            ("Daal Mash Tadka", "Veg", 420, True, 20),
+            ("Koyla Naan", "Breads", 80, True, 8),
+            ("Chicken White Karahi (Half)", "Karahi", 1600, False, 30),
+            ("Chargha Chicken (Full)", "Pakistani", 1350, False, 38),
+            ("Machli Karahi (Fish)", "Karahi", 1750, False, 35),
+            ("Raita & Salad", "Sides", 130, True, 5),
+            ("Suji Ka Halwa", "Desserts", 220, True, 8),
         ],
     },
 ]
@@ -207,9 +397,13 @@ def _ensure_restaurant(data: dict) -> Restaurant:
             opening_time=_dt.strptime(data["opening_time"], "%H:%M").time(),
             closing_time=_dt.strptime(data["closing_time"], "%H:%M").time(),
             is_active=True,
+            image_url=data.get("image"),
         )
         db.session.add(restaurant)
         db.session.flush()
+    # image baad mein add hui ho to purane restaurants pe bhi laga do
+    if data.get("image") and not restaurant.image_url:
+        restaurant.image_url = data["image"]
     for name, category, price, is_veg, prep in data["items"]:
         if not MenuItem.query.filter_by(restaurant_id=restaurant.id, name=name).first():
             db.session.add(
@@ -248,8 +442,8 @@ def _seed_orders(customers: list[User], partners: list[User], restaurants: list[
         placed = now - timedelta(days=max(0, index - 6) % 14, hours=1 + (index % 9), minutes=index * 5)
         cancelled = index in {7, 13, 23}
         delivered = not cancelled
-        # keep the newest six orders in an active lifecycle state so the
-        # assignment / route-optimizer demo has work to do immediately
+        # newest 6 orders active rakhe hain taake optimizer/route demo
+        # ke liye live kaam maujood ho
         active_status = None if index >= 6 else ("placed", "confirmed", "prepared", "dispatched")[index % 4]
         if active_status:
             delivered = False

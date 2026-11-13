@@ -15,6 +15,9 @@ DEFAULT_SETTINGS: dict[str, tuple[str, str]] = {
     "prep_buffer_min": ("10", "Buffer minutes added after food preparation"),
     "partner_commission_percent": ("80", "Percent of delivery fee paid to the partner"),
     "auto_assign_orders": ("true", "Automatically assign confirmed orders to the best partner"),
+    "live_order_simulation": ("true", "Live demo simulator - automatically place 2 orders every minute"),
+    "sim_orders_per_minute": ("2", "Simulated orders per minute (live demo feed)"),
+    "auto_hire_partners": ("true", "Automatically hire new delivery partners when orders exceed fleet capacity"),
 }
 
 

@@ -1,16 +1,13 @@
 """
-ML predictor module consumed by the web tier through ``app.services.ml_bridge``.
+ML predictor - trained model ko load kar ke ETA nikalta hai.
 
-Loads the trained scikit-learn regressor shipped with the project
-(``delivery_time_model.pkl`` + ``model_features.pkl`` at the project root -
-these files are NOT part of the web app and are never rewritten by it) and
-exposes:
+Files: delivery_time_model.pkl + model_features.pkl (project root).
+Web tier isay app.services.ml_bridge ke through call karta hai:
 
-    predict_eta(features: dict) -> {"minutes": float, "source": "ml"}
+    predict_eta(features) -> {"minutes": float, "source": "ml"}
 
-The expected feature dictionary (from ml_bridge) is translated into the
-training feature set produced by scripts/train_model.py. Missing categorical
-values are simply left as 0-hot (exactly like the original training pipeline).
+Categorical values one-hot encoding mein convert hoti hain
+(training pipeline wale hi column names use hote hain).
 """
 from __future__ import annotations
 

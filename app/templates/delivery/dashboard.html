@@ -49,6 +49,16 @@
   </div>
 </div>
 
+<div class="panel mb-4">
+  <div class="panel-body d-flex flex-wrap align-items-center gap-4 py-3">
+    <span class="live-pill"><span class="live-dot"></span> Live feed</span>
+    <span><i class="bi bi-broadcast text-brand"></i> New requests waiting: <strong data-live="openJobs">—</strong></span>
+    <span><i class="bi bi-bicycle text-brand"></i> My active: <strong data-live="activeOrders">—</strong></span>
+    <span><i class="bi bi-cash-coin text-brand"></i> Earned today: <strong data-live="earnedToday">—</strong></span>
+    <span><i class="bi bi-house-check text-brand"></i> Delivered today: <strong data-live="deliveredToday">—</strong></span>
+  </div>
+</div>
+
 <div class="row g-4">
   <div class="col-lg-7">
     <div class="panel mb-4">
@@ -61,7 +71,11 @@
           <div class="order-list">
             {% for order in active_orders %}
               <div class="order-row">
-                <div class="order-thumb">🍲</div>
+                <div class="order-thumb">
+                  {% if order.restaurant and order.restaurant.image_url %}
+                    <img src="{{ order.restaurant.image_url }}" alt="">
+                  {% else %}<i class="bi bi-egg-fried"></i>{% endif %}
+                </div>
                 <div class="order-main">
                   <h3><a class="text-reset" href="{{ url_for('delivery.order_detail', order_id=order.id) }}">{{ order.restaurant.name }}</a></h3>
                   <div class="order-sub">

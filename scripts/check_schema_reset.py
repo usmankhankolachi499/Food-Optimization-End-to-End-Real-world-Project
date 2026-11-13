@@ -21,6 +21,6 @@ with application.app_context():
     print(seed_demo(with_orders=True))
     print("after: users", User.query.count(), "restaurants", Restaurant.query.count(),
           "orders", Order.query.count(), "audit", AuditLog.query.count())
-    # FK sanity: restaurant delete cascade-free path (has orders -> blocked path handled in UI)
+    # FK check: restaurant jis pe orders hain usay delete na ho (UI handle karta hai)
     active = Order.query.filter(Order.status.in_(["placed", "confirmed", "prepared", "dispatched"])).count()
     print("active orders:", active)

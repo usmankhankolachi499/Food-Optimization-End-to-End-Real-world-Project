@@ -1,10 +1,4 @@
-"""Real-time location tracking.
-
-Relational ``LocationLog`` rows are the canonical store (works everywhere).
-When ``MONGO_URI`` is configured *and* ``pymongo`` is installed, every point
-is also mirrored to MongoDB, matching the SRS storage split for high-volume
-tracking data.
-"""
+"""Real-time location tracking (LocationLog table + optional MongoDB mirror)."""
 from __future__ import annotations
 
 import logging

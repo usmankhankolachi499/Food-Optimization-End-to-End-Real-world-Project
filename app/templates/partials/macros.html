@@ -24,11 +24,8 @@
 {%- endmacro %}
 
 {% macro restaurant_card(restaurant, index=1) -%}
-{% set cuisine = restaurant.cuisine or '' %}
-{% set emoji = '🍕' if 'italian' in cuisine|lower else ('🥗' if ('healthy' in cuisine|lower or 'salad' in cuisine|lower) else ('🍛' if ('biryani' in cuisine|lower or 'rice' in cuisine|lower or 'hyderabadi' in cuisine|lower) else ('🍢' if ('pakistani' in cuisine|lower or 'bbq' in cuisine|lower or 'desi' in cuisine|lower or 'indian' in cuisine|lower) else ('🍜' if ('asian' in cuisine|lower or 'chaat' in cuisine|lower or 'street' in cuisine|lower) else ('🐟' if ('seafood' in cuisine|lower or 'fish' in cuisine|lower) else '🍽️'))))) %}
 <a class="restaurant-card" href="{{ url_for('main.restaurant_detail', restaurant_id=restaurant.id) }}">
-  <div class="restaurant-cover cover-{{ (index % 4) + 1 }}" {% if restaurant.image_url %}style="background-image:linear-gradient(to top, rgba(8,30,22,.5), rgba(8,30,22,.05)), url('{{ restaurant.image_url }}');"{% endif %}>
-    <span class="cover-emoji">{{ emoji }}</span>
+  <div class="restaurant-cover cover-{{ (index % 4) + 1 }}" {% if restaurant.image_url %}style="background-image:linear-gradient(to top, rgba(8,30,22,.35), rgba(8,30,22,.05)), url('{{ restaurant.image_url }}');"{% endif %}>
     <span class="open-pill {{ 'open' if restaurant.is_open_now else 'closed' }}">{{ 'Open now' if restaurant.is_open_now else 'Closed' }}</span>
   </div>
   <div class="restaurant-body">
@@ -57,7 +54,11 @@
 
 {% macro order_row(order, link_endpoint='customer.order_detail') -%}
 <div class="order-row">
-  <div class="order-thumb">🍲</div>
+  <div class="order-thumb">
+    {% if order.restaurant and order.restaurant.image_url %}
+      <img src="{{ order.restaurant.image_url }}" alt="">
+    {% else %}<i class="bi bi-egg-fried"></i>{% endif %}
+  </div>
   <div class="order-main">
     <h3><a class="text-reset" href="{{ url_for(link_endpoint, order_id=order.id) }}">{{ order.restaurant.name }}</a></h3>
     <div class="order-sub">

@@ -1,7 +1,7 @@
 """Session based shopping cart.
 
-Only item ids and quantities are kept in the session; prices are always read
-from the database so a cart can never be used to tamper with totals.
+Session mein sirf item id + quantity rakhte hain; price hamesha DB se
+aati hai, is liye total tamper nahi ho sakta.
 """
 from __future__ import annotations
 

@@ -1,12 +1,10 @@
 """
-Bootstrap the SQL Server deliverable (SRS 3.11).
+SQL Server setup (SRS 3.11).
 
   python scripts/bootstrap_sql_server.py          # create DB + tables + seed
 
-Creates the ``food_delivery_sys`` database if missing, creates the schema
-through the application models (works with the mini-ORM backend), seeds
-optimization settings and demo data (Karachi restaurants, partners, orders)
-and validates the T-SQL layer. Every later app run works against SQL Server.
+food_delivery_sys DB + schema + demo data (Karachi restaurants, partners,
+orders) ek hi run mein, phir app seedha SQL Server pe chalti hai.
 """
 import os
 import sys

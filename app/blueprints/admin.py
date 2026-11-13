@@ -50,7 +50,7 @@ from ..services.assignment import (
 )
 from ..services.ml_bridge import ml_available
 from ..services.notifications import notify, notify_admins, notify_order_status
-from ..services.settings import DEFAULT_SETTINGS, all_settings, set_setting
+from ..services.settings import DEFAULT_SETTINGS, all_settings, get_bool, get_int, set_setting
 from ..services.tracking import mongo_enabled, tracking_payload
 from ..utils import (
     as_decimal,
@@ -113,6 +113,8 @@ def dashboard():
     )
     recent_orders = Order.query.order_by(Order.placed_at.desc()).limit(8).all()
     partners = analytics.partner_performance(30, limit=4)
+    sim_enabled = get_bool("live_order_simulation", True)
+    sim_rate = get_int("sim_orders_per_minute", 2)
     return render_template(
         "admin/dashboard.html",
         summary=summary,
@@ -122,7 +124,69 @@ def dashboard():
         pending_orders=pending_orders,
         recent_orders=recent_orders,
         partners=partners,
+        sim_enabled=sim_enabled,
+        sim_rate=sim_rate,
     )
+
+
+@bp.post("/orders/simulate")
+@login_required
+def simulate_orders():
+    """Manual demo button - foran 2 simulated orders generate karo."""
+    from ..services import simulator
+
+    created = simulator.spawn_orders(2)
+    db.session.commit()
+    simulator.advance_lifecycle()
+    db.session.commit()
+    flash(f"{len(created)} simulated orders placed - partners ko live requests mil gayi hain.", "success")
+    return redirect(url_for("admin.dashboard"))
+
+
+@bp.post("/orders/assign-all")
+@login_required
+def assign_all_orders():
+    """Sab unassigned orders ko ek click mein partner do (capacity kam ho to hire karo)."""
+    from ..services.assignment import assign_order, auto_assign_order
+    from ..services import simulator
+
+    orders = Order.query.filter(
+        Order.delivery_partner_id.is_(None),
+        Order.status.in_(("confirmed", "prepared")),
+    ).order_by(Order.placed_at.asc()).all()
+
+    assigned = 0
+    hired = 0
+    for order in orders:
+        partner = auto_assign_order(order, force=True)
+        if partner:
+            assigned += 1
+            continue
+        # koi eligible partner nahi -> naya rider hire kar ke do
+        new_partner = None
+        if get_bool("auto_hire_partners", True):
+            new_partner = simulator.hire_partner()
+            if new_partner:
+                hired += 1
+        if new_partner is None:
+            new_partner = simulator.least_workload_partner()
+        if new_partner:
+            ok, _message = assign_order(order, new_partner, actor="assign-all", force=True)
+            if ok:
+                assigned += 1
+    db.session.commit()
+    audit.log_action(
+        _user(), "orders_assigned_bulk", "orders",
+        f"assigned={assigned}, hired={hired}", commit=True,
+    )
+    if assigned:
+        message = f"{assigned} orders assigned."
+        if hired:
+            message += f" {hired} naye partner(s) hired (orders ke hisab se)."
+        flash(message, "success")
+    else:
+        flash("No unassigned orders right now - sab pehle se assigned hain.", "info")
+    return redirect(request.referrer or url_for("admin.orders"))
 
 
 # ---------------------------------------------------------------------------
@@ -165,8 +229,8 @@ def _user_form_values(user: User | None = None) -> dict:
         "email": request.form.get("email", user.email if user else ""),
         "phone": request.form.get("phone", user.phone or "" if user else ""),
         "role": request.form.get("role", user.role if user else ROLE_CUSTOMER),
-        # An unchecked checkbox is absent from POST; do not fall back to the
-        # stored value or the box could never be turned off.
+        # unchecked checkbox POST mein aata hi nahi, is liye stored value
+        # pe fallback nahi kar sakte warna box kabhi off hi nahi hoga
         "is_active": (
             request.form.get("is_active", "")
             if request.method == "POST"
@@ -886,6 +950,7 @@ def settings():
             "max_orders_per_partner": (1, 10, "Max orders per partner"),
             "prep_buffer_min": (0, 60, "Preparation buffer"),
             "partner_commission_percent": (0, 100, "Partner commission"),
+            "sim_orders_per_minute": (0, 30, "Simulated orders per minute"),
         }
         for key, (low, high, label) in numeric_rules.items():
             raw = request.form.get(key, "").strip()
@@ -904,6 +969,14 @@ def settings():
             set_setting(
                 "auto_assign_orders",
                 "true" if request.form.get("auto_assign_orders") else "false",
+            )
+            set_setting(
+                "live_order_simulation",
+                "true" if request.form.get("live_order_simulation") else "false",
+            )
+            set_setting(
+                "auto_hire_partners",
+                "true" if request.form.get("auto_hire_partners") else "false",
             )
             db.session.commit()
             audit.log_action(_user(), "settings_updated", "optimization", ", ".join(numeric_rules), commit=True)

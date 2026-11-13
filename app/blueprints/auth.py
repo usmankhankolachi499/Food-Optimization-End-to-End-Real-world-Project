@@ -1,7 +1,7 @@
 """Login, registration, logout and password change."""
 from __future__ import annotations
 
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, current_app, flash, redirect, render_template, request, url_for
 
 from ..auth import (
     clear_login_failures,
@@ -13,7 +13,7 @@ from ..auth import (
     record_login_failure,
 )
 from ..extensions import db
-from ..models import ROLE_CUSTOMER, CustomerProfile, User
+from ..models import ROLE_ADMIN, ROLE_CUSTOMER, ROLE_DELIVERY, CustomerProfile, DeliveryPartnerProfile, User
 from ..utils import safe_next_url, validate_email, validate_phone
 
 bp = Blueprint("auth", __name__)
@@ -63,7 +63,8 @@ def register():
         return redirect(_dashboard_for(user))
 
     form = {key: request.form.get(key, "").strip() for key in (
-        "name", "username", "email", "phone", "address", "city", "password", "confirm_password"
+        "name", "username", "email", "phone", "address", "city",
+        "password", "confirm_password", "role", "staff_code",
     )}
     if request.method == "POST":
         errors = []
@@ -87,6 +88,11 @@ def register():
         ).first():
             errors.append("An account with that username or email already exists.")
 
+        # staff roles (admin/partner) sirf valid staff code se bante hain
+        role = form["role"] if form["role"] in (ROLE_CUSTOMER, ROLE_DELIVERY, ROLE_ADMIN) else ROLE_CUSTOMER
+        if role != ROLE_CUSTOMER and form["staff_code"] != current_app.config["STAFF_SIGNUP_CODE"]:
+            errors.append("Staff code is invalid. Customer accounts do not need a code.")
+
         if errors:
             for error in errors:
                 flash(error, "danger")
@@ -96,17 +102,19 @@ def register():
                 username=form["username"],
                 email=form["email"].lower(),
                 phone=form["phone"],
-                role=ROLE_CUSTOMER,
+                role=role,
             )
             account.set_password(form["password"])
             account.customer_profile = CustomerProfile(
                 address=form["address"], city=form["city"]
             )
+            if role == ROLE_DELIVERY:
+                account.partner_profile = DeliveryPartnerProfile(vehicle_type="Bike")
             db.session.add(account)
             db.session.commit()
             login_user(account)
             flash("Your account is ready. Start exploring restaurants!", "success")
-            return redirect(url_for("customer.dashboard"))
+            return redirect(_dashboard_for(account))
 
     return render_template("auth/register.html", form=form)
 

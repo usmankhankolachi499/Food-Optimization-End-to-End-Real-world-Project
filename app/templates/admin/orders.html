@@ -9,6 +9,10 @@
     <p>{{ pagination.total }} order{{ '' if pagination.total == 1 else 's' }} matching the current filters.</p>
   </div>
   <div class="d-flex gap-2">
+    <form method="post" action="{{ url_for('admin.assign_all_orders') }}" onsubmit="return confirm('Sab unassigned orders ko partners ko assign kar dein? Capacity kam ho to naye riders hire ho sakte hain.');">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button class="btn btn-blue" type="submit"><i class="bi bi-bounding-box-circles me-1"></i> Assign all</button>
+    </form>
     <a class="btn btn-ghost" href="{{ url_for('admin.report_orders', days=30) }}"><i class="bi bi-download me-1"></i> CSV</a>
     <a class="btn btn-ghost" href="{{ url_for('admin.partners') }}"><i class="bi bi-bicycle me-1"></i> Partners</a>
   </div>

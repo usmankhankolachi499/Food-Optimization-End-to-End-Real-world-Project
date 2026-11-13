@@ -31,9 +31,7 @@ class Config:
     ENV = os.getenv("FLASK_ENV", "development")
 
     # -------------------------------------------------------------- database
-    # Two persistence modes:
-    #   1) SQL Server (T-SQL) via pyodbc - set MSSQL_CONN_STR (SRS primary).
-    #   2) SQLite fallback when MSSQL is not configured (simple local run).
+    # SQL Server main backend hai; SQLite sirf tab jab SSMS available na ho
     _database_url = os.getenv("DATABASE_URL", "").strip()
     if _database_url.startswith("sqlite:///"):
         DATABASE_PATH = _database_url[len("sqlite:///"):]
@@ -65,6 +63,8 @@ class Config:
     SESSION_COOKIE_SECURE = _bool("SESSION_COOKIE_SECURE", False)
     REMEMBER_COOKIE_HTTPONLY = True
     CSRF_ENABLED = _bool("CSRF_ENABLED", True)
+    # Staff (admin/partner) signup ke liye special code - .env se override ho sakta hai
+    STAFF_SIGNUP_CODE = os.getenv("STAFF_SIGNUP_CODE", "MOON-STAFF-2026")
 
     # --------------------------------------------------------------- uploads
     MAX_CONTENT_LENGTH = int(os.getenv("MAX_CONTENT_MB", "8")) * 1024 * 1024
@@ -72,15 +72,11 @@ class Config:
     ALLOWED_IMAGE_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
 
     # --------------------------------------------------------- integrations
-    # The ML / data pipeline is built separately. When a compatible module is
-    # importable it will be used automatically; otherwise deterministic
-    # heuristics keep the web application fully functional.
+    # ML module mila to use karo, warna simple heuristic se ETA ban jata hai
     ML_MODULE = os.getenv("ML_MODULE", "ml.predictor")
     ML_ENABLED = _bool("ML_ENABLED", True)
 
-    # Optional MongoDB for high-volume location / tracking logs (SRS 3.11).
-    # When MONGO_URI is set and pymongo is available every GPS ping is mirrored
-    # to MongoDB; otherwise the relational LocationLog table is used alone.
+    # MongoDB optional hai (tracking logs ke liye, SRS 3.11)
     MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
     MONGO_DB = os.getenv("MONGO_DB", "moonlight_tracking")
     MONGO_COLLECTION = os.getenv("MONGO_COLLECTION", "location_logs")
@@ -90,7 +86,7 @@ class Config:
     AUTO_ASSIGN_ORDERS = _bool("AUTO_ASSIGN_ORDERS", True)
 
     @staticmethod
-    def init_app(app):  # pragma: no cover - kept for Flask convention
+    def init_app(app):  # upload folder setup
         os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
 

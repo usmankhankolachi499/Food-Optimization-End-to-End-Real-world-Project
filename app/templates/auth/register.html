@@ -18,13 +18,26 @@
   </aside>
 
   <section class="auth-form">
-    <div class="eyebrow mb-2"><i class="bi bi-person-plus"></i> Customer sign-up</div>
+    <div class="eyebrow mb-2"><i class="bi bi-person-plus"></i> Sign-up</div>
     <h2>Create your account</h2>
-    <p>Delivery partner accounts are created by the administrator.</p>
+    <p>Customer account is the default. Delivery partner ya admin account ke liye role select kar ke staff code dain.</p>
 
     <form method="post" novalidate>
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="row g-3">
+        <div class="col-sm-6">
+          <label class="form-label" for="role">Account type</label>
+          <select class="form-select" id="role" name="role">
+            <option value="customer" selected>Customer</option>
+            <option value="delivery">Delivery Partner</option>
+            <option value="admin">Administrator</option>
+          </select>
+        </div>
+        <div class="col-sm-6" id="staff_code_block" style="display:none;">
+          <label class="form-label" for="staff_code">Staff code</label>
+          <input class="form-control" id="staff_code" name="staff_code" placeholder="Admin/partner code" autocomplete="off">
+          <div class="muted tiny mt-1">Ye code admin se milta hai.</div>
+        </div>
         <div class="col-sm-6">
           <label class="form-label" for="name">Full name</label>
           <input class="form-control" id="name" name="name" value="{{ form.name }}" required>
@@ -70,4 +83,16 @@
     <div class="auth-switch">Already have an account? <a href="{{ url_for('auth.login') }}">Sign in</a></div>
   </section>
 </div>
+
+<script>
+  // role != customer ho to staff code field show karo
+  (function () {
+    const roleSel = document.getElementById('role');
+    const block = document.getElementById('staff_code_block');
+    if (!roleSel || !block) return;
+    const toggle = () => { block.style.display = roleSel.value === 'customer' ? 'none' : ''; };
+    roleSel.addEventListener('change', toggle);
+    toggle();
+  })();
+</script>
 {% endblock %}

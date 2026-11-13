@@ -1,17 +1,13 @@
-"""Scheduled database backup (SRS non-functional: Reliability - data backup).
+"""Database backup (SRS NFR: Reliability).
 
-Runs a full ``BACKUP DATABASE`` against the SQL Server application database
-``food_delivery_sys`` using the same trusted connection the web app uses, and
-falls back to a plain file copy when the app is running in SQLite mode.
+BACKUP DATABASE run karta hai food_delivery_sys pe (SQL Server mode);
+SQLite mode mein plain file copy hoti hai.
 
-Usage:
-    python scripts/backup_database.py                 # backup now
-    python scripts/backup_database.py --keep 14       # keep newest 14 backups
-    python scripts/backup_database.py --verify        # list existing backups
+    python scripts/backup_database.py              # backup now
+    python scripts/backup_database.py --keep 14    # newest 14 backups rakho
+    python scripts/backup_database.py --verify     # backups list
 
-On Windows schedule it with Task Scheduler, e.g. hourly:
-    schtasks /Create /TN "MOONLight-DB-Backup" /SC HOURLY /TR ^
-      "python C:\\path\\to\\scripts\\backup_database.py --keep 168"
+Windows Task Scheduler se schedule ho sakta hai (hourly/daily).
 """
 from __future__ import annotations
 
@@ -40,9 +36,8 @@ def backup_mssql(backup_dir: Path) -> Path:
     import pyodbc  # deferred so the script also runs on machines without pyodbc
 
     backup_dir.mkdir(parents=True, exist_ok=True)
-    # Give the SQL Server service account write access so BACKUP DATABASE can
-    # write the .bak directly into the project's backups folder (best effort;
-    # if the grant fails we stage through the instance default backup folder).
+    # SQL Server service account ko backups folder pe write access chahiye
+    # hota hai; grant fail ho to instance default backup folder use hota hai
     target = backup_dir / f"{Config.MSSQL_DATABASE}_{_timestamp()}.bak"
     # autocommit: BACKUP DATABASE cannot run inside a transaction
     conn = pyodbc.connect(Config.MSSQL_MASTER_CONN_STR, timeout=30, autocommit=True)

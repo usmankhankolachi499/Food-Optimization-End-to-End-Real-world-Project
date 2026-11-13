@@ -1,9 +1,7 @@
-"""Session based authentication, role guards, CSRF and safe defaults.
+"""Session auth, role guards, CSRF.
 
-The project intentionally avoids external auth dependencies so it can run on
-the lab machines without internet access. Passwords are hashed with Werkzeug
-(PBKDF2/scrypt depending on version) and every state-changing request is
-protected by a session-bound CSRF token.
+Koi external auth library nahi (lab machines pe bina internet ke chalna
+hai) - passwords Werkzeug se hashed, har POST/PUT/DELETE pe CSRF token.
 """
 from __future__ import annotations
 

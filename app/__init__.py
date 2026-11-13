@@ -81,7 +81,7 @@ def create_app(config_object=None) -> Flask:
         )
 
     @app.errorhandler(Exception)
-    def handle_unexpected(error):  # pragma: no cover - safety net
+    def handle_unexpected(error):  # last-resort crash handler
         app.logger.exception("Unhandled error: %s", error)
         if request.path.startswith("/api/"):
             return jsonify({"ok": False, "error": "Unexpected server error"}), 500
@@ -104,6 +104,11 @@ def create_app(config_object=None) -> Flask:
             from .services.settings import ensure_defaults
 
             ensure_defaults()
+
+    # live demo order simulator (Admin > Settings se off ho sakta hai)
+    from .services import simulator
+
+    simulator.start(app)
 
     # ----------------------------------------------------------- CLI tools
     @app.cli.command("init-db")

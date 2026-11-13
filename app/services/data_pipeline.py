@@ -1,14 +1,7 @@
 ﻿"""Data pipeline service (SRS 3.10 & 3.11).
 
-Gives the admin panel a single view over the data engineering side of the
-project:
-
-* inventory of the ``data/`` folder (raw CSV / JSONL sources, ML dataset),
-* ingestion status for the SQL Server (T-SQL) and MongoDB stores,
-* a repeatable ``run_validation()`` quality report over the ingested rows.
-
-Validation is read-only; it flags suspicious rows that the cleaning stage of
-the ingestion scripts would remove or repair.
+data/ folder ki inventory + SQL Server / MongoDB ingestion status +
+rows ka quality validation (read-only).
 """
 from __future__ import annotations
 

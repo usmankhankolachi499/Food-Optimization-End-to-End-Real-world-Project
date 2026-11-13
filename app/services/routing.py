@@ -1,11 +1,7 @@
-"""Route optimization and ETA calculation.
+"""Route optimization + ETA calculation.
 
-The SRS asks for shortest/fastest routes, traffic awareness and dynamic
-recalculation. This module implements a nearest-neighbour optimizer with
-pickup-before-drop precedence for batched orders. Travel time uses the
-traffic multiplier and average speed configured in Admin > Settings. If the
-separately-built ML module provides an ETA predictor, :mod:`ml_bridge` is
-used for the final estimate.
+Nearest-neighbour route banata hai (pickup before drop), travel time
+traffic multiplier + settings ki average speed se, final ETA ml_bridge se.
 """
 from __future__ import annotations
 
@@ -186,7 +182,7 @@ def optimize_batch(orders: Iterable[Order], partner_profile=None) -> dict[str, A
             for stop in pending
             if stop["kind"] == "pickup" or stop["order_id"] in picked_up
         ]
-        if not eligible:  # safety net (shouldn't happen)
+        if not eligible:  # extra guard, ideally yahan tak nahi pahunchta
             eligible = pending
         next_stop = min(
             eligible,

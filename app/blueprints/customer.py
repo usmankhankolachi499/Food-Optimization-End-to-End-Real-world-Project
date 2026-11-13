@@ -114,9 +114,8 @@ def dashboard():
     profile = user.customer_profile
     recommended_query = Restaurant.query.filter_by(is_active=True)
     if profile and profile.city:
-        # NOTE: build the OR conditionally - a bare False literal inside
-        # db.or_ renders invalid SQL on SQL Server (error 4145) and 500s
-        # the dashboard for freshly registered users with no preferences.
+        # bare 'False' inside the filter used to crash SQL Server (4145),
+        # so the cuisine condition is added only when preferences exist
         city_match = Restaurant.city == profile.city
         if profile.preference_list:
             recommended_query = recommended_query.filter(

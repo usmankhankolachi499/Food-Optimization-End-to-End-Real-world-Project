@@ -61,7 +61,7 @@ def ranked_partners(order: Order) -> list[dict]:
         elif radius and distance > radius:
             reasons.append(f"outside {radius:.0f} km radius")
         if score is None:
-            # deterministic: distance dominates, workload breaks ties
+            # ML na ho to: distance main factor, workload tie-breaker
             score = (distance if distance is not None else 999.0) + workload * 2.0
         ranked.append(
             {

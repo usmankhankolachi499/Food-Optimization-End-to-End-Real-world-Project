@@ -1,14 +1,9 @@
 """
-ML model training (supports SRS 3.9 - delivery time prediction).
+Delivery time model training (SRS 3.9).
 
-Retrains the delivery-time regressor on data/ml/delivery_time_dataset.csv
-and saves delivery_time_model.pkl + model_features.pkl (the pair consumed
-by ml/predictor.py). The previous artifacts are kept as *.bak.
-
-Improvements over the original GradientBoostingRegressor baseline:
-  * HistGradientBoostingRegressor (histogram-based GBDT, sklearn >= 1.0)
-  * early-stopping + light hyper-parameter search over two candidates
-  * reported metrics: MAE / RMSE / R2 / within-10-min accuracy + 5-fold CV
+Train on data/ml/delivery_time_dataset.csv, save delivery_time_model.pkl
++ model_features.pkl (ml/predictor.py inhi files ko load karta hai).
+Purane artifacts *.bak mein safe rehte hain.
 
 Run:  python scripts/train_model.py
 """
@@ -89,7 +84,7 @@ def main():
         Xtr2, Xte2 = Xtr2[feat_cols], Xte2[feat_cols]
         best_model.fit(Xtr2, ytr2)
         evaluate(best_model, Xte2, yte2, f"split seed={seed}")
-    # refit on the canonical split before saving
+    # save karne se pehle main split pe wapis refit karo
     best_model.fit(Xtr[feat_cols], ytr)
 
     for p in (MODEL_P, FEAT_P):

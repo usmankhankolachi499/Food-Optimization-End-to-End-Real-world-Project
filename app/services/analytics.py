@@ -253,7 +253,7 @@ def analytics_bundle(days: int = 30) -> dict:
         "statuses": statuses,
         "top_restaurants": restaurants,
         "partners": partners,
-        # JSON-safe payload consumed by charts.js on the analytics page.
+        # charts.js isi payload ko read karta hai
         "chart": {
             "trend": trend,
             "peak": peak,

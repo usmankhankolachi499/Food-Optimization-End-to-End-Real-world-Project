@@ -85,7 +85,7 @@
 
         <form method="post" action="{{ url_for('admin.order_auto_assign', order_id=order.id) }}" class="mb-2">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button class="btn btn-soft btn-sm w-100" type="submit" {{ 'disabled' if not order.is_active }}><i class="bi bi-magic me-1"></i> Auto-assign best partner</button>
+          <button class="btn btn-soft btn-sm w-100" type="submit" {{ 'disabled' if not order.is_active }}><i class="bi bi-lightning-charge me-1"></i> Auto-assign best partner</button>
         </form>
 
         <form method="post" action="{{ url_for('admin.order_assign', order_id=order.id) }}">

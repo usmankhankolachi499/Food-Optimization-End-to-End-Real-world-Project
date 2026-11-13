@@ -1,13 +1,7 @@
-"""SQLite persistence layer built on Python's standard ``sqlite3`` module.
+"""Persistence layer for the app (sqlite3 + pyodbc backends).
 
-The application used to depend on Flask-SQLAlchemy.  This module replaces that
-dependency with a small, focused persistence layer that keeps the same
-declarative model style (``db.Model``, ``db.Column``, ``db.session`` ...), but
-generates and executes plain SQL through the standard-library ``sqlite3``
-driver.  No third-party ORM is imported anywhere in the project.
-
-Only the features used by this application are implemented; the goal is a
-clear academic implementation rather than a general purpose ORM.
+Same db.Model / db.Column / db.session style, no third-party ORM.
+Only the features this project actually needs are implemented.
 """
 from __future__ import annotations
 
@@ -767,8 +761,8 @@ class Session:
         is_mssql = getattr(self.connection, "kind", "sqlite") == "mssql"
         pk = model.__pk__
         if is_mssql:
-            # Same-batch identity fetch: SCOPE_IDENTITY() is NULL in a later
-            # batch, so the id is returned through OUTPUT INSERTED.
+            # SCOPE_IDENTITY() next batch mein NULL hota hai, is liye id
+            # OUTPUT INSERTED ke through wapas lete hain
             output = f' OUTPUT INSERTED."{pk.name}"' if pk else ""
             sql = f'INSERT INTO "{table}" ({column_sql}){output} VALUES ({placeholders})'
         else:

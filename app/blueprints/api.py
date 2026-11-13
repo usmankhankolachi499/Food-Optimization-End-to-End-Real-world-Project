@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from flask import Blueprint, jsonify, request
+from datetime import timedelta
 
 from ..auth import get_current_user, login_required
 from ..extensions import db, text
@@ -10,6 +11,7 @@ from ..models import (
     Notification,
     Order,
 )
+from ..utils import is_lat, is_lng, to_int, utcnow
 from ..services import routing
 from ..services.tracking import record_location, tracking_payload
 from ..utils import is_lat, is_lng, to_int, utcnow
@@ -36,6 +38,60 @@ def health():
         return jsonify({"ok": True, "service": "food-delivery", "time": utcnow().isoformat() + "Z"})
     except Exception as exc:  # pragma: no cover
         return jsonify({"ok": False, "error": str(exc)}), 503
+
+
+@bp.get("/live/summary")
+@login_required
+def live_summary():
+    """Role-aware live counts - live.js isi ko poll karta hai."""
+    user = get_current_user()
+    today = utcnow().date()
+    data = {"ok": True, "role": user.role, "time": utcnow().isoformat() + "Z"}
+
+    ten_min_ago = utcnow() - timedelta(minutes=10)
+    recent = Order.query.filter(Order.placed_at >= ten_min_ago).count()
+
+    if user.is_admin:
+        today_orders = Order.query.filter(Order.placed_at >= today).all()
+        data.update(
+            new_orders_10min=recent,
+            orders_today=len(today_orders),
+            revenue_today=round(sum(float(o.total or 0) for o in today_orders), 2),
+            unassigned=Order.query.filter(
+                Order.delivery_partner_id.is_(None),
+                Order.status.in_(("confirmed", "prepared")),
+            ).count(),
+        )
+    elif user.role == ROLE_DELIVERY:
+        active = Order.query.filter(
+            Order.delivery_partner_id == user.id,
+            Order.status.in_(("confirmed", "prepared", "dispatched")),
+        ).count()
+        delivered_today = Order.query.filter(
+            Order.delivery_partner_id == user.id,
+            Order.status == "delivered",
+            Order.delivered_at >= today,
+        ).all()
+        data.update(
+            open_jobs=Order.query.filter(
+                Order.delivery_partner_id.is_(None),
+                Order.status.in_(("confirmed", "prepared")),
+            ).count(),
+            active_orders=active,
+            earned_today=round(sum(float(o.delivery_fee or 0) for o in delivered_today), 2),
+            delivered_today=len(delivered_today),
+        )
+    else:
+        mine = Order.query.filter(Order.customer_id == user.id, Order.placed_at >= today).all()
+        data.update(
+            new_orders_10min=recent,
+            orders_today=len(mine),
+            active_orders=Order.query.filter(
+                Order.customer_id == user.id,
+                Order.status.in_(("confirmed", "prepared", "dispatched")),
+            ).count(),
+        )
+    return jsonify(data)
 
 
 @bp.get("/orders/<int:order_id>/tracking")

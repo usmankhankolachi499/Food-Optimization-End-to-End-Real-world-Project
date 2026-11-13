@@ -1,21 +1,7 @@
-"""Bridge to the machine-learning / data module (built separately).
+"""Bridge between the web app and the ML model (ml.predictor).
 
-The SRS keeps the ML pipeline out of the web tier. If a compatible module
-(for example ``ml.predictor``) is present on ``PYTHONPATH`` and exposes a
-``predict_eta(features: dict) -> float | dict`` function, it is used
-automatically. Otherwise the web application falls back to a transparent,
-deterministic ETA heuristic so that every screen remains functional.
-
-Expected feature dictionary::
-
-    {
-        "distance_km": 4.2,
-        "prep_time_min": 25,
-        "item_count": 3,
-        "traffic_factor": 1.15,
-        "hour_of_day": 19,
-        "weather": "clear",          # optional
-    }
+ML module available ho to usi se ETA, warna simple distance/traffic
+formula se estimate nikal leta hai (app kabhi rukta nahi).
 """
 from __future__ import annotations
 

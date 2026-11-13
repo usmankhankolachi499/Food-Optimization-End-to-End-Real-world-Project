@@ -1,18 +1,11 @@
 """
-SRS 3.11 - Data Ingestion: CSV -> SQL Server and JSONL -> MongoDB.
+Data ingestion (SRS 3.11): CSV -> SQL Server, JSONL -> MongoDB.
 
-Usage (one-time setup, run from project root):
     python scripts/ingest_sql_server.py        # schema + bulk load
     python scripts/ingest_mongodb.py           # location logs, traffic, events
-    python scripts/ingest_mongodb.py --drop    # re-load from zero
 
-Loads the DATA WAREHOUSE database (``food_delivery``, matching the
-data/sql_server/*.csv deliverables). The live application database,
-``food_delivery_sys``, is created separately via
-scripts/bootstrap_sql_server.py.
-
-Bulk inserts use FastExecutemany (pyodbc) which loads 15k orders in
-seconds instead of minutes.
+Warehouse DB (food_delivery) load karta hai; app ki DB (food_delivery_sys)
+alag hai, wo bootstrap_sql_server.py banata hai.
 """
 import os
 import sys

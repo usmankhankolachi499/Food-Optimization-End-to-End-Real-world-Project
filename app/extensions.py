@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import sqlite3
 from datetime import datetime, time
+from time import sleep as _sleep
 from decimal import Decimal
 
 from flask import current_app, g, has_app_context
@@ -1559,11 +1560,26 @@ class _Connection:
         self.kind = kind  # "sqlite" | "mssql"
 
     def execute(self, sql, params=None):
-        cursor = (
-            self.raw.execute(sql, params)
-            if params is not None else self.raw.execute(sql)
-        )
+        cursor = self._execute_retry(sql, params)
         return cursor if self.kind == "sqlite" else _Cursor(cursor)
+
+    def _execute_retry(self, sql, params=None, attempts: int = 3):
+        """SQL Server deadlock (40001/1205) pe chhota retry - simulator
+        thread aur web request kabhi kabhi lock lete hain."""
+        last_error = None
+        for attempt in range(attempts):
+            try:
+                if params is not None:
+                    return self.raw.execute(sql, params)
+                return self.raw.execute(sql)
+            except Exception as exc:
+                message = str(exc)
+                if "40001" in message or "(1205)" in message:
+                    last_error = exc
+                    _sleep(0.15 * (attempt + 1))  # thoda backoff
+                    continue
+                raise
+        raise last_error
 
     def commit(self):
         self.raw.commit()

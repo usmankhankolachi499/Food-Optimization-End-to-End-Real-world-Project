@@ -8,7 +8,7 @@
 ## 📌 Project ek line mein
 
 Karachi (Pakistan) ki localization ke sath **Food Delivery web application** — jisme customer order karta hai,
-admin best delivery partner assign karta hai (ML optimizer se), aur live tracking hoti hai.
+admin best delivery partner assign karta hai (distance/workload scoring se), aur live tracking hoti hai.
 Delivery time ka **andaza Machine Learning model** lagata hai (accuracy **94% / R² 0.936**).
 
 ---
@@ -67,7 +67,8 @@ Browser mein kholo: **http://127.0.0.1:5000**
 3. **Optimizer** ⭐ — project ka HERO page:
    - Unassigned orders dikhte hain
    - "Auto-assign" dabao → system **best partner** chunta hai
-   - Logic: distance (kam) + workload (kam) + ML ETA (kam) + partner rating
+   - Logic: distance (kam) + workload (kam) + partner rating (deterministic scoring)
+   - (ML sirf **ETA prediction** ke liye hai — assignment distance/workload se hoti hai)
    - Har partner ka score + wajah dikhti hai ("at capacity 3/3" waghera)
 4. **Orders** — kisi bhi order pe detail kholo:
    - Partner assign/reassign

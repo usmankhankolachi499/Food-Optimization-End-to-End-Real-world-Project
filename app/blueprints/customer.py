@@ -284,6 +284,13 @@ def checkout():
         return redirect(url_for("main.restaurants"))
 
     restaurant = data["restaurant"]
+    # SRS 3.3: band restaurant se order place nahi ho sakta
+    if not restaurant.is_open_now:
+        flash(
+            f"{restaurant.name} is closed right now. Please order from another restaurant.",
+            "warning",
+        )
+        return redirect(url_for("main.restaurants"))
     profile = user.customer_profile or CustomerProfile(user_id=user.id)
     fee = Decimal("0.00")
     distance = 0.0

@@ -26,7 +26,20 @@ def _bool(name: str, default: bool = False) -> bool:
 
 class Config:
     # ------------------------------------------------------------------ core
-    SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-change-me-in-production-8f4b2c")
+    # SECRET_KEY: .env se lo, warna pehli baar auto-generate kar ke
+    # instance/secret_key.txt mein save karo (restart pe same rahta hai,
+    # repo mein koi hardcoded secret nahi jata).
+    _secret = os.getenv("SECRET_KEY", "").strip()
+    if not _secret:
+        _secret_file = INSTANCE_DIR / "secret_key.txt"
+        if _secret_file.exists():
+            _secret = _secret_file.read_text(encoding="utf-8").strip()
+        if not _secret:
+            import secrets as _secrets
+
+            _secret = _secrets.token_hex(32)
+            _secret_file.write_text(_secret, encoding="utf-8")
+    SECRET_KEY = _secret
     APP_NAME = os.getenv("APP_NAME", "MOON Light")
     ENV = os.getenv("FLASK_ENV", "development")
 
@@ -63,7 +76,8 @@ class Config:
     SESSION_COOKIE_SECURE = _bool("SESSION_COOKIE_SECURE", False)
     REMEMBER_COOKIE_HTTPONLY = True
     CSRF_ENABLED = _bool("CSRF_ENABLED", True)
-    # Staff (admin/partner) signup ke liye special code - .env se override ho sakta hai
+    # Staff (admin/partner) signup ke liye special code.
+    # NOTE: ye sirf DEMO default hai - production mein .env se change karein.
     STAFF_SIGNUP_CODE = os.getenv("STAFF_SIGNUP_CODE", "MOON-STAFF-2026")
 
     # --------------------------------------------------------------- uploads

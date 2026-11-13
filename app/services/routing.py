@@ -24,12 +24,34 @@ def _coord(entity) -> Optional[tuple[float, float]]:
     return float(lat), float(lng)
 
 
-def travel_minutes(distance_km: float, traffic_factor: float | None = None) -> int:
+# Hour-wise traffic profile (SRS 3.7) - ingested traffic_data.jsonl
+# (data/mongodb) ke hour-wise pattern se derived: peak hours mein zyada
+# traffic, din ke doraan medium, raat ko low. Admin ka base traffic_factor
+# in multipliers se multiply hota hai.
+_HOUR_TRAFFIC_MULTIPLIER = {
+    0: 0.90, 1: 0.85, 2: 0.85, 3: 0.85, 4: 0.90,
+    5: 0.95, 6: 1.05, 7: 1.25, 8: 1.35, 9: 1.30, 10: 1.15,
+    11: 1.05, 12: 1.10, 13: 1.15, 14: 1.05, 15: 1.00,
+    16: 1.10, 17: 1.35, 18: 1.45, 19: 1.40, 20: 1.25, 21: 1.15,
+    22: 1.05, 23: 0.95,
+}
+
+
+def traffic_factor_for_hour(hour: int | None, base: float | None = None) -> float:
+    """Base traffic factor ko hour-wise traffic pattern se adjust karo."""
+    base = float(base) if base is not None else get_float("traffic_factor", 1.15)
+    if hour is None:
+        return base
+    multiplier = _HOUR_TRAFFIC_MULTIPLIER.get(int(hour) % 24, 1.0)
+    return round(max(1.0, base * multiplier), 3)
+
+
+def travel_minutes(
+    distance_km: float, traffic_factor: float | None = None, hour: int | None = None
+) -> int:
     speed = max(8.0, get_float("avg_speed_kmph", 24.0))
-    traffic_factor = (
-        float(traffic_factor) if traffic_factor is not None else get_float("traffic_factor", 1.15)
-    )
-    return max(1, int(round((max(0.0, distance_km) / speed) * 60 * max(1.0, traffic_factor))))
+    factor = traffic_factor_for_hour(hour, traffic_factor)
+    return max(1, int(round((max(0.0, distance_km) / speed) * 60 * factor)))
 
 
 def estimate_eta(order: Order, prep_time_min: int | None = None) -> int:
@@ -38,12 +60,13 @@ def estimate_eta(order: Order, prep_time_min: int | None = None) -> int:
     item_prep = max((item.menu_item.prep_time_min for item in items if item.menu_item), default=20)
     prep = max(prep_time_min or 0, item_prep)
     distance = float(order.distance_km or 0)
+    hour = order.placed_at.hour if order.placed_at else None
     result = predict_eta(
         distance_km=distance,
         prep_time_min=prep,
         item_count=order.item_count or 1,
-        traffic_factor=get_float("traffic_factor", 1.15),
-        hour_of_day=order.placed_at.hour if order.placed_at else None,
+        traffic_factor=traffic_factor_for_hour(hour),
+        hour_of_day=hour,
     )
     return int(result["minutes"])
 

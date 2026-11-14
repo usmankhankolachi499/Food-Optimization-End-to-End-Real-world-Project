@@ -131,10 +131,13 @@ def spawn_orders(count: int = 2) -> list[Order]:
             )
         order.subtotal = subtotal
         order.total = subtotal + fee
-        order.estimated_delivery_min = estimate_eta(order)
 
         db.session.add(order)
         db.session.flush()
+        # rider pehle assign -> ETA real rider features ke sath (full-accuracy path)
+        auto_assign_order(order)  # sab partners busy hon to open job ban jata hai
+        if not order.estimated_delivery_min:
+            order.estimated_delivery_min = estimate_eta(order)
         notify_admins(
             "New order received",
             f"{order.order_number} - {restaurant.name} ({format_money(order.total)}).",
@@ -146,7 +149,6 @@ def spawn_orders(count: int = 2) -> list[Order]:
             f"{order.order_number} from {restaurant.name} is confirmed.",
             "order",
         )
-        auto_assign_order(order)  # sab partners busy hon to open job ban jata hai
         created.append(order)
     return created
 

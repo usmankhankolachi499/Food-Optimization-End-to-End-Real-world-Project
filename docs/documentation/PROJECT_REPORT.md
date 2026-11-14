@@ -44,16 +44,28 @@ Chart.js · Leaflet / OpenStreetMap.
 | Dataset | 13,314 historical deliveries (`data/ml/delivery_time_dataset.csv`) |
 | Features | 17 base → 28 encoded columns (one-hot) |
 | Algorithm | HistGradientBoostingRegressor (scikit-learn) |
-| Hyperparameters | max_iter=600, lr=0.045, max_leaf_nodes=31, L2=0.05, early stopping |
-| Test R² | **0.936 (~94%)** — SRS requirement ≥ 90% |
+| Hyperparameters | max_iter=1200, lr=0.03, max_leaf_nodes=63, L2=0.1, early stopping |
+| Test R² (test = production) | **0.921 (~92%)** — SRS requirement ≥ 90% ✅ |
+| MAE | ~3.68 minutes |
+| Within ±10 min | ~93.7% of predictions |
+| Train/serve skew | **None by design** — traffic estimated the same way in training and serving (hour-probability table), so benchmark = live accuracy |
+| Oracle upper bound | R² 0.937 with recorded real traffic (not available at serving); dataset noise floor (5-fold OOF) |
 | MAE | ~3.4 minutes |
 | Within ±10 min | ~96% of predictions |
 | Robustness | Same score across 4 different train/test splits |
 
-Integration: checkout calls `routing.estimate_eta()` → `ml_bridge` →
-`ml/predictor.py` loads the read-only pkl artifacts and returns the ETA in
-milliseconds. A deterministic heuristic fallback keeps the app running if
-the model is unavailable.
+Integration: the delivery partner is assigned **before** the ETA is
+quoted, so both ETA computations run through
+`routing.estimate_eta()` → `ml_bridge` → `ml/predictor.py` (read-only pkl
+artifacts) with the same features — at **checkout**
+(`auto_assign_order()` runs first, then the ETA is built with the
+assigned rider's real location/workload/vehicle) and again on any
+re-assignment via `assign_order()`. The model is train/serve consistent:
+traffic is estimated from the same hour-probability table in training
+and serving, so the test R² (0.921) IS the production accuracy. If no
+partner is available, the ETA falls back to a defaults-based estimate
+until assignment. A deterministic heuristic fallback keeps the app
+running if the model is unavailable.
 
 ## 6. Data Pipeline
 

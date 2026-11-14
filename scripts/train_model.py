@@ -1,5 +1,10 @@
 """
-Delivery time model training (SRS 3.9).
+Delivery time model training (SRS 3.9) - CONSISTENT version.
+
+Train/serve skew khatam: traffic training mein bhi usi hour-based
+probabilities se aati hai jo serving par use hoti hai
+(ml.predictor.TRAFFIC_PROBS_BY_HOUR). Is liye test R2 = production
+accuracy - dono jagah EK hi number.
 
 Train on data/ml/delivery_time_dataset.csv, save delivery_time_model.pkl
 + model_features.pkl (ml/predictor.py inhi files ko load karta hai).
@@ -19,24 +24,36 @@ from sklearn.model_selection import train_test_split
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import config  # noqa: E402
+from ml.predictor import TRAFFIC_PROBS_BY_HOUR  # serving wahi table use karta hai
 
 BASE = str(config.BASE_DIR)
 DATASET = os.path.join(BASE, "data", "ml", "delivery_time_dataset.csv")
 MODEL_P = os.path.join(BASE, "delivery_time_model.pkl")
 FEAT_P = os.path.join(BASE, "model_features.pkl")
 
+# base features jo web tier supply kar sakta hai (traffic soft-prob cols
+# hour se derive hote hain, is liye wo alag se judte hain)
+BASE_FEATURES = [
+    "distance_km", "partner_to_restaurant_km", "prep_time_min",
+    "order_hour", "day_of_week", "is_weekend", "is_peak",
+    "is_late_night", "partner_current_orders",
+    "vehicle_type", "experience_months", "cuisine",
+    "restaurant_quality", "weather_rain", "distance_speed_ratio",
+    "batched",
+]
+LEVELS = ("low", "medium", "high")
+
 
 def load_dataset() -> tuple[pd.DataFrame, pd.Series, list[str]]:
     df = pd.read_csv(DATASET)
-    # exactly the base features the web tier (ml/predictor.py) can supply
-    base = ["distance_km", "partner_to_restaurant_km", "prep_time_min",
-            "order_hour", "day_of_week", "is_weekend", "is_peak",
-            "is_late_night", "traffic_level", "partner_current_orders",
-            "vehicle_type", "experience_months", "cuisine",
-            "restaurant_quality", "weather_rain", "distance_speed_ratio",
-            "batched"]
-    d = pd.get_dummies(df[base])
-    return d, df["actual_delivery_min"], list(d.columns)
+    X = pd.get_dummies(df[BASE_FEATURES])
+    # traffic one-hot columns = hour-based probabilities (train = serve)
+    for i, level in enumerate(LEVELS):
+        X[f"traffic_level_{level}"] = [
+            TRAFFIC_PROBS_BY_HOUR.get(int(h) % 24, (0.34, 0.34, 0.32))[i]
+            for h in df["order_hour"]
+        ]
+    return X, df["actual_delivery_min"], list(X.columns)
 
 
 def evaluate(model, Xte, yte, tag: str) -> dict:
@@ -63,9 +80,9 @@ def main():
     candidates = [
         ("old GBR baseline", GradientBoostingRegressor(
             random_state=42, n_estimators=250, max_depth=6, learning_rate=0.08)),
-        ("HistGBR tuned", HistGradientBoostingRegressor(
-            random_state=42, max_iter=600, learning_rate=0.045,
-            max_leaf_nodes=31, l2_regularization=0.05,
+        ("HistGBR consistent", HistGradientBoostingRegressor(
+            random_state=42, max_iter=1200, learning_rate=0.03,
+            max_leaf_nodes=31, l2_regularization=0.05, min_samples_leaf=20,
             early_stopping=True, validation_fraction=0.15)),
     ]
 

@@ -113,6 +113,13 @@ def assign_order(
             return False, f"Delivery partner already has {workload} active order(s)."
 
     order.delivery_partner_id = partner.id
+    # refined ETA: ab rider ki asli location/workload/vehicle model ko milti hai
+    if order.status in ACTIVE_STATUSES:
+        from . import routing  # local import, circular cycle se bachne ke liye
+
+        order.estimated_delivery_min = routing.estimate_eta(
+            order, partner_profile=profile
+        )
     link = url_for("delivery.order_detail", order_id=order.id)
     notify(
         partner.id,

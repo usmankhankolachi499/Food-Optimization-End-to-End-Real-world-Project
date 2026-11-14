@@ -44,8 +44,18 @@ def predict_eta(
     item_count: int,
     traffic_factor: float | None = None,
     hour_of_day: int | None = None,
+    cuisine: str | None = None,
+    restaurant_quality: float | None = None,
+    partner_to_restaurant_km: float | None = None,
+    partner_current_orders: int | None = None,
+    vehicle_type: str | None = None,
+    experience_months: float | None = None,
 ) -> dict[str, Any]:
-    """Return ``{"minutes": int, "source": "ml"|"heuristic"}``."""
+    """Return ``{"minutes": int, "source": "ml"|"heuristic"}``.
+
+    Rider-side kwargs assignment ke baad real values ke sath aate hain;
+    checkout pe ye None hote hain aur model apne defaults use karta hai.
+    """
     from datetime import datetime
 
     from .settings import get_float, get_int
@@ -64,6 +74,18 @@ def predict_eta(
         "traffic_factor": round(float(traffic_factor), 3),
         "hour_of_day": int(hour_of_day),
     }
+    if cuisine:
+        features["cuisine"] = str(cuisine)
+    if restaurant_quality is not None:
+        features["restaurant_quality"] = float(restaurant_quality)
+    if partner_to_restaurant_km is not None:
+        features["partner_to_restaurant_km"] = round(float(partner_to_restaurant_km), 3)
+    if partner_current_orders is not None:
+        features["partner_current_orders"] = int(partner_current_orders)
+    if vehicle_type:
+        features["vehicle_type"] = str(vehicle_type)
+    if experience_months is not None:
+        features["experience_months"] = float(experience_months)
 
     predictor = _load_predictor()
     if predictor is not None:

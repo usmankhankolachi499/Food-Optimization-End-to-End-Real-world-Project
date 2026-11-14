@@ -5,6 +5,7 @@ traffic multiplier + settings ki average speed se, final ETA ml_bridge se.
 """
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any, Iterable, Optional
 
 from ..models import Order
@@ -54,19 +55,63 @@ def travel_minutes(
     return max(1, int(round((max(0.0, distance_km) / speed) * 60 * factor)))
 
 
-def estimate_eta(order: Order, prep_time_min: int | None = None) -> int:
-    """Estimated minutes from now until delivery for one order."""
+def estimate_eta(
+    order: Order, prep_time_min: int | None = None, partner_profile=None
+) -> int:
+    """Estimated minutes from now until delivery for one order.
+
+    partner_profile assignment ke baad milta hai - tab rider ki asli
+    location/workload/vehicle model ko milti hai (refined ETA).
+    """
     items = list(order.items)
     item_prep = max((item.menu_item.prep_time_min for item in items if item.menu_item), default=20)
     prep = max(prep_time_min or 0, item_prep)
     distance = float(order.distance_km or 0)
     hour = order.placed_at.hour if order.placed_at else None
+
+    # restaurant-side real features (checkout pe bhi available)
+    restaurant = order.restaurant
+    cuisine = getattr(restaurant, "cuisine", None)
+    quality = getattr(restaurant, "rating_avg", None)
+
+    # rider-side real features (sirf assignment ke baad)
+    p2r = None
+    workload = None
+    vehicle = None
+    experience = None
+    if partner_profile is not None:
+        if (
+            partner_profile.has_location
+            and restaurant is not None
+            and restaurant.has_location
+        ):
+            p2r = haversine_km(
+                partner_profile.current_lat,
+                partner_profile.current_lng,
+                restaurant.latitude,
+                restaurant.longitude,
+            )
+        from .assignment import partner_workload  # local import, cycle se bachne ke liye
+
+        workload = partner_workload(partner_profile.user_id)
+        vehicle = getattr(partner_profile, "vehicle_type", None) or "Bike"
+        # profile pe experience ka column nahi hai - account age se approx
+        created = getattr(partner_profile, "created_at", None)
+        if created is not None:
+            experience = max(1.0, (datetime.utcnow() - created).days / 30.0)
+
     result = predict_eta(
         distance_km=distance,
         prep_time_min=prep,
         item_count=order.item_count or 1,
         traffic_factor=traffic_factor_for_hour(hour),
         hour_of_day=hour,
+        cuisine=cuisine,
+        restaurant_quality=quality,
+        partner_to_restaurant_km=p2r,
+        partner_current_orders=workload,
+        vehicle_type=vehicle,
+        experience_months=experience,
     )
     return int(result["minutes"])
 

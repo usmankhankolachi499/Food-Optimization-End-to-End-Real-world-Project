@@ -5,6 +5,7 @@ Usage:  set BASEURL then  python scripts/regression.py  (BASEURL env optional)
 import os
 import sys
 import re
+import time
 
 import requests
 
@@ -107,8 +108,16 @@ r = s.post(BASE + "/admin/settings", data={
     "auto_assign_orders": "on",
 }, timeout=60)
 check("admin settings save", r)
-r = s.get(BASE + "/admin/audit", timeout=30)
-check("audit got settings_updated", r, r.status_code == 200 and "Settings Updated" in r.text)
+# audit entry action-filter se check karo (pagination/timing se azad) +
+# chhota retry, kyunke audit write commit hone mein 1 sec lag sakta hai
+audit_ok = False
+for _ in range(4):
+    ra = s.get(BASE + "/admin/audit?action=settings_updated", timeout=30)
+    if ra.status_code == 200 and "Settings Updated" in ra.text:
+        audit_ok = True
+        break
+    time.sleep(1)
+check("audit got settings_updated", ra, audit_ok)
 
 # user create
 c = csrf(s, "/admin/users/new")
@@ -119,8 +128,14 @@ r = s.post(BASE + "/admin/users/new", data={
     "password": "RegTest#123", "phone": "+92 300 111 2222", "is_active": "on",
 }, timeout=60)
 check("admin user create", r, r.status_code == 200 and username in r.text)
-r = s.get(BASE + "/admin/audit", timeout=30)
-check("audit got user_created", r, "User Created" in r.text)
+audit_ok = False
+for _ in range(4):
+    ra = s.get(BASE + "/admin/audit?action=user_created", timeout=30)
+    if ra.status_code == 200 and "User Created" in ra.text:
+        audit_ok = True
+        break
+    time.sleep(1)
+check("audit got user_created", ra, "User Created" in ra.text)
 
 # data validation run
 c = csrf(s, "/admin/data")

@@ -10,17 +10,19 @@ flowchart TD
     C --> D{Valid input?}
     D -- No --> C
     D -- Yes --> E[Calculate distance<br/>haversine + delivery fee]
-    E --> F[Call routing.estimate_eta]
+    E --> P{Auto-assign<br/>setting on?}
+    P -- Yes --> Q[Assign best rider first:<br/>real location, workload,<br/>vehicle, experience]
+    P -- No --> R[Order waits in queue]
+    Q --> F[Call routing.estimate_eta<br/>with ALL real features]
+    R --> F2[ETA with defaults<br/>rider abhi nahi mila]
     F --> G[ml_bridge.predict_eta]
+    F2 --> G
     G --> H{ML model<br/>available?}
     H -- Yes --> I[Load pkl model,<br/>build 28-feature row,<br/>predict]
     H -- No --> J[Fallback heuristic:<br/>prep + distance/speed x traffic]
     I --> K[Save order with<br/>estimated_delivery_min]
     J --> K
     K --> L[Notify customer,<br/>partner, admin]
-    L --> M{Auto-assign<br/>setting on?}
-    M -- Yes --> N[Assignment engine]
-    M -- No --> O[Order waits in queue]
 ```
 
 ## 2. Order Assignment (Distance + Workload Scoring)

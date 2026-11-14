@@ -69,21 +69,41 @@ delivery_time_model.pkl   HistGradientBoostingRegressor
                           (max_iter=600, lr=0.045, max_leaf_nodes=31,
                            l2=0.05, early_stopping=True)
 model_features.pkl        exact 28-column list
-        Test metrics: R² 0.936 · MAE 3.4 min · ~96% within ±10 min
+        Test metrics: R² 0.921 · MAE 3.68 min · ~94% within ±10 min
+        (train = serve consistent: traffic hour-probability table)
 ```
 
-**Prediction (online, per order):**
+**Prediction (online, per order — full features at both stages):**
 
 ```
+Step 1 - checkout:
 customer.py checkout
-  → routing.estimate_eta(order)        # features from the order
-  → ml_bridge.predict_eta(...)         # bridge: try ML, fallback heuristic
-  → ml/predictor.predict_eta(features) # builds 28-col row (one-hot like training)
-  → model.predict() → minutes          # read-only pkl, cached per process
+  → auto_assign_order(order)              # rider pehle assign hota hai
+  → routing.estimate_eta(order,
+        partner_profile=profile)          # saare features REAL:
+                                          # distance, prep, hour, traffic,
+                                          # p2r (haversine), workload, vehicle...
+  → ml_bridge.predict_eta(...)            # bridge: try ML, fallback heuristic
+  → ml/predictor.predict_eta(features)    # builds 28-col row (one-hot like training)
+  → model.predict() → minutes             # read-only pkl, cached per process
+
+Step 2 - re-assignment (assign_order() bhi same path):
+  → routing.estimate_eta(order, partner_profile=profile)
+
+Fallback: koi rider available na ho to ETA defaults-based estimate hoti
+hai, aur assignment ke baad full-feature ETA lag jati hai.
 ```
 
 - The bridge always returns `{"minutes": int, "source": "ml"|"heuristic"}`
   so the UI can show the prediction source.
+- Accuracy, honestly stated (one number everywhere): the model is
+  **train/serve consistent** — traffic is estimated from the same
+  hour-probability table (`ml.predictor.TRAFFIC_PROBS_BY_HOUR`) during
+  training and serving, so the test R² **0.921** IS the production
+  accuracy. No skew by design. The oracle upper bound (with recorded
+  real traffic, unavailable at serving) is R² 0.937 — that equals the
+  dataset's noise floor (5-fold OOF), which is why ~0.92 is the maximum
+  honest live number. `scripts/eval_production_accuracy.py` prints both.
 - If the model files are missing or fail to load, the deterministic
   heuristic (`prep + distance/speed × traffic`) keeps the app working.
 

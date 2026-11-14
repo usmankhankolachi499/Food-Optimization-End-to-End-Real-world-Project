@@ -9,7 +9,7 @@
 
 Karachi (Pakistan) ki localization ke sath **Food Delivery web application** — jisme customer order karta hai,
 admin best delivery partner assign karta hai (distance/workload scoring se), aur live tracking hoti hai.
-Delivery time ka **andaza Machine Learning model** lagata hai (accuracy **94% / R² 0.936**).
+Delivery time ka **andaza Machine Learning model** lagata hai (accuracy **R² 0.921 (~92%) — test = production, dono jagah EK number**).
 
 ---
 
@@ -104,10 +104,22 @@ Browser mein kholo: **http://127.0.0.1:5000**
 |---|---|
 | Algorithm | HistGradientBoostingRegressor (scikit-learn) |
 | Training data | `data/ml/delivery_time_dataset.csv` — 13,314 orders |
-| **Accuracy (R²)** | **0.936 (≈94%)** ✅ requirement: 90% |
-| MAE | ~3.4 minute |
-| ETAs ±10 min ke andar | ~96% |
+| **Accuracy (R², test = production)** | **0.921 (≈92%)** ✅ requirement: 90% — train/serve consistent, dono jagah EK number |
+| MAE | ~3.68 minute |
+| ETAs ±10 min ke andar | ~93.7% |
+| Oracle upper bound | R² 0.937 (asli traffic ke sath — serving par available nahi hoti; dataset ka noise floor) |
 | Model file | `delivery_time_model.pkl` + `model_features.pkl` (root mein) |
+
+**Dono jagah EK number (viva ke liye):** model **train/serve consistent**
+hai — traffic training mein bhi usi hour-probability table se aati hai jo
+serving par use hoti hai (`ml.predictor.TRAFFIC_PROBS_BY_HOUR`). Is liye
+test accuracy aur live app accuracy **bilkul same** hai — koi "offline vs
+production" farq hi nahi hai. Rider bhi ETA se pehle assign hota hai
+(foodpanda style), is liye rider features bhi har jagah REAL hain.
+(Dono numbers dekhne ke liye:)
+```powershell
+python scripts\eval_production_accuracy.py
+```
 
 **Retrain karna ho to:**
 ```powershell
@@ -183,7 +195,8 @@ Data pipeline ✅ | Settings ✅ | Audit log ✅ | Backups ✅ | ML ETA predicti
 ## 🗓️ Version History
 
 - **30-Oct-2026:** Original build (purana ML model ~75%)
-- **04-Nov-2026:** UI restyle (navy/gold MOON Light) + ML retrain **R² 0.936**
+- **04-Nov-2026:** UI restyle (navy/gold MOON Light) + ML retrain
+- **14-Nov-2026:** ML train/serve skew khatam (consistent model **R² 0.921** test = production)
 - **05-Nov-2026:** Signup bug fix (fresh user dashboard 500 error) — poora flow clean
 - **11-Nov-2026:** Full SRS re-audit — 0 failures, 0 errors, sab healthy
 

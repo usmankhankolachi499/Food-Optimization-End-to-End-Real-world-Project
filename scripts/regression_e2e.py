@@ -8,6 +8,10 @@ import requests
 
 sys.stdout.reconfigure(encoding="utf-8")
 
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if ROOT_DIR not in sys.path:
+    sys.path.insert(0, ROOT_DIR)
+
 BASE = "http://127.0.0.1:5000"
 PW = "Password@123"
 fails = []
@@ -32,7 +36,15 @@ r = c.get(BASE + "/customer/dashboard", timeout=30)
 check("bilal logged in", "Bilal" in r.text)
 
 r = c.get(BASE + "/restaurants", timeout=30)
-rid = re.search(r'/restaurants/(\d+)', r.text).group(1)
+# sirf OPEN restaurant chuno - checkout closed restaurant ko redirect karta hai
+rid = None
+for card in r.text.split('restaurant-card')[1:]:
+    m = re.search(r'/restaurants/(\d+)', card)
+    if m and 'open-pill open' in card:
+        rid = m.group(1)
+        break
+if rid is None:  # sab band hon to pehla (fail ki wajah clear rahegi)
+    rid = re.search(r'/restaurants/(\d+)', r.text).group(1)
 r = c.get(BASE + f"/restaurants/{rid}", timeout=30)
 item_id = re.search(r'/customer/cart/add/(\d+)', r.text).group(1)
 r = c.post(BASE + f"/customer/cart/add/{item_id}", data={"csrf_token": csrf(c), "quantity": "2"}, timeout=30)
@@ -47,7 +59,8 @@ r = c.post(BASE + "/customer/checkout", data={
     "payment_method": "Easypaisa",
     "delivery_address": "House 44, Block 13-D, Gulshan-e-Iqbal, Karachi",
 }, timeout=60)
-placed = r.status_code in (200, 302)
+# success = orders page par redirect; checkout par wapas aana = place fail
+placed = r.status_code == 200 and "/customer/orders" in r.url
 check("order placed", placed, r.url[-50:])
 order_id = None
 if placed:

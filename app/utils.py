@@ -96,8 +96,10 @@ def haversine_km(lat1, lon1, lat2, lon2) -> float:
 
 
 def generate_order_number() -> str:
-    stamp = utcnow().strftime("%y%m%d")
-    suffix = "".join(secrets.choice("0123456789") for _ in range(4))
+    # FD + date + HHMMSS + 2 random digits: 4-digit suffix se zyada space,
+    # warna din bhar mein collision ka chance (UNIQUE constraint violation)
+    stamp = utcnow().strftime("%y%m%d%H%M%S")
+    suffix = "".join(secrets.choice("0123456789") for _ in range(2))
     return f"FD{stamp}{suffix}"
 
 

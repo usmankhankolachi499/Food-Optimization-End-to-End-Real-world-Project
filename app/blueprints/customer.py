@@ -369,7 +369,12 @@ def checkout():
             db.session.add(order)
             db.session.flush()  # assign order.id
 
-            order.estimated_delivery_min = routing.estimate_eta(order)
+            # rider pehle assign hota hai - phir ETA real rider features
+            # (location/workload/vehicle) ke sath banti hai (full-accuracy path)
+            assigned = auto_assign_order(order)
+            if not order.estimated_delivery_min:
+                # koi rider available nahi tha - ETA defaults wale estimate par
+                order.estimated_delivery_min = routing.estimate_eta(order)
             notify(
                 user.id,
                 "Order confirmed",
@@ -384,7 +389,6 @@ def checkout():
                 "order",
                 url_for("admin.order_detail", order_id=order.id),
             )
-            assigned = auto_assign_order(order)
             db.session.commit()
             clear_cart()
             if assigned:
